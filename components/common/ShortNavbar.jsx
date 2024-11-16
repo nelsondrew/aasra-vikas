@@ -13,6 +13,7 @@ const ShortNavbar = () => {
     }
   };
 
+  // test
   useEffect(() => {
     window.addEventListener("scroll", navBarTop);
     return () => {
