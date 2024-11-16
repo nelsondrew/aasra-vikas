@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import logo from "/public/images/logo.png";
+import logo from "/public/images/av_logo.png";
 
 const ShortNavbar = () => {
   const [windowHeight, setWindowHeight] = useState(0);
@@ -30,7 +30,10 @@ const ShortNavbar = () => {
         <div className="container">
           <div className="row d-flex header-area">
             <nav className="navbar d-flex justify-content-between navbar-expand-lg navbar-dark">
-              <Link className="navbar-brand" href="/">
+              <Link style={{
+                height : "56px",
+                width : "13rem"
+              }} className="navbar-brand" href="/">
                 <Image src={logo} className="logo" alt="logo" />
               </Link>
               <div className="d-flex align-items-center justify-content-end">
