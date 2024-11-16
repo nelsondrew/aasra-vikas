@@ -15,7 +15,7 @@ const Counter = () => {
                 <div className="col-lg-6">
                   <div className="single-box">
                     <h4>3.5x</h4>
-                    <p>More likely to get approved with Bankio</p>
+                    <p>More likely to get approved with Aasra Vikas</p>
                   </div>
                   <div className="single-box">
                     <h4>110,000+</h4>

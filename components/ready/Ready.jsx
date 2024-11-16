@@ -12,7 +12,7 @@ const Ready = () => {
               <div className="section-text">
                 <h3 className="title">Ready to get started?</h3>
                 <p>
-                  It only takes a few minutes to register your FREE Bankio
+                  It only takes a few minutes to register your FREE Aasra Vikas
                   account.
                 </p>
               </div>

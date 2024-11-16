@@ -15,7 +15,7 @@ const LoginForm = () => {
                   <h2 className="title">Set Up Your Password</h2>
                   <p>
                     Your security is our top priority. You&#39;ll need this to
-                    log into your bankio account
+                    log into your Aasra Vikas account
                   </p>
                 </div>
 

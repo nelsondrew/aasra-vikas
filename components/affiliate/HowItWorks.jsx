@@ -12,7 +12,7 @@ import share_icon from "/public/images/icon/share-icon.png";
 
 const HowItWorks = () => {
   const [copyValue, setCopyValue] = useState({
-    value: "bankio.com/get/yU78has7",
+    value: "Aasra Vikas.com/get/yU78has7",
     copied: false,
   });
   return (
@@ -23,7 +23,7 @@ const HowItWorks = () => {
             <div className="col-md-7">
               <div className="section-header text-center">
                 <h5 className="sub-title">
-                  Refer Bankio credit card and earn $25!
+                  Refer Aasra Vikas credit card and earn $25!
                 </h5>
                 <h2 className="title">How it Works</h2>
                 <p>
@@ -94,7 +94,7 @@ const HowItWorks = () => {
                     <Image src={how_works_affiliate_2} alt="image" />
                   </div>
                   <h4>
-                    Your friends have to sign up and activate their Bankio
+                    Your friends have to sign up and activate their Aasra Vikas
                     Credit Card
                   </h4>
                 </div>
@@ -109,7 +109,7 @@ const HowItWorks = () => {
                     <Image src={how_works_affiliate_3} alt="image" />
                   </div>
                   <h4>
-                    Both you and your friend get $25 credited to your Bankio
+                    Both you and your friend get $25 credited to your Aasra Vikas
                     credit card balance!
                   </h4>
                 </div>

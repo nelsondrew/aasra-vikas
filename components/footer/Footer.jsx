@@ -78,7 +78,7 @@ const Footer = () => {
               <h5>Support</h5>
               <ul className="footer-link">
                 <li>
-                  <Link href="mailto:support@bankio">Support@bankio</Link>
+                  <Link href="mailto:support@Aasra Vikas">Support@Aasra Vikas</Link>
                 </li>
                 <li>
                   <Link href="/contact">Contact Us</Link>
@@ -114,7 +114,7 @@ const Footer = () => {
               <div className="left">
                 <p>
                   {" "}
-                  Copyright © <Link href="index">Bankio</Link> | Designed by{" "}
+                  Copyright © <Link href="index">Aasra Vikas</Link> | Designed by{" "}
                   <Link href="https://themeforest.net/user/pixelaxis">
                     PIXELAXIS
                   </Link>

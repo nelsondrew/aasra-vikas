@@ -11,7 +11,7 @@ const OtpForm = () => {
             <div className="col-lg-8">
               <div className="form-content">
                 <div className="section-header">
-                  <h5 className="sub-title">Give yourself the Bankio Edge</h5>
+                  <h5 className="sub-title">Give yourself the Aasra Vikas Edge</h5>
                   <h2 className="title">Varified Your Phone Number</h2>
                   <p>
                     A 6 digit One Time Password (OTP) has been sent to your

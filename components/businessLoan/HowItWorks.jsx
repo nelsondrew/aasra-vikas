@@ -72,7 +72,7 @@ const HowItWorks = () => {
                       </div>
                       <h5>3. Send documents</h5>
                       <p>
-                        Upload your documents on the Bankio app and get approved
+                        Upload your documents on the Aasra Vikas app and get approved
                         in
                       </p>
                     </div>

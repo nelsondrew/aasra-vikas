@@ -22,7 +22,7 @@ const App = () => {
             <div className="col-lg-6">
               <div className="top-section">
                 <h5 className="sub-title">
-                  Learn why Bankio is the right choice for you
+                  Learn why Aasra Vikas is the right choice for you
                 </h5>
                 <h2 className="title">Send money from the comfort of home</h2>
                 <p>

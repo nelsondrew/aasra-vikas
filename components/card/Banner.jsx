@@ -9,7 +9,7 @@ const Banner = () => {
           <h5 className="sub-title">Add value to your life</h5>
           <h2 className="title">Global Expansion Made Easy</h2>
           <p>
-            Accelerate your ambitions with the Bankio Debit and Credit Cards
+            Accelerate your ambitions with the Aasra Vikas Debit and Credit Cards
             that comes with no annual fee, a high credit limit.
           </p>
         </div>

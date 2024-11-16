@@ -94,9 +94,9 @@ const Testimonials = () => {
                   <div className="content">
                     <div className="top-content">
                       <Image src={quote} alt="quote" />
-                      <h5>“I love Bankio, they&#39;re the best”</h5>
+                      <h5>“I love Aasra Vikas, they&#39;re the best”</h5>
                       <p className="xxlr">
-                        “ It&#39;s been 2 years since I found Bankio, and
+                        “ It&#39;s been 2 years since I found Aasra Vikas, and
                         it&#39;s such a relief as a small business owner to not
                         worry about unnecessary fees. I lost my credit card
                         once, and the service was so prompt that I was back to
@@ -118,9 +118,9 @@ const Testimonials = () => {
                   <div className="content">
                     <div className="top-content">
                       <Image src={quote} alt="quote" />
-                      <h5>“I love Bankio, they&#39;re the best”</h5>
+                      <h5>“I love Aasra Vikas, they&#39;re the best”</h5>
                       <p className="xxlr">
-                        “ It&#39;s been 2 years since I found Bankio, and
+                        “ It&#39;s been 2 years since I found Aasra Vikas, and
                         it&#39;s such a relief as a small business owner to not
                         worry about unnecessary fees. I lost my credit card
                         once, and the service was so prompt that I was back to
@@ -142,9 +142,9 @@ const Testimonials = () => {
                   <div className="content">
                     <div className="top-content">
                       <Image src={quote} alt="quote" />
-                      <h5>“I love Bankio, they&#39;re the best”</h5>
+                      <h5>“I love Aasra Vikas, they&#39;re the best”</h5>
                       <p className="xxlr">
-                        “ It&#39;s been 2 years since I found Bankio, and
+                        “ It&#39;s been 2 years since I found Aasra Vikas, and
                         it&#39;s such a relief as a small business owner to not
                         worry about unnecessary fees. I lost my credit card
                         once, and the service was so prompt that I was back to
@@ -166,9 +166,9 @@ const Testimonials = () => {
                   <div className="content">
                     <div className="top-content">
                       <Image src={quote} alt="quote" />
-                      <h5>“I love Bankio, they&#39;re the best”</h5>
+                      <h5>“I love Aasra Vikas, they&#39;re the best”</h5>
                       <p className="xxlr">
-                        “ It&#39;s been 2 years since I found Bankio, and
+                        “ It&#39;s been 2 years since I found Aasra Vikas, and
                         it&#39;s such a relief as a small business owner to not
                         worry about unnecessary fees. I lost my credit card
                         once, and the service was so prompt that I was back to

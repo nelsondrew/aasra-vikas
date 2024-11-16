@@ -59,7 +59,7 @@ const EducationLoanForm = () => {
               <label></label>
             </div>
             <span className="check_span">
-              By clicking submit, you agree to Bankio&#39;s Privacy Policy, T&C
+              By clicking submit, you agree to Aasra Vikas&#39;s Privacy Policy, T&C
               & E-sign and Communication Authorization.
             </span>
           </div>

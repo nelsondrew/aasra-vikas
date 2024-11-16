@@ -8,19 +8,19 @@ const help_data = [
     id: 1,
     icon: need_help_1,
     title: "Sales",
-    desc: "sales@bankio.com",
+    desc: "sales@Aasra Vikas.com",
   },
   {
     id: 2,
     icon: need_help_2,
     title: "Help & Support",
-    desc: "supports@bankio.com",
+    desc: "supports@Aasra Vikas.com",
   },
   {
     id: 3,
     icon: need_help_3,
     title: "Media & Press",
-    desc: "media@bankio.com",
+    desc: "media@Aasra Vikas.com",
   },
 ];
 

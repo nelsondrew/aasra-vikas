@@ -33,7 +33,7 @@ const Loan = () => {
                   many challenges and opportunities.We don’t waste time on
                   unnecessary paperwork and do most things electronically. It’s
                   no wonder that we are among the most popular business loan
-                  providers in the Bankio.
+                  providers in the Aasra Vikas.
                 </p>
               </div>
             </div>

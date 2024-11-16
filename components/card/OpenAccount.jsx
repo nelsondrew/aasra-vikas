@@ -13,7 +13,7 @@ const OpenAccount = () => {
                   Boost your savings with the right credit card
                 </h5>
                 <h2 className="title">
-                  Access Endless Possibilities With Bankio Card
+                  Access Endless Possibilities With Aasra Vikas Card
                 </h2>
                 <p>
                   All your needs covered with a full range of credit and debit

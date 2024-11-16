@@ -37,7 +37,7 @@ const BlogDetails = () => {
                     <div className="blog-contant mt-60">
                       <div className="blog-text">
                         <h3>
-                          Bankio is a next-gen banking experience looking to
+                          Aasra Vikas is a next-gen banking experience looking to
                           disrupt the industry.
                         </h3>
                         <p>
@@ -51,7 +51,7 @@ const BlogDetails = () => {
                         </p>
                       </div>
                       <div className="blog-text">
-                        <h3>Learn how easy is to invest with Bankio</h3>
+                        <h3>Learn how easy is to invest with Aasra Vikas</h3>
                         <p>
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit. Nulla dolor at turpis porta elementum non
@@ -83,7 +83,7 @@ const BlogDetails = () => {
                 <div className="col-lg-10">
                   <div className="blog-contant">
                     <div className="single-item mb-60">
-                      <h3>With Bankio, you can open an account today</h3>
+                      <h3>With Aasra Vikas, you can open an account today</h3>
                       <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Sit purus vel, viverra facilisi neque quisque. Phasellus
@@ -138,7 +138,7 @@ const BlogDetails = () => {
                     <div className="single-item">
                       <h5>
                         Discover how easy it is to apply for business of
-                        personal loans on Bankio. With our advanced loans
+                        personal loans on Aasra Vikas. With our advanced loans
                         system, it’s easier than ever.
                       </h5>
                       <p>
@@ -159,7 +159,7 @@ const BlogDetails = () => {
                   <div className="blog-contant">
                     <div className="single-item mb-60">
                       <h3>
-                        Are you looking for a credit card? Discover new Bankio
+                        Are you looking for a credit card? Discover new Aasra Vikas
                         credit options
                       </h3>
                       <p>
@@ -187,7 +187,7 @@ const BlogDetails = () => {
                   <div className="blog-contant section-bor">
                     <div className="single-item pb-120">
                       <h6>
-                        At Bankio, we are transparent, supportive, and we always
+                        At Aasra Vikas, we are transparent, supportive, and we always
                         put our customers first
                       </h6>
                       <p>

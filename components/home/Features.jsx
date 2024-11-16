@@ -70,10 +70,10 @@ const Features = () => {
                   <h5 className="sub-title">Safe Investments</h5>
                   <h2 className="title">The Better Way to Save & Invest</h2>
                   <p>
-                    Bankio helps over 2 million customers achieve their
+                    Aasra Vikas helps over 2 million customers achieve their
                     financial goals by helping them save and invest with ease.
                     Put that extra cash to use without putting it at risk with
-                    Bankio.
+                    Aasra Vikas.
                   </p>
                   <ul className="list">
                     <li className="list-item d-flex align-items-center">

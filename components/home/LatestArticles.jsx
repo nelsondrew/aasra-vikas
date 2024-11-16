@@ -9,7 +9,7 @@ const LatestArticles = () => {
           <div className="row d-flex justify-content-center">
             <div className="col-lg-6">
               <div className="section-header text-center">
-                <h5 className="sub-title">Latest insights from Bankio</h5>
+                <h5 className="sub-title">Latest insights from Aasra Vikas</h5>
                 <h2 className="title">Our Latest Articles</h2>
                 <p>Get more Latest News and Resources here ...</p>
               </div>

@@ -17,7 +17,7 @@ const CallToAction = () => {
                   </h2>
                   <p>
                     Sign in to your account for your personalized link and share
-                    it with friends. Once they apply for a Bankio account, you
+                    it with friends. Once they apply for a Aasra Vikas account, you
                     both get paid!
                   </p>
                 </div>

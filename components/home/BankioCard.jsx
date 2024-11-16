@@ -2,7 +2,7 @@ import CardSlider from "../carousel/CardSlider";
 import CreditCard from "./CreditCard";
 import DebitCard from "./DebitCard";
 
-const BankioCard = () => {
+const Aasra VikasCard = () => {
   return (
     <section className="card-section">
       <div className="overlay pt-120 pb-120">
@@ -14,7 +14,7 @@ const BankioCard = () => {
                   Boost your savings with the right credit card
                 </h5>
                 <h2 className="title">
-                  Access Endless Possibilities with Bankio Card
+                  Access Endless Possibilities with Aasra Vikas Card
                 </h2>
                 <p>
                   All your needs covered with a full range of credit and debit
@@ -87,4 +87,4 @@ const BankioCard = () => {
   );
 };
 
-export default BankioCard;
+export default Aasra VikasCard;

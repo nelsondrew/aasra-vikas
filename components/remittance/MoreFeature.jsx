@@ -30,7 +30,7 @@ const MoreFeature = () => {
                   <h5>Always at Your Fingertips</h5>
                   <p>
                     Things come up. Money needs to be sent in a pinch. With the
-                    Bankio app’s remittance feature, sending money back home
+                    Aasra Vikas app’s remittance feature, sending money back home
                     only takes a few taps.
                   </p>
                 </div>
@@ -45,7 +45,7 @@ const MoreFeature = () => {
                   <h5>Get the exchange rate right time</h5>
                   <p>
                     The cost of sending money abroad is constantly shifting. But
-                    with the Bankio app, you’ll always know the exchange rate
+                    with the Aasra Vikas app, you’ll always know the exchange rate
                     and exactly how much remittance costs you.
                   </p>
                 </div>
@@ -74,7 +74,7 @@ const MoreFeature = () => {
                 <div className="text-area">
                   <h5>Send with speed</h5>
                   <p>
-                    When you send money abroad with the Bankio app’s remittance
+                    When you send money abroad with the Aasra Vikas app’s remittance
                     feature, your payments arrive instantly. No waiting and no
                     instant transfer-fees. get 24/7 support.
                   </p>

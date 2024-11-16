@@ -9,10 +9,10 @@ const AboutCarLoan = () => {
       link="/#car-loan-form"
     >
       <div className="section-text">
-        <h5 className="sub-title">Why should you demand a bankio loan</h5>
+        <h5 className="sub-title">Why should you demand a Aasra Vikas loan</h5>
         <h2 className="title">Smarter car loans. Designed for you.</h2>
         <p>
-          Bankio expands access to fair credit with a simple and fast loan
+          Aasra Vikas expands access to fair credit with a simple and fast loan
           application that looks at you – not just your credit score.A flexible
           hassle-free financing facility that enables you to own your dream car
         </p>

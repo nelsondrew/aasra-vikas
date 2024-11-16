@@ -14,7 +14,7 @@ const OurJourney = () => {
                 </h2>
                 <p>
                   For decades, the clearing of financial transactions remained
-                  unchanged and unchallenged.Bankio provide real-time payment
+                  unchanged and unchallenged.Aasra Vikas provide real-time payment
                   and innovative banking services to their customers . Our
                   company timeline
                 </p>

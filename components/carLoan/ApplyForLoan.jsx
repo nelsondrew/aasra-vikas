@@ -12,7 +12,7 @@ const ApplyForLoan = () => {
                   Apply for a loan today. Your new car is waiting for you
                 </h2>
                 <p>
-                  Don’t just dream, get your dream car.Bankio offers a flexible
+                  Don’t just dream, get your dream car.Aasra Vikas offers a flexible
                   and hassle-free financing facility that enables you to own
                   your dream car and provides financing up to 85% of the value
                   of your desired car.

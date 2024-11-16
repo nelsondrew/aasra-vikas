@@ -72,7 +72,7 @@ const RegisterForm = () => {
                           By clicking submit, you agree to{" "}
                           <Link href="/terms-condition">
                             <span>
-                              Bankio&#39;s Terms of Use, Privacy Policy, E-sign
+                              Aasra Vikas&#39;s Terms of Use, Privacy Policy, E-sign
                             </span>
                           </Link>{" "}
                           &{" "}

@@ -11,7 +11,7 @@ const CallToAction = () => {
                 <div className="section-header text-center">
                   <h2 className="title">Save With Us</h2>
                   <p>
-                    Bankio’s range of savings account offers tailor made saving
+                    Aasra Vikas’s range of savings account offers tailor made saving
                     solutions for you
                   </p>
                 </div>

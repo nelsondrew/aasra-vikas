@@ -15,10 +15,10 @@ const NetWork = () => {
                 </h2>
                 <p>
                   You got credit, now it’s time to give your friends some credit
-                  too. With Bankio’s Refer-a-Friend program, you can earn a $25
-                  referral reward when your friend activates a Bankio credit
+                  too. With Aasra Vikas’s Refer-a-Friend program, you can earn a $25
+                  referral reward when your friend activates a Aasra Vikas credit
                   card using your link. What’s more, your friend gets $25
-                  credited to their Bankio credit card balance too!
+                  credited to their Aasra Vikas credit card balance too!
                 </p>
               </div>
             </div>

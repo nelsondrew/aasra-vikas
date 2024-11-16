@@ -20,7 +20,7 @@ const Author = () => {
                   <Image src={author_image} alt="images" />
                 </div>
                 <h4>Percy Mathis</h4>
-                <p className="highlight-text">Marketing Manager at Bankio</p>
+                <p className="highlight-text">Marketing Manager at Aasra Vikas</p>
                 <p className="para-text">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sit
                   purus vel, viverra facilisi neque quisque.
