@@ -2,7 +2,7 @@ import CardSlider from "../carousel/CardSlider";
 import CreditCard from "./CreditCard";
 import DebitCard from "./DebitCard";
 
-const Aasra VikasCard = () => {
+const BankioCard = () => {
   return (
     <section className="card-section">
       <div className="overlay pt-120 pb-120">
@@ -87,4 +87,4 @@ const Aasra VikasCard = () => {
   );
 };
 
-export default Aasra VikasCard;
+export default BankioCard;
