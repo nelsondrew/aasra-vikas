@@ -3,6 +3,8 @@ import Head from "next/head";
 import { useEffect } from "react";
 import Layout from "../components/layout";
 import "../styles/globals.scss";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -18,6 +20,7 @@ export default function App({ Component, pageProps }) {
           <link rel="icon" href="av_favicon.ico" />
         </Head>
         <Component {...pageProps} />
+        <ToastContainer />
       </>
     );
   }
