@@ -5,6 +5,10 @@ import useIsMobile from "../../hooks/useIsMobile";
 import styled from "styled-components";
 
 const StyledSection = styled.section`
+  .single-input {
+    display: flex;
+    flex-direction: column;
+  }
   .error-border {
     input {
       border: 1px solid red;
