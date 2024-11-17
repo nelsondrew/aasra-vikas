@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomSelect from "../customSelect";
 import Link from "next/link";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const LoanApplication = () => {
   const [formDetails, setFormDetails] = useState({
@@ -31,6 +32,8 @@ const LoanApplication = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const isMobile = useIsMobile();
+
 
   const validateForm = () => {
     const newErrors = {};
@@ -102,6 +105,10 @@ const LoanApplication = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(`It is a mobile : ${isMobile}`)
+  }, [isMobile])
+
   return (
     <section className="loan-application-form">
       <div className="overlay pt-120 pb-120">
@@ -170,7 +177,10 @@ const LoanApplication = () => {
                         name: "employmentType",
                         type: "select",
                         options: ["Salaried", "Self-Employed"],
-                        class : "col-6"
+                        class : "col-6",
+                        mobileStyle: {
+                           marginTop : "18px"
+                        }
                       },
                       { label: "Salary", name: "salary", type: "number" , class : "col-6" },
                       {
@@ -252,7 +262,11 @@ const LoanApplication = () => {
                       },
                     ].map((field, index) => (
                       <div className={field?.class || 'col-6'} key={index}>
-                        <div className="single-input">
+                        <div style={{
+                            ...(isMobile && field?.mobileStyle && {
+                                ...field.mobileStyle
+                            })
+                        }} className="single-input">
                           {field.type === "select" ? (
                             <CustomSelect
                               label={field.label}
