@@ -2,6 +2,19 @@ import { useEffect, useState } from "react";
 import CustomSelect from "../customSelect";
 import Link from "next/link";
 import useIsMobile from "../../hooks/useIsMobile";
+import styled from "styled-components";
+
+const StyledSection = styled.section`
+  .error-border {
+    input {
+      border: 1px solid red;
+    }
+  }
+  .error {
+    color: red;
+    font-size: 0.875rem;
+  }
+`;
 
 const LoanApplication = () => {
   const [formDetails, setFormDetails] = useState({
@@ -33,7 +46,6 @@ const LoanApplication = () => {
 
   const [errors, setErrors] = useState({});
   const isMobile = useIsMobile();
-
 
   const validateForm = () => {
     const newErrors = {};
@@ -106,11 +118,11 @@ const LoanApplication = () => {
   };
 
   useEffect(() => {
-    console.log(`It is a mobile : ${isMobile}`)
-  }, [isMobile])
+    console.log("current errors", errors);
+  }, [errors]);
 
   return (
-    <section className="loan-application-form">
+    <StyledSection className="loan-application-form">
       <div className="overlay pt-120 pb-120">
         <div className="container">
           <div className="row">
@@ -123,7 +135,7 @@ const LoanApplication = () => {
                     Fill in the required information for your loan application.
                   </p>
                 </div>
-                <form onSubmit={handleSubmit}>
+                <form>
                   <div className="row">
                     {/* Dynamic Fields */}
                     {[
@@ -131,93 +143,108 @@ const LoanApplication = () => {
                         label: "Applicant Name",
                         name: "applicantName",
                         type: "text",
-                        class : 'col-12'
+                        class: "col-12",
                       },
                       {
                         label: "Mother's Name",
                         name: "mothersName",
                         type: "text",
-                        class : 'col-6',
+                        class: "col-6",
                       },
                       {
                         label: "Father's Name",
                         name: "fathersName",
                         type: "text",
-                        class : "col-6"
+                        class: "col-6",
                       },
-                      { label: "Date of Birth", name: "dob", type: "date" , class : "col-6" },
-                      { label: "PAN Number", name: "pan", type: "text" , class : "col-6" },
+                      {
+                        label: "Date of Birth",
+                        name: "dob",
+                        type: "date",
+                        class: "col-6",
+                      },
+                      {
+                        label: "PAN Number",
+                        name: "pan",
+                        type: "text",
+                        class: "col-6",
+                      },
                       {
                         label: "Current Address",
                         name: "currentAddress",
                         type: "text",
-                        class : 'col-12'
+                        class: "col-12",
                       },
                       {
                         label: "Staying at Current Address Since",
                         name: "currentAddressSince",
                         type: "date",
-                        class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Permanent Address",
                         name: "permanentAddress",
                         type: "text",
-                        class : "col-12"
+                        class: "col-12",
                       },
                       {
                         label: "House Owned or Rented?",
                         name: "houseStatus",
                         type: "select",
                         options: ["Owned", "Rented"],
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Employment Type",
                         name: "employmentType",
                         type: "select",
                         options: ["Salaried", "Self-Employed"],
-                        class : "col-6",
+                        class: "col-6",
                         mobileStyle: {
-                           marginTop : "18px"
-                        }
+                          marginTop: "18px",
+                        },
                       },
-                      { label: "Salary", name: "salary", type: "number" , class : "col-6" },
+                      {
+                        label: "Salary",
+                        name: "salary",
+                        type: "number",
+                        class: "col-6",
+                      },
                       {
                         label: "Monthly Income",
                         name: "income",
                         type: "number",
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Education Qualification",
                         name: "education",
                         type: "text",
-                        class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Work Experience",
                         name: "workExperience",
                         type: "text",
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Number of Dependents",
                         name: "dependents",
                         type: "number",
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Current Number of Ongoing Loans",
                         name: "ongoingLoans",
                         type: "number",
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Total Loan Obligation",
                         name: "loanObligation",
                         type: "number",
-                         class : "col-6"
+                        class: "col-6",
                       },
                       {
                         label: "Total EMI Paying Currently",
@@ -261,12 +288,18 @@ const LoanApplication = () => {
                         class: "col-12",
                       },
                     ].map((field, index) => (
-                      <div className={field?.class || 'col-6'} key={index}>
-                        <div style={{
-                            ...(isMobile && field?.mobileStyle && {
-                                ...field.mobileStyle
-                            })
-                        }} className="single-input">
+                      <div className={field?.class || "col-6"} key={index}>
+                        <div
+                          style={{
+                            ...(isMobile &&
+                              field?.mobileStyle && {
+                                ...field.mobileStyle,
+                              }),
+                          }}
+                          className={`single-input ${
+                            errors[field.name] ? "error-border" : ""
+                          }`}
+                        >
                           {field.type === "select" ? (
                             <CustomSelect
                               label={field.label}
@@ -299,9 +332,14 @@ const LoanApplication = () => {
                     ))}
                   </div>
                   <div className="btn-area">
-                    <button style={{
-                      marginTop: "2rem"
-                    }} type="submit" className="cmn-btn">
+                    <button
+                      onClick={handleSubmit}
+                      style={{
+                        marginTop: "2rem",
+                      }}
+                      type="submit"
+                      className="cmn-btn"
+                    >
                       Submit Application
                     </button>
                   </div>
@@ -311,7 +349,7 @@ const LoanApplication = () => {
           </div>
         </div>
       </div>
-    </section>
+    </StyledSection>
   );
 };
 
