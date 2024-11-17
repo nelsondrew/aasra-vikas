@@ -188,7 +188,6 @@ const LoanApplication = () => {
 
     return (
         <StyledSection className="loan-application-form">
-            <div>Add toast</div>
             <div className="overlay pt-120 pb-120">
                 <div className="container">
                     <div className="row">
