@@ -18,7 +18,7 @@ const Personalized = () => {
                 <h3 className="title">Need a Personalized Solution?</h3>
                 <p>
                   Get in touch with us, and we will help you to create the right
-                  one for your business or personal needs.
+                  one for your businessssss or personal needs.
                 </p>
               </div>
               <Link href="/register" className="cmn-btn">

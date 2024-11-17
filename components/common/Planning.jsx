@@ -24,7 +24,7 @@ const Planning = () => {
                 Apply for a loan
               </Link>
             </div>
-            <div className="col-xl-6 col-lg-7">
+            {/* <div className="col-xl-6 col-lg-7">
               <div className="row cus-mar">
                 {planning_data.map((singlePlanning) => (
                   <div key={singlePlanning.id} className="col-md-6 col-sm-6">
@@ -32,7 +32,7 @@ const Planning = () => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

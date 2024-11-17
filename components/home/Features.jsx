@@ -10,7 +10,7 @@ const Features = () => {
     <>
       <section className="features-section">
         <div className="overlay pt-120">
-          <div className="container wow fadeInUp">
+          {/* <div className="container wow fadeInUp">
             <div className="row">
               <div className="col-lg-6">
                 <div className="top-section">
@@ -49,13 +49,13 @@ const Features = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
       <section className="features-section second">
         <div className="overlay pt-120 pb-120">
-          <div className="container wow fadeInUp">
+          {/* <div className="container wow fadeInUp">
             <div className="row">
               <div className="col-lg-6 text-start cus-ord">
                 <div className="img-area">
@@ -92,7 +92,7 @@ const Features = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </>

@@ -70,7 +70,7 @@ export const how_it_work_data = [
   {
     id: 4,
     icon: get_loan_4,
-    title: "4. Get a New Car",
+    title: "4. Make your dream come true",
     desc: "Make smart spending decisions on the spot. Our budgeting too",
   },
 ];

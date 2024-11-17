@@ -34,7 +34,7 @@ const HomeBanner = () => {
       </div>
 
       {/* Partners slider here */}
-      <Partners />
+      {/* <Partners /> */}
     </section>
   );
 };
