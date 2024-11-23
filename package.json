@@ -18,12 +18,14 @@
     "react": "18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-icons": "^4.7.1",
     "react-slick": "^0.29.0",
     "react-toastify": "^10.0.6",
     "sass": "^1.57.1",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "twilio": "^5.3.6"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^2.1.4"

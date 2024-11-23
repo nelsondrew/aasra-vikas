@@ -1,96 +1,114 @@
-import Image from "next/image";
-import Link from "next/link";
-import arrow_left from "/public/images/icon/arrow-left.png";
+import React, { useEffect, useState } from "react";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "../../firebase";
 
-const OtpForm = () => {
+const PhoneAuth = () => {
+  const [phone, setPhone] = useState("");
+  const [otp, setOtp] = useState("");
+  const [confirmationResult, setConfirmationResult] = useState(null);
+  const [error, setError] = useState("");
+
+  const resetRecaptcha = () => {
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear(); // Clear existing reCAPTCHA instance
+      setupRecaptcha(); // Reinitialize
+    }
+  };
+
+  useEffect(() => {
+    resetRecaptcha();
+  },[]);
+
+  const setupRecaptcha = () => {
+    // Clear any existing instance
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
+    }
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => console.log("reCAPTCHA solved"),
+        }
+      );
+    }
+  };
+
+  const sendOTP = async (e) => {
+    e?.preventDefault();
+    setError("");
+    try {
+      setupRecaptcha();
+      const appVerifier = window.recaptchaVerifier;
+
+      try {
+        const confirmationResult = await signInWithPhoneNumber(auth , phone , appVerifier);
+        setConfirmationResult(confirmationResult);
+        console.log("OTP sent");
+      } catch(e) {
+        setError("Failed to send OTP: " + err.message);
+        console.error(err);
+        resetRecaptcha();
+      };
+    } catch (err) {
+      resetRecaptcha();
+      setError("Error initializing reCAPTCHA: " + err.message);
+    }
+  };
+
+  const verifyOTP = () => {
+    if (!confirmationResult) {
+      setError("No OTP confirmation available. Retry sending OTP.");
+      return;
+    }
+
+    confirmationResult
+      .confirm(otp)
+      .then((result) => {
+        console.log("User signed in:", result.user);
+      })
+      .catch((err) => {
+        setError("Invalid OTP: " + err.message);
+        console.error(err);
+      });
+  };
+
   return (
-    <section className="sign-in-up verify-number">
-      <div className="overlay pt-120 pb-120">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8">
-              <div className="form-content">
-                <div className="section-header">
-                  <h5 className="sub-title">Give yourself the Aasra Vikas Edge</h5>
-                  <h2 className="title">Varified Your Phone Number</h2>
-                  <p>
-                    A 6 digit One Time Password (OTP) has been sent to your
-                    given email address which will expire in 15 minutes, after
-                    which you will need to resend the code.
-                  </p>
-                </div>
-                <form action="#">
-                  <div className="row">
-                    <div className="col-xl-5 col-lg-6 col-md-6">
-                      <div className="single-input">
-                        <label>Enter OTP Here</label>
-                        <div className="mobile-otp d-flex align-items-center">
-                          <div className="inputs d-flex flex-row justify-content-center">
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                            <input
-                              className="text-center form-control"
-                              type="text"
-                              placeholder="1"
-                              maxLength="1"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="btn-area">
-                    <Link href="/">Resend Code</Link>
-                    <button className="cmn-btn">Submit OTP</button>
-                  </div>
-                </form>
-                <div className="btn-back mt-60 d-flex align-items-center">
-                  <Link href="/" className="back-arrow">
-                    <Image src={arrow_left} alt="icon" />
-                    Back
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div
+      style={{
+        marginTop: "10rem",
+      }}
+    >
+      <h1>Phone Authentication</h1>
+      <div id="recaptcha-container"/>
+
+      {!confirmationResult ? (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter phone number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <button onClick={sendOTP}>Send OTP</button>
         </div>
-      </div>
-    </section>
+      ) : (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+          <button onClick={verifyOTP}>Verify OTP</button>
+        </div>
+      )}
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </div>
   );
 };
 
-export default OtpForm;
+export default PhoneAuth;
