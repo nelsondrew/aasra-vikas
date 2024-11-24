@@ -45,15 +45,11 @@ const VerifyNumberForm = ({ onPhoneNumberSubmit, loading }) => {
             <div className="col-lg-8">
               <div className="form-content">
                 <div className="section-header">
-                  <h5 className="sub-title">
-                    Give yourself the Aasra Vikas Edge
-                  </h5>
                   <h2 className="title">
-                    What’s the best number to reach you on?
+                    Verify your number to proceed with the Application
                   </h2>
                   <p>
-                    We don’t send spam, just important information you must
-                    know.
+                    The otp will be verified in order to verify the phone number
                   </p>
                 </div>
                 <form onSubmit={(e) => e.preventDefault()}>
@@ -95,12 +91,6 @@ const VerifyNumberForm = ({ onPhoneNumberSubmit, loading }) => {
                     </button>
                   </div>
                 </form>
-                <div className="btn-back mt-60 d-flex align-items-center">
-                  <Link href="/" className="back-arrow">
-                    <Image src={arrow_left} alt="icon" />
-                    Back
-                  </Link>
-                </div>
               </div>
             </div>
           </div>

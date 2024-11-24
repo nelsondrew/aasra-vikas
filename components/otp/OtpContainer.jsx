@@ -1,6 +1,6 @@
 import OtpNew from "./OtpNew";
 import { useEffect, useState } from "react";
-import VarifyNumberForm from "../varifyNumber/VarifyNumberForm";
+import VerifyNumberForm from "../varifyNumber/VarifyNumberForm";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase";
 import PhoneNumberVerified from "./PhoneNumberVerified";
@@ -121,7 +121,7 @@ export default function OtpContainer() {
       <div id="recaptcha-container"></div>
       {otpFormState === OTP_STATES.MOBILE_NUMBER_SUBMIT && (
         <>
-          <VarifyNumberForm
+          <VerifyNumberForm
             loading={loading}
             onPhoneNumberSubmit={handlePhoneSubmit}
           />
