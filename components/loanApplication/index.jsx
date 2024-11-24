@@ -74,7 +74,7 @@ const ApplicatioFields = [
         class: "col-6",
     },
     {
-        label: "Upload Bank Statement (PDF)",
+        label: "Upload 6 Bank Statement (PDF)",
         name: "bankStatement",
         type: "file",
         class: "col-12",
