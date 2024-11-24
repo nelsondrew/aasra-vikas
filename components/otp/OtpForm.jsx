@@ -22,7 +22,7 @@ const PhoneAuth = () => {
   const setupRecaptcha = () => {
     // Clear any existing instance
     if (window.recaptchaVerifier) {
-      window.recaptchaVerifier.clear();
+      window.recaptchaVerifier?.clear();
     }
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(

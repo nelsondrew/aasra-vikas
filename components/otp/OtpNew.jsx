@@ -3,16 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import arrow_left from "/public/images/icon/arrow-left.png";
 
-const OtpNew = () => {
+const OtpNew = ({ onOtpSubmit }) => {
   // Store the OTP input values in state
-  const [inputValues, setInputValues] = useState(new Array(6).fill(''));
+  const [inputValues, setInputValues] = useState(new Array(6).fill(""));
   const inputsRef = useRef([]);
 
   // Handle input change
   const handleInputChange = (e, index) => {
     const { value } = e.target;
     const newInputValues = [...inputValues];
-    
+    if (newInputValues[index] !== "") return;
     // Update the current input value
     newInputValues[index] = value;
     setInputValues(newInputValues);
@@ -42,13 +42,13 @@ const OtpNew = () => {
 
   // Disable logic: Update the 'disabled' status based on the previous input value
   const getDisabled = (index) => {
-    return index > 0 && inputValues[index - 1] === '';
+    return index > 0 && inputValues[index - 1] === "";
   };
 
   // Ensuring focus management after state change
   useEffect(() => {
     // Automatically focus the first input if not filled (i.e., focus on the first empty input)
-    const firstEmptyInput = inputValues.findIndex(val => val === '');
+    const firstEmptyInput = inputValues.findIndex((val) => val === "");
     if (firstEmptyInput !== -1 && inputsRef.current[firstEmptyInput]) {
       inputsRef.current[firstEmptyInput].focus();
     }
@@ -62,11 +62,12 @@ const OtpNew = () => {
             <div className="col-lg-8">
               <div className="form-content">
                 <div className="section-header">
-                  <h5 className="sub-title">Give yourself the Bankio Edge</h5>
-                  <h2 className="title">Varified Your Phone Number</h2>
+                  <h5 className="sub-title">
+                    Give yourself the Aasra Vikas Edge
+                  </h5>
                   <p>
                     A 6 digit One Time Password (OTP) has been sent to your
-                    given email address which will expire in 15 minutes, after
+                    given phone number which will expire in 15 minutes, after
                     which you will need to resend the code.
                   </p>
                 </div>
@@ -82,7 +83,7 @@ const OtpNew = () => {
                                 key={index}
                                 ref={(el) => (inputsRef.current[index] = el)} // Store each input in the ref
                                 className="text-center form-control"
-                                type="text"
+                                type="number"
                                 maxLength="1"
                                 value={value}
                                 onChange={(e) => handleInputChange(e, index)}
@@ -98,7 +99,15 @@ const OtpNew = () => {
                   </div>
                   <div className="btn-area">
                     <Link href="/">Resend Code</Link>
-                    <button className="cmn-btn" type="button" disabled={inputValues.includes("")}>
+                    <button
+                      onClick={async () => {
+                        const inputResult = inputValues.join('');
+                        await onOtpSubmit(inputResult);
+                      }}
+                      className="cmn-btn"
+                      type="button"
+                      disabled={inputValues.includes("")}
+                    >
                       Submit OTP
                     </button>
                   </div>
