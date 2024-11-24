@@ -3,6 +3,8 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth , RecaptchaVerifier } from "firebase/auth"
 import firebase from "firebase/app";
 import "firebase/auth";
+import { getStorage } from "firebase/storage";  // To handle file uploads
+
 
 // Your web app's Firebase configuration
 // const firebaseConfig = {
@@ -28,7 +30,9 @@ const app = getApps().length ===0 ?  initializeApp(firebaseConfig, "Aasra Vikas"
 const db = getFirestore(app);
 const auth = getAuth(app);
 auth.useDeviceLanguage();
+const storage = getStorage(app);  // Initialize Firebase Storage
 
 
-export { auth , RecaptchaVerifier,  db };
+
+export { auth , RecaptchaVerifier,  db  , storage};
 

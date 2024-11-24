@@ -41,6 +41,7 @@ const RegisterForm = () => {
     ref2Contact: "",
     numberVerified: false,
     mobileNumber: 0,
+    bankStatementUrl: '',
 });
 
 
