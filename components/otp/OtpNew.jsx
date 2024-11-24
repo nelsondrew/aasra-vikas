@@ -2,8 +2,29 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import arrow_left from "/public/images/icon/arrow-left.png";
+import styled from "styled-components";
 
-const OtpNew = ({ onOtpSubmit }) => {
+const OtpVerificationContainer = styled.section`
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const OtpNew = ({ onOtpSubmit , loading }) => {
   // Store the OTP input values in state
   const [inputValues, setInputValues] = useState(new Array(6).fill(""));
   const inputsRef = useRef([]);
@@ -55,7 +76,7 @@ const OtpNew = ({ onOtpSubmit }) => {
   }, [inputValues]); // Run this when inputValues change
 
   return (
-    <section className="sign-in-up verify-number">
+    <OtpVerificationContainer className="sign-in-up verify-number">
       <div className="overlay pt-120 pb-120">
         <div className="container">
           <div className="row">
@@ -98,17 +119,21 @@ const OtpNew = ({ onOtpSubmit }) => {
                     </div>
                   </div>
                   <div className="btn-area">
-                    <Link href="/">Resend Code</Link>
+                    {/* <Link href="/">Resend Code</Link> */}
                     <button
                       onClick={async () => {
-                        const inputResult = inputValues.join('');
+                        const inputResult = inputValues.join("");
                         await onOtpSubmit(inputResult);
                       }}
                       className="cmn-btn"
                       type="button"
                       disabled={inputValues.includes("")}
                     >
-                      Submit OTP
+                      {loading ? (
+                        <div className="loader" /> // Your custom loader here
+                      ) : (
+                        "Submit OTP"
+                      )}
                     </button>
                   </div>
                 </form>
@@ -123,7 +148,7 @@ const OtpNew = ({ onOtpSubmit }) => {
           </div>
         </div>
       </div>
-    </section>
+    </OtpVerificationContainer>
   );
 };
 

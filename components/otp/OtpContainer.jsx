@@ -3,20 +3,22 @@ import { useEffect, useState } from "react";
 import VarifyNumberForm from "../varifyNumber/VarifyNumberForm";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase";
+import PhoneNumberVerified from "./PhoneNumberVerified";
 
 export const OTP_STATES = {
   MOBILE_NUMBER_SUBMIT: 1,
   OTP_CODE_SUBMIT: 2,
+  PHONE_NUMBER_VERIFIED: 3,
 };
 
 export default function OtpContainer() {
   const [otpFormState, setOtpFormState] = useState(
     OTP_STATES.MOBILE_NUMBER_SUBMIT
   );
-  const [otp, setOtp] = useState("");
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
+  const [otpVerificationLoading, setOtpVerificationLoading] = useState(false);
 
   const resetRecaptcha = () => {
     if (window.recaptchaVerifier) {
@@ -75,18 +77,22 @@ export default function OtpContainer() {
     }
   };
 
-  const verifyOTP = async () => {
+  const verifyOTP = async (otpFromProps) => {
+    debugger;
+    setOtpVerificationLoading(true);
     if (!confirmationResult) {
       setError("No OTP confirmation available. Retry sending OTP.");
       return;
     }
 
     confirmationResult
-      .confirm(otp)
+      .confirm(otpFromProps)
       .then((result) => {
+        setOtpVerificationLoading(false);
         console.log("User signed in:", result.user);
       })
       .catch((err) => {
+        setOtpVerificationLoading(false);
         setError("Invalid OTP: " + err.message);
         console.error(err);
       });
@@ -102,9 +108,9 @@ export default function OtpContainer() {
   };
 
   const handleOtpSubmit = async (otp) => {
-    setOtp(otp);
     try {
-      await verifyOTP();
+      await verifyOTP(otp);
+      setOtpFormState(OTP_STATES.PHONE_NUMBER_VERIFIED);
     } catch (e) {
       console.log(e);
     }
@@ -123,8 +129,14 @@ export default function OtpContainer() {
       )}
       {otpFormState === OTP_STATES.OTP_CODE_SUBMIT && confirmationResult && (
         <>
-          <OtpNew onOtpSubmit={handleOtpSubmit} />
+          <OtpNew
+            loading={otpVerificationLoading}
+            onOtpSubmit={handleOtpSubmit}
+          />
         </>
+      )}
+      {otpFormState === OTP_STATES.PHONE_NUMBER_VERIFIED && (
+        <PhoneNumberVerified />
       )}
     </>
   );
