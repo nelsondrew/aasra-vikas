@@ -41,33 +41,8 @@ const StyledSection = styled.section`
   }
 `;
 
-const LoanApplication = ({setOtpFormState}) => {
-    const [formDetails, setFormDetails] = useState({
-        applicantName: "",
-        mothersName: "",
-        fathersName: "",
-        dob: "",
-        pan: "",
-        currentAddress: "",
-        currentAddressSince: "",
-        permanentAddress: "",
-        houseStatus: "",
-        employmentType: "",
-        salary: "",
-        income: "",
-        education: "",
-        workExperience: "",
-        dependents: "",
-        ongoingLoans: "",
-        loanObligation: "",
-        emi: "",
-        ref1Name: "",
-        ref1Relation: "",
-        ref1Contact: "",
-        ref2Name: "",
-        ref2Relation: "",
-        ref2Contact: "",
-    });
+const LoanApplication = ({setOtpFormState ,formDetails , setFormDetails}) => {
+
 
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false); // Add loading state

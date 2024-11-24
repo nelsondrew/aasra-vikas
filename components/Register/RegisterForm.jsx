@@ -14,6 +14,37 @@ const RegisterForm = () => {
     OTP_STATES.REGISTRATION
   );
 
+  const [formDetails, setFormDetails] = useState({
+    applicantName: "",
+    mothersName: "",
+    fathersName: "",
+    dob: "",
+    pan: "",
+    currentAddress: "",
+    currentAddressSince: "",
+    permanentAddress: "",
+    houseStatus: "",
+    employmentType: "",
+    salary: "",
+    income: "",
+    education: "",
+    workExperience: "",
+    dependents: "",
+    ongoingLoans: "",
+    loanObligation: "",
+    emi: "",
+    ref1Name: "",
+    ref1Relation: "",
+    ref1Contact: "",
+    ref2Name: "",
+    ref2Relation: "",
+    ref2Contact: "",
+    numberVerified: false,
+    mobileNumber: 0,
+});
+
+
+
   return (
     <>
       {otpFormState === OTP_STATES.REGISTRATION && (
@@ -22,7 +53,7 @@ const RegisterForm = () => {
             <div className="container">
               <div className="row">
                 <div className="col-lg-8">
-                  <LoanApplication setOtpFormState={setOtpFormState} />
+                  <LoanApplication formDetails={formDetails} setFormDetails={setFormDetails} setOtpFormState={setOtpFormState} />
                 </div>
               </div>
             </div>
@@ -30,7 +61,7 @@ const RegisterForm = () => {
         </section>
       )}
       {otpFormState !== OTP_STATES.REGISTRATION && (
-        <OtpContainer otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
+        <OtpContainer pan={formDetails?.pan} otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
       )}
     </>
   );

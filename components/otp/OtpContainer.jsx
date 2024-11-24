@@ -5,13 +5,15 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase";
 import PhoneNumberVerified from "./PhoneNumberVerified";
 import { OTP_STATES } from "../Register/RegisterForm";
+import { updatePhoneNumber, updateVerificationStatus } from "../../firebase/utils";
 
 
-export default function OtpContainer({ otpFormState , setOtpFormState }) {
+export default function OtpContainer({ otpFormState , setOtpFormState , pan}) {
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
   const [otpVerificationLoading, setOtpVerificationLoading] = useState(false);
+  const [phone, setPhone] = useState('');
 
   const resetRecaptcha = () => {
     if (window.recaptchaVerifier) {
@@ -57,6 +59,8 @@ export default function OtpContainer({ otpFormState , setOtpFormState }) {
         );
         setConfirmationResult(confirmationResult);
         setLoading(false);
+        await updatePhoneNumber(pan , phone);
+        setPhone(phone);
         console.log("OTP sent");
       } catch (e) {
         setError("Failed to send OTP: " + e);
@@ -72,22 +76,23 @@ export default function OtpContainer({ otpFormState , setOtpFormState }) {
 
   const verifyOTP = async (otpFromProps) => {
     setOtpVerificationLoading(true);
+  
     if (!confirmationResult) {
       setError("No OTP confirmation available. Retry sending OTP.");
+      setOtpVerificationLoading(false); // Make sure to stop loading if there's an error
       return;
     }
-
-    confirmationResult
-      .confirm(otpFromProps)
-      .then((result) => {
-        setOtpVerificationLoading(false);
-        console.log("User signed in:", result.user);
-      })
-      .catch((err) => {
-        setOtpVerificationLoading(false);
-        setError("Invalid OTP: " + err.message);
-        console.error(err);
-      });
+  
+    try {
+      const result = await confirmationResult.confirm(otpFromProps); // Wait for the confirmation
+      setOtpVerificationLoading(false);
+      await updateVerificationStatus(phone)
+      console.log("User signed in:", result.user);
+    } catch (err) {
+      setOtpVerificationLoading(false);
+      setError("Invalid OTP: " + err.message);
+      console.error(err);
+    }
   };
 
   const handlePhoneSubmit = async (phoneNumber) => {
