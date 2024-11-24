@@ -20,7 +20,7 @@ const HomeBanner = () => {
                   </div>
                   <div className="bottom-area">
                     <Link href="/register" className="cmn-btn">
-                      Open Account
+                      Apply For Loan
                     </Link>
                     <Link href="/contact" className="cmn-btn second">
                       Get in touch

@@ -7,7 +7,7 @@ const Banner = () => {
       <Breadcrumb
         breadcrumbs={[
           ["Home", "/"],
-          ["Pages", "/"],
+          // ["Pages", "/"],
           ["Terms Conditions", "/"],
         ]}
       />
