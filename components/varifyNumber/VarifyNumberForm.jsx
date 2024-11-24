@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css"; // Import the default styles
-import arrow_left from "/public/images/icon/arrow-left.png";
 import styled from "styled-components";
 
 const VerifyNumberFormContainer = styled.section`
