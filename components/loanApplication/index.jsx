@@ -1,10 +1,11 @@
-import {  useEffect, useState } from "react";
+import {  useState } from "react";
 import CustomSelect from "../customSelect";
 import useIsMobile from "../../hooks/useIsMobile";
 import styled from "styled-components";
 import { db } from "../../firebase";
 import { addDoc, collection, deleteDoc, getDocs, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { OTP_STATES } from "../Register/RegisterForm";
 
 const StyledSection = styled.section`
   .single-input {
@@ -40,7 +41,7 @@ const StyledSection = styled.section`
   }
 `;
 
-const LoanApplication = () => {
+const LoanApplication = ({setOtpFormState}) => {
     const [formDetails, setFormDetails] = useState({
         applicantName: "",
         mothersName: "",
@@ -150,6 +151,10 @@ const LoanApplication = () => {
                 toast.success("Loan applicant details submitted successfully!", {
                     position: "bottom-right",
                 });
+                setTimeout(() => {
+                    setOtpFormState(OTP_STATES.MOBILE_NUMBER_SUBMIT)
+
+                },500)
                 console.log("Form submitted successfully:", formDetails);
             } catch (error) {
                 toast.error("Error submitting form. Please try again later.", {

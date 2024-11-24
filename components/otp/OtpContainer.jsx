@@ -4,17 +4,10 @@ import VerifyNumberForm from "../varifyNumber/VarifyNumberForm";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from "../../firebase";
 import PhoneNumberVerified from "./PhoneNumberVerified";
+import { OTP_STATES } from "../Register/RegisterForm";
 
-export const OTP_STATES = {
-  MOBILE_NUMBER_SUBMIT: 1,
-  OTP_CODE_SUBMIT: 2,
-  PHONE_NUMBER_VERIFIED: 3,
-};
 
-export default function OtpContainer() {
-  const [otpFormState, setOtpFormState] = useState(
-    OTP_STATES.MOBILE_NUMBER_SUBMIT
-  );
+export default function OtpContainer({ otpFormState , setOtpFormState }) {
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
@@ -78,7 +71,6 @@ export default function OtpContainer() {
   };
 
   const verifyOTP = async (otpFromProps) => {
-    debugger;
     setOtpVerificationLoading(true);
     if (!confirmationResult) {
       setError("No OTP confirmation available. Retry sending OTP.");
