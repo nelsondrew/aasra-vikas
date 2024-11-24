@@ -83,13 +83,9 @@ const OtpNew = ({ onOtpSubmit , loading }) => {
             <div className="col-lg-8">
               <div className="form-content">
                 <div className="section-header">
-                  <h5 className="sub-title">
-                    Give yourself the Aasra Vikas Edge
-                  </h5>
                   <p>
                     A 6 digit One Time Password (OTP) has been sent to your
-                    given phone number which will expire in 15 minutes, after
-                    which you will need to resend the code.
+                    given phone number which will expire in 15 minutes
                   </p>
                 </div>
                 <form action="#">
