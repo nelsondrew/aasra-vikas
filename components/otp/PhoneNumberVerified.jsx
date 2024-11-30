@@ -30,6 +30,13 @@ const PhoneNumberVerifiedContainer = styled.section`
     font-weight: bold;
     margin-bottom: 20px;
   }
+
+  .cmnn-btn {
+    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const PhoneNumberVerified = ({ handleProceedtoPayment }) => {
@@ -49,8 +56,13 @@ const PhoneNumberVerified = ({ handleProceedtoPayment }) => {
                 <p>
                   One last step remains: payment of the pre-processing fee for your loan application.
                 </p>
-                <div className="btn-area mt-4">
-                  <div onClick={handleProceedtoPayment} className="cmn-btn">
+                <div style={{
+                  display : 'flex',
+                  justifyContent: 'center'
+                }} className="btn-area mt-4">
+                  <div style={{
+                    width : '40%'
+                  }} onClick={handleProceedtoPayment} className="cmn-btn">
                     Proceed to Payment Page
                   </div>
                 </div>

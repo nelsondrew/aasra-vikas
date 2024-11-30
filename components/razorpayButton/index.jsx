@@ -9,7 +9,7 @@ const RazorpayButton = ({ isLoading  , onSuccess }) => {
             const response = await fetch("/api/createOrder", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ amount: 500, currency: "INR" }), // Example amount: ₹500
+                body: JSON.stringify({ amount: 199, currency: "INR" }), // Example amount: ₹500
             });
             const order = await response.json();
 
@@ -23,7 +23,7 @@ const RazorpayButton = ({ isLoading  , onSuccess }) => {
                 key: process.env.RAZORPAY_KEY_ID,
                 amount: order.amount,
                 currency: order.currency,
-                name: "Your Company Name",
+                name: "Aasra vikas",
                 description: "Test Transaction",
                 order_id: order.id,
                 handler: function (response) {
@@ -52,7 +52,7 @@ const RazorpayButton = ({ isLoading  , onSuccess }) => {
         document.body.appendChild(script);
     }, []);
 
-    return <button className="payment-button" disabled={isLoading} onClick={handlePayment}>Pay ₹500</button>;
+    return <button className="payment-button" disabled={isLoading} onClick={handlePayment}>Pay ₹199</button>;
 };
 
 export default RazorpayButton;
