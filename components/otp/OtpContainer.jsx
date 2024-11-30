@@ -107,11 +107,15 @@ export default function OtpContainer({ otpFormState , setOtpFormState , pan}) {
   const handleOtpSubmit = async (otp) => {
     try {
       await verifyOTP(otp);
-      setOtpFormState(OTP_STATES.PHONE_NUMBER_VERIFIED);
+      setOtpFormState(3);
     } catch (e) {
       console.log(e);
     }
   };
+
+  const handleProceedtoPayment = () => {
+    setOtpFormState(4);
+  }
 
   return (
     <>
@@ -133,7 +137,7 @@ export default function OtpContainer({ otpFormState , setOtpFormState , pan}) {
         </>
       )}
       {otpFormState === OTP_STATES.PHONE_NUMBER_VERIFIED && (
-        <PhoneNumberVerified />
+        <PhoneNumberVerified handleProceedtoPayment={handleProceedtoPayment} />
       )}
     </>
   );

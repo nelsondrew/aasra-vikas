@@ -1,12 +1,14 @@
 import { useState } from "react";
 import LoanApplication from "../loanApplication";
 import OtpContainer from "../otp/OtpContainer";
+import PaymentPage from "../payment/PaymentPage";
 
 export const OTP_STATES = {
   REGISTRATION: 0,
   MOBILE_NUMBER_SUBMIT: 1,
   OTP_CODE_SUBMIT: 2,
   PHONE_NUMBER_VERIFIED: 3,
+  PAYMENT_PAGE: 4,
 };
 
 const RegisterForm = () => {
@@ -61,8 +63,11 @@ const RegisterForm = () => {
           </div>
         </section>
       )}
-      {otpFormState !== OTP_STATES.REGISTRATION && (
+      {(otpFormState !== OTP_STATES.REGISTRATION || otpFormState !== OTP_STATES.PAYMENT_PAGE) && (
         <OtpContainer pan={formDetails?.pan} otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
+      )}
+      {otpFormState === OTP_STATES.PAYMENT_PAGE && (
+        <PaymentPage/>
       )}
     </>
   );

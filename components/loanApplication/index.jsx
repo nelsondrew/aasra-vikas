@@ -7,6 +7,7 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { OTP_STATES } from "../Register/RegisterForm";
+import { APPLICATION_FIELDS } from "../../data/constants";
 
 const StyledSection = styled.section`
   .single-input {
@@ -42,162 +43,7 @@ const StyledSection = styled.section`
   }
 `;
 
-const ApplicatioFields = [
-    {
-        label: "Applicant Name",
-        name: "applicantName",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Mother's Name",
-        name: "mothersName",
-        type: "text",
-        class: "col-6",
-    },
-    {
-        label: "Father's Name",
-        name: "fathersName",
-        type: "text",
-        class: "col-6",
-    },
-    {
-        label: "Date of Birth",
-        name: "dob",
-        type: "date",
-        class: "col-6",
-    },
-    {
-        label: "PAN Number",
-        name: "pan",
-        type: "text",
-        class: "col-6",
-    },
-    {
-        label: "Upload 6 Bank Statement (PDF)",
-        name: "bankStatement",
-        type: "file",
-        class: "col-12",
-      },
-    {
-        label: "Current Address",
-        name: "currentAddress",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Staying at Current Address Since",
-        name: "currentAddressSince",
-        type: "date",
-        class: "col-6",
-    },
-    {
-        label: "Permanent Address",
-        name: "permanentAddress",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "House Owned or Rented?",
-        name: "houseStatus",
-        type: "select",
-        options: ["Owned", "Rented"],
-        class: "col-6",
-    },
-    {
-        label: "Employment Type",
-        name: "employmentType",
-        type: "select",
-        options: ["Salaried", "Self-Employed"],
-        class: "col-6",
-        mobileStyle: {
-            marginTop: "18px",
-        },
-    },
-    {
-        label: "Salary",
-        name: "salary",
-        type: "number",
-        class: "col-6",
-    },
-    {
-        label: "Monthly Income",
-        name: "income",
-        type: "number",
-        class: "col-6",
-    },
-    {
-        label: "Education Qualification",
-        name: "education",
-        type: "text",
-        class: "col-6",
-    },
-    {
-        label: "Work Experience",
-        name: "workExperience",
-        type: "text",
-        class: "col-6",
-    },
-    {
-        label: "Number of Dependents",
-        name: "dependents",
-        type: "number",
-        class: "col-6",
-    },
-    {
-        label: "Current Number of Ongoing Loans",
-        name: "ongoingLoans",
-        type: "number",
-        class: "col-6",
-    },
-    {
-        label: "Total Loan Obligation",
-        name: "loanObligation",
-        type: "number",
-        class: "col-6",
-    },
-    {
-        label: "Total EMI Paying Currently",
-        name: "emi",
-        type: "number",
-    },
-    {
-        label: "Reference 1 Name",
-        name: "ref1Name",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Reference 1 Relation",
-        name: "ref1Relation",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Reference 1 Contact",
-        name: "ref1Contact",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Reference 2 Name",
-        name: "ref2Name",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Reference 2 Relation",
-        name: "ref2Relation",
-        type: "text",
-        class: "col-12",
-    },
-    {
-        label: "Reference 2 Contact",
-        name: "ref2Contact",
-        type: "text",
-        class: "col-12",
-    },
-]
+
 
 const LoanApplication = ({ setOtpFormState, formDetails, setFormDetails }) => {
   const [errors, setErrors] = useState({});
@@ -353,7 +199,7 @@ const LoanApplication = ({ setOtpFormState, formDetails, setFormDetails }) => {
                 <form>
                   <div className="row">
                     {/* Dynamic Fields */}
-                    {ApplicatioFields.map((field, index) => (
+                    {APPLICATION_FIELDS.map((field, index) => (
                       <div className={field?.class || "col-6"} key={index}>
                         <div
                           style={{
