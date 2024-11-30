@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 
 
-const RazorpayButton = ({ isLoading }) => {
+const RazorpayButton = ({ isLoading  , onSuccess }) => {
     const handlePayment = async () => {
         try {
             // Step 1: Create an order from the server
@@ -27,8 +27,8 @@ const RazorpayButton = ({ isLoading }) => {
                 description: "Test Transaction",
                 order_id: order.id,
                 handler: function (response) {
-                    alert("Payment Successful!");
                     console.log("Payment Details:", response);
+                    onSuccess();
                 },
                 prefill: {
                     name: "Test User",

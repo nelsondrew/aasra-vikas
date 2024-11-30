@@ -1,11 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import styled from "styled-components";
 import RazorpayButton from "../razorpayButton";
+import Image from "next/image";
+import checkmark from "/public/images/sucess_checkmark.png"; // Replace with your actual checkmark icon path
+
+
 
 const StyledSection = styled.section`
+  margin-top: 13rem;
   .payment-container {
     max-width: 600px;
     margin: 0 auto;
@@ -78,39 +81,71 @@ const StyledSection = styled.section`
   .support-email:hover {
     text-decoration: underline;
   }
+
+  .success-message {
+    font-size: 18px;
+    color: #28a745;
+    margin-top: 20px;
+  }
+
+
+  .checkmark img {
+    width: 10%;
+    height: 50%;
+    margin-bottom: 2rem;
+  }
+
 `;
 
-// Make sure to replace with your actual Stripe publishable key
-
-const PaymentPage = ({ applicantId }) => {
-  const router = useRouter();
+const PaymentPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [paymentSuccess, setPaymentSuccess] = React.useState(false);
 
+  const handleSuccess = () => {
+    // Set the state to show the success message
+    setPaymentSuccess(true);
+  };
 
   return (
     <StyledSection>
       <div className="payment-container">
-        <h2 className="title">Processing Fee Payment</h2>
-        <p className="description">
-          Please pay the processing fee of 199 INR to complete your loan
-          application.
-        </p>
-        <div className="disclaimer">
-          <strong>Disclaimer:</strong> This processing fee is required to
-          proceed with your loan application. It covers the administrative costs
-          associated with reviewing and processing your application.
-        </div>
-        <RazorpayButton isLoading={false} />
-        <p className="refund-info">
-          In the event that the payment doesn't go through and money is deducted
-          from your account, it will be refunded within 2-3 business days.
-        </p>
-        <p className="support-info">
-          For more support or inquiries, please contact{" "}
-          <a href="mailto:support@aasravikas.com" className="support-email">
-            support@aasravikas.com
-          </a>
-        </p>
+        {paymentSuccess ? (
+          <div className="success-message">
+               <div className="checkmark">
+                  <Image src={checkmark} alt="Verified" />
+                </div>
+            <h3 style={{
+                color: 'green'
+            }}>Your payment was successful!</h3>
+            <p style={{
+                color: 'green'
+            }}>We have received your application and it is under review.</p>
+          </div>
+        ) : (
+          <>
+            <h2 className="title">Processing Fee Payment</h2>
+            <p className="description">
+              Please pay the processing fee of 199 INR to complete your loan
+              application.
+            </p>
+            <div className="disclaimer">
+              <strong>Disclaimer:</strong> This processing fee is required to
+              proceed with your loan application. It covers the administrative costs
+              associated with reviewing and processing your application.
+            </div>
+            <RazorpayButton isLoading={isLoading} onSuccess={handleSuccess} />
+            <p className="refund-info">
+              In the event that the payment doesn't go through and money is deducted
+              from your account, it will be refunded within 2-3 business days.
+            </p>
+            <p className="support-info">
+              For more support or inquiries, please contact{" "}
+              <a href="mailto:support@aasravikas.com" className="support-email">
+                support@aasravikas.com
+              </a>
+            </p>
+          </>
+        )}
       </div>
     </StyledSection>
   );
