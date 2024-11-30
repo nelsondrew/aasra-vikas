@@ -5,7 +5,6 @@ import checkmark from "/public/images/sucess_checkmark.png"; // Replace with you
 import arrow_left from "/public/images/icon/arrow-left.png";
 
 const PhoneNumberVerifiedContainer = styled.section`
-  margin-top: 14rem;
   .checkmark {
     width: 80px;
     height: 80px;
@@ -58,7 +57,8 @@ const PhoneNumberVerified = ({ handleProceedtoPayment }) => {
                 </p>
                 <div style={{
                   display : 'flex',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  cursor: 'pointer'
                 }} className="btn-area mt-4">
                   <div style={{
                     width : '40%'
