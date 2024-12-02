@@ -1,3 +1,21 @@
+const listItems = [
+  "To access and use the Services, you agree to provide true, accurate and complete information to us during and after registration, and you shall be responsible for all acts done through the use of your registered account.",
+  "Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness or suitability of the information and materials offered on this website or through the Services, for any specific purpose. You acknowledge that such information and materials may contain inaccuracies or errors and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.",
+  "Your use of our Services and the websiteis solely at your own risk and discretion.. You are required to independently assess and ensure that the Services meet your requirements.\nThe contents of the Website and the Services are proprietary to Us and you will not have any authority to claim any intellectual property rights, title, or interest in its contents.",
+  "You acknowledge that unauthorized use of the Website or the Services may lead to action against you as per these Terms or applicable laws.",
+  "You agree to pay us the charges associated with availing the Services.",
+  "You agree not to use the website and/ or Services for any purpose that is unlawful, illegal or forbidden by these Terms, or Indian or local laws that might apply to you.",
+  "You agree and acknowledge that website and the Services may contain links to other third party websites. On accessing these links, you will be governed by the terms of use, privacy policy and such other policies of such third party websites.",
+  "You understand that upon initiating a transaction for availing the Services you are entering into a legally binding and enforceable contract with the us for the Services.",
+  "You shall be entitled to claim a refund of the payment made by you in case we are not able to provide the Service. ",
+  "The timelines for such return and refund will be according to the specific Service you have availed or within the time period provided in our policies (as applicable).",
+  " In case you do not raise a refund claim within the stipulated time, than this would make you ineligible for a refund.",
+  "Notwithstanding anything contained in these Terms, the parties shall not be liable for any failure to perform an obligation under these Terms if performance is prevented or delayed by a force majeure event.",
+  "These Terms and any dispute or claim relating to it, or its enforceability, shall be governed by and construed in accordance with the laws of India.",
+  "All disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in Pune, Maharashtra",
+  "All concerns or communications relating to these Terms must be communicated to us using the contact information provided on this website.",
+];
+
 const Conditions = () => {
   return (
     <section className="privacy-content terms">
@@ -11,71 +29,37 @@ const Conditions = () => {
                   our customers.
                 </h4>
                 <p>
-                  Id ipsum mi tempor eget. Pretium consectetur scelerisque
-                  blandit habitasse non ullamcorper enim, diam quam id et,
-                  tempus massa. Sed nam vulputate pellentesque quis. Varius a,
-                  nunc faucibus proin elementum id odio auctor. Nunc,
-                  suspendisse consequat libero, pharetra tellus vulputate auctor
-                  venenatis tortor non rhoncus at duis. Pharetra ipsum mauris
-                  integer sit feugiat.
+                  These Terms and Conditions, along with privacy policy or other
+                  terms (“Terms”) constitute a binding agreement by and between
+                  AASRA VIKAS MICRO SERVICE FOUNDATION, ( “Website Owner” or
+                  “we” or “us” or “our”) and you (“you” or “your”) and relate to
+                  your use of our website, goods (as applicable) or services (as
+                  applicable) (collectively, “Services”).
                 </p>
-                <ul>
-                  <li>
-                    — Blandit dignissim nulla varius tristique a sed integer ut
-                    tempor.
-                  </li>
-                  <li>— Augue interdum semper bibendum amet sed.</li>
-                  <li>— Dis in at ultricies tortor sit tellus.</li>
-                  <li>— Habitant ornare aenean maecenas pretium</li>
-                </ul>
                 <p>
-                  Eget purus aenean sit risus. Arcu, aliquam eget et viverra
-                  risus purus. Commodo fames tristique dui pharetra elit aliquet
-                  morbi. Eget consectetur risus nunc lorem sit consequat
-                  aliquet. Dolor velit consectetur etiam scelerisque. Integer
-                  interdum sodales scelerisque diam massa quam sit quis. Sed et
-                  dui a nam pulvinar. Tristique justo, donec lectus vitae,
-                  cursus ligula ridiculus lacus, tincidunt. Diam dictumst
-                  faucibus dui aliquet aenean nascetur feugiat leo. Etiam
-                  dignissim orci dignissim vitae.
+                  By using our website and availing the Services, you agree that
+                  you have read and accepted these Terms (including the Privacy
+                  Policy). We reserve the right to modify these Terms at any
+                  time and without assigning any reason. It is your
+                  responsibility to periodically review these Terms to stay
+                  informed of updates.
                 </p>
+                <p>
+                  The use of this website or availing of our Services is subject
+                  to the following terms of use:
+                </p>
+             
+
                 <div className="safe-data">
                   <h4>
                     Your data is safe with us, we will not share any information
                     with external sources.
                   </h4>
-                  <p>
-                    Blandit dignissim nulla varius tristique a sed integer ut
-                    tempor. Augue interdum semper bibendum amet sed. Dis in at
-                    ultricies tortor sit tellus. Habitant ornare aenean maecenas
-                    pretium, dui ullamcorper quis. Egestas viverra et id aliquet
-                    faucibus rhoncus a. Sollicitudin nisl nulla tempor pretium
-                    lorem at mauris faucibus pulvinar.
-                  </p>
+               
                   <ul>
-                    <li>
-                      Eget purus aenean sit risus. Arcu, aliquam eget et viverra
-                      risus purus. Commodo fames tristique dui pharetra elit
-                      aliquet morbi.
-                    </li>
-                    <li>
-                      Eget consectetur risus nunc lorem sit consequat aliquet.
-                      Dolor velit consectetur etiam scelerisque.
-                    </li>
-                    <li>
-                      Integer interdum sodales scelerisque diam massa quam sit
-                      quis. Sed et dui a nam pulvinar. Tristique justo, donec
-                      lectus vitae, cursus ligula ridiculus lacus, tincidunt.
-                    </li>
-                    <li>
-                      Diam dictumst faucibus dui aliquet aenean nascetur feugiat
-                      leo. Etiam dignissim.
-                    </li>
-                    <li>
-                      {" "}
-                      Aliquam eget et viverra risus purus. Commodo fames
-                      tristique dui pharetra elit aliquet morbi.
-                    </li>
+                    {listItems.map((item) => (
+                      <li key={item.substring(1, 4)}>{item}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
