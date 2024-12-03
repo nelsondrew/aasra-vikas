@@ -8,19 +8,19 @@ const help_data = [
     id: 1,
     icon: need_help_1,
     title: "Sales",
-    desc: "sales@Aasra Vikas.com",
+    desc: "sales@aasravikas.com",
   },
   {
     id: 2,
     icon: need_help_2,
     title: "Help & Support",
-    desc: "supports@Aasra Vikas.com",
+    desc: "supports@aasravikas.com",
   },
   {
     id: 3,
     icon: need_help_3,
     title: "Media & Press",
-    desc: "media@Aasra Vikas.com",
+    desc: "media@aasravikas.com",
   },
 ];
 
