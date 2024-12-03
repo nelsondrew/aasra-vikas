@@ -18,10 +18,10 @@ const CreditHistory = () => {
               <div className="top-section">
                 <div className="section-text">
                   <h5 className="sub-title">
-                    don’t have an SSN yet there is no need to worry
+                    don’t have an Credit History yet there is no need to worry
                   </h5>
                   <h2 className="title">
-                    Be Eligible Without SSN or Credit History
+                    Be Eligible Credit History
                   </h2>
                   <p>
                     We look at holistic profile of individuals, and do no rely

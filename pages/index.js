@@ -38,7 +38,7 @@ export default function Home() {
       {/* <CallToAction /> */}
       {/* <Planning /> */}
       {/* <Personalized /> */}
-      <Testimonials />
+      {/* <Testimonials /> */}
       {/* <LatestArticles /> */}
       <Faq />
     </>

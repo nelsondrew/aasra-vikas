@@ -1,39 +1,63 @@
 const faqData = [
   {
     id: 1,
-    question: "How do I locate the nearesty branch or ATM?",
+    question: "What is Aasra Vikas Micro Service Foundation?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "Aasra Vikas Micro Service Foundation is an NGO that provides interest-free loans to underprivileged individuals to help them start businesses and improve their quality of life.",
   },
   {
     id: 2,
-    question: "What do I do if I lose my card or it gets stolen?",
+    question: "Who can apply for a loan?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "Any individual from an economically disadvantaged background who needs financial support to start a business or improve their livelihood can apply for a loan.",
   },
   {
     id: 3,
-    question: "What is your customer service number?",
+    question: "What is the maximum loan amount I can apply for?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "You can apply for loans ranging from ₹1,000 to ₹2,00,000, depending on your needs and eligibility.",
   },
   {
     id: 4,
-    question: "How do I reset my pin?",
+    question: "Is there an interest charged on the loans?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "No, all loans provided by Aasra Vikas Micro Service Foundation are completely interest-free.",
   },
   {
     id: 5,
-    question: "What is required to use Digital Banking?",
+    question: "What are the charges for applying for a loan?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "A nominal fee of ₹199 is charged for registration and processing purposes. This helps us cover administrative costs.",
   },
   {
     id: 6,
-    question: "Is digital banking secure?",
+    question: "Is any collateral or security required for the loan?",
     answer:
-      "If your card is missing, let us know immediately. We’ll block your card right away send over a new one on the same day.To report a lost or stolen card, call us at (406) 555-0120.",
+      "No, the loans are unsecured, meaning you do not need to provide any collateral or guarantee to avail the loan.",
+  },
+  {
+    id: 7,
+    question: "How can I apply for a loan?",
+    answer:
+      "You can apply for a loan by visiting our website, filling out the online application form, and paying the ₹199 registration and processing fee through our secure payment gateway.",
+  },
+  {
+    id: 8,
+    question: "What is the repayment tenure for the loans?",
+    answer:
+      "Loan repayment tenure ranges from 6 to 36 months, and you can choose a tenure that best suits your financial situation.",
+  },
+  {
+    id: 9,
+    question: "What documents are required to apply for a loan?",
+    answer:
+      "Typically, you will need to provide identity proof (like Aadhaar or PAN card), address proof, and a brief description of your business plan or purpose for the loan.",
+  },
+  {
+    id: 10,
+    question: "How does Aasra Vikas ensure the proper use of loan funds?",
+    answer:
+      "We provide guidance to borrowers on utilizing the loan funds effectively and may periodically review their progress to ensure funds are being used for the intended purpose.",
   },
 ];
 

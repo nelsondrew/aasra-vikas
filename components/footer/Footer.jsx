@@ -111,15 +111,7 @@ const Footer = () => {
         <div className="row">
           <div className="col-12">
             <div className="footer-bottom">
-              <div className="left">
-                <p>
-                  {" "}
-                  Copyright © <Link href="index">Aasra Vikas</Link> | Designed by{" "}
-                  <Link href="https://themeforest.net/user/pixelaxis">
-                    PIXELAXIS
-                  </Link>
-                </p>
-              </div>
+             
               <div className="right">
                 <Link href="/privacy-policy" className="cus-bor">
                   Privacy{" "}
