@@ -22,7 +22,7 @@ const AboutBusiness = () => {
             <span className="check d-flex align-items-center justify-content-center">
               <Image src={check} alt="icon" />
             </span>
-            <span>No SSN or credit history required</span>
+            <span>No Credit history required</span>
           </li>
           <li className="list-item d-flex align-items-center ">
             <span className="check d-flex align-items-center justify-content-center">
