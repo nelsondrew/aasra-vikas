@@ -37,19 +37,19 @@ export const core_values_data = [
   {
     id: 1,
     icon: core_values_1,
-    title: "Customer First",
-    desc: "We aim to provide our customers with top-notch service that helps them grow their business and put their best foot forward.",
+    title: "Compassion",
+    desc: "We believe in showing empathy and understanding to those in need. Our foundation is built on the desire to support underprivileged individuals and uplift them through kindness and care.",
   },
   {
     id: 2,
     icon: core_values_2,
-    title: "Passion over Pedigree",
-    desc: "We hire for passion, because passionate people can overcome any obstacle and acquire any knowledge necessary.",
+    title: "Empowerment",
+    desc: "Our mission is to empower individuals by providing them with the tools and financial support they need to create sustainable livelihoods and realize their potential.",
   },
   {
     id: 3,
     icon: core_values_3,
-    title: "Commitment",
-    desc: "Our first priority is to keep your money safe and secure. Every single aspect of our service is optimized to protect and grow your funds!",
+    title: "Inclusivity",
+    desc: "We embrace diversity and strive to create opportunities for everyone, regardless of background. We ensure that all individuals have access to the resources and opportunities they deserve.",
   },
 ];

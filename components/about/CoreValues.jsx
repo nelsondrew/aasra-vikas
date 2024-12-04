@@ -9,13 +9,14 @@ const CoreValues = () => {
           <div className="row justify-content-center">
             <div className="col-lg-9">
               <div className="section-header text-center">
-                <h5 className="sub-title">Our core values</h5>
-                <h2 className="title">
-                  Our values help us set the bar for good banking high.
-                </h2>
+                <h5 className="sub-title">Our Core Values</h5>
+                <h2 className="title">Guiding Principles That Define Us</h2>
                 <p>
-                  Our values define us. They guide us in building and improving
-                  our product, hiring teammates, and serving our customers.
+                  At Aasra Vikas Micro Service Foundation, our core values
+                  shape everything we do. They inspire us to serve with
+                  dedication, drive impactful change, and create a brighter
+                  future for all. These principles are the foundation of our
+                  mission to empower communities and transform lives.
                 </p>
               </div>
             </div>
