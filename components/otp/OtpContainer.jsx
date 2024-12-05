@@ -8,7 +8,7 @@ import { OTP_STATES } from "../Register/RegisterForm";
 import { updatePhoneNumber, updateVerificationStatus } from "../../firebase/utils";
 
 
-export default function OtpContainer({ otpFormState , setOtpFormState , pan}) {
+export default function OtpContainer({ otpFormState , setOtpFormState , pan , updateMobileNumber }) {
   const [confirmationResult, setConfirmationResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
@@ -59,6 +59,7 @@ export default function OtpContainer({ otpFormState , setOtpFormState , pan}) {
         );
         setConfirmationResult(confirmationResult);
         setLoading(false);
+        updateMobileNumber(phone);
         await updatePhoneNumber(pan , phone);
         setPhone(phone);
         console.log("OTP sent");

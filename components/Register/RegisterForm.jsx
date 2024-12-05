@@ -46,6 +46,13 @@ const RegisterForm = () => {
     bankStatementUrl: '',
 });
 
+const updateMobileNumber = (mobile) => {
+  setFormDetails({
+    ...formDetails,
+    mobileNumber : mobile
+  })
+}
+
 
 
   return (
@@ -64,7 +71,7 @@ const RegisterForm = () => {
         </section>
       )}
       {(otpFormState !== OTP_STATES.REGISTRATION || otpFormState !== OTP_STATES.PAYMENT_PAGE) && (
-        <OtpContainer pan={formDetails?.pan} otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
+        <OtpContainer updateMobileNumber={updateMobileNumber} pan={formDetails?.pan} otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
       )}
       {otpFormState === OTP_STATES.PAYMENT_PAGE && (
         <PaymentPage mobileNumber={formDetails.mobileNumber} pan={formDetails.pan}/>
