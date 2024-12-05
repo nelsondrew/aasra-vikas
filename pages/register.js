@@ -8,8 +8,8 @@ export default function Register() {
     <>
       <ShortNavbar />
       <RegisterForm />
-      <PhoneNumberVerified/>
-      <PaymentPage/>
+      {/* <PhoneNumberVerified/>
+      <PaymentPage/> */}
     </>
   );
 }
