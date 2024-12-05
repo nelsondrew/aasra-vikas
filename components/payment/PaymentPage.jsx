@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import styled from "styled-components";
-import RazorpayButton from "../razorpayButton";
 import Image from "next/image";
 import checkmark from "/public/images/sucess_checkmark.png"; // Replace with your actual checkmark icon path
 import CashfreeButton from "../cashFreeButton/cashFreeButton";
@@ -141,7 +140,6 @@ const PaymentPage = () => {
               proceed with your loan application. It covers the administrative costs
               associated with reviewing and processing your application.
             </div>
-            {/* <RazorpayButton isLoading={isLoading} onSuccess={handleSuccess} /> */}
             <CashfreeButton isLoading={isLoading} onSuccess={handleSuccess}/>
             <p className="refund-info">
               In the event that the payment doesn't go through and money is deducted

@@ -7,9 +7,9 @@ export default function Register() {
   return (
     <>
       <ShortNavbar />
-      {/* <RegisterForm /> */}
-      <PhoneNumberVerified/>
-      <PaymentPage/>
+      <RegisterForm />
+      {/* <PhoneNumberVerified/>
+      <PaymentPage/> */}
     </>
   );
 }

@@ -71,12 +71,12 @@ const LoanApplication = ({ setOtpFormState, formDetails, setFormDetails }) => {
     if (!formDetails.ongoingLoans) newErrors.ongoingLoans = "Number of ongoing loans is required.";
     if (!formDetails.loanObligation) newErrors.loanObligation = "Total loan obligation is required.";
     if (!formDetails.emi) newErrors.emi = "Total EMI is required.";
-    if (!formDetails.ref1Name.trim()) newErrors.ref1Name = "Reference 1 name is required.";
-    if (!formDetails.ref1Relation.trim()) newErrors.ref1Relation = "Reference 1 relation is required.";
-    if (!formDetails.ref1Contact.trim()) newErrors.ref1Contact = "Reference 1 contact is required.";
-    if (!formDetails.ref2Name.trim()) newErrors.ref2Name = "Reference 2 name is required.";
-    if (!formDetails.ref2Relation.trim()) newErrors.ref2Relation = "Reference 2 relation is required.";
-    if (!formDetails.ref2Contact.trim()) newErrors.ref2Contact = "Reference 2 contact is required.";
+    // if (!formDetails.ref1Name.trim()) newErrors.ref1Name = "Reference 1 name is required.";
+    // if (!formDetails.ref1Relation.trim()) newErrors.ref1Relation = "Reference 1 relation is required.";
+    // if (!formDetails.ref1Contact.trim()) newErrors.ref1Contact = "Reference 1 contact is required.";
+    // if (!formDetails.ref2Name.trim()) newErrors.ref2Name = "Reference 2 name is required.";
+    // if (!formDetails.ref2Relation.trim()) newErrors.ref2Relation = "Reference 2 relation is required.";
+    // if (!formDetails.ref2Contact.trim()) newErrors.ref2Contact = "Reference 2 contact is required.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
