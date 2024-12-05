@@ -26,7 +26,7 @@ import { getStorage } from "firebase/storage";  // To handle file uploads
   };
   
 
-const app = getApps().length ===0 ?  initializeApp(firebaseConfig, "Aasra Vikas") : getApp();
+const app =  initializeApp(firebaseConfig, "Aasra Vikas");
 const db = getFirestore(app);
 const auth = getAuth(app);
 auth.useDeviceLanguage();

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import RazorpayButton from "../razorpayButton";
 import Image from "next/image";
 import checkmark from "/public/images/sucess_checkmark.png"; // Replace with your actual checkmark icon path
+import CashfreeButton from "../cashFreeButton/cashFreeButton";
 
 
 
@@ -106,6 +107,13 @@ const PaymentPage = () => {
     setPaymentSuccess(true);
   };
 
+  let checkoutOptions = {
+    paymentSessionId: "session_zmChxTuIbjbVoCWPOAkiYPqSN5RJezsD7RotTbyz5Pbp8mGWW6inX4XQFBNd7JveYyyM9v-fpEwxH7AUInYH1bXIadoIEjItOxzrr1gIwPgEW4JGMTWHAJcpayment",
+    redirectTarget: "_self" //optional ( _self, _blank, or _top)
+}
+
+
+
   return (
     <StyledSection>
       <div className="payment-container">
@@ -133,7 +141,8 @@ const PaymentPage = () => {
               proceed with your loan application. It covers the administrative costs
               associated with reviewing and processing your application.
             </div>
-            <RazorpayButton isLoading={isLoading} onSuccess={handleSuccess} />
+            {/* <RazorpayButton isLoading={isLoading} onSuccess={handleSuccess} /> */}
+            <CashfreeButton isLoading={isLoading} onSuccess={handleSuccess}/>
             <p className="refund-info">
               In the event that the payment doesn't go through and money is deducted
               from your account, it will be refunded within 2-3 business days.
