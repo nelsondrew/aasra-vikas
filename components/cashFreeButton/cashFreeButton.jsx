@@ -16,7 +16,7 @@ function Checkout() {
       customerEmail: "test@test.com",
       customerPhone: "9999999999",
       customerId: "abcdsees",
-      returnUrl: "blank.com",
+      returnUrl: "https://www.aasravikas.com/register",
     });
     let checkoutOptions = {
       paymentSessionId: paymentSessionId,

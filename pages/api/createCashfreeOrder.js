@@ -34,9 +34,6 @@ export default async function handler(req, res) {
         customer_email: customerEmail,
         customer_phone: customerPhone,
       },
-      order_meta: {
-        return_url: returnUrl,
-      },
       order_note: "Payment for registration",
     };
 
