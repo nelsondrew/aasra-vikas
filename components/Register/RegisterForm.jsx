@@ -67,7 +67,7 @@ const RegisterForm = () => {
         <OtpContainer pan={formDetails?.pan} otpFormState={otpFormState} setOtpFormState={setOtpFormState}/>
       )}
       {otpFormState === OTP_STATES.PAYMENT_PAGE && (
-        <PaymentPage/>
+        <PaymentPage mobileNumber={formDetails.mobileNumber} pan={formDetails.pan}/>
       )}
     </>
   );

@@ -97,7 +97,7 @@ const StyledSection = styled.section`
 
 `;
 
-const PaymentPage = () => {
+const PaymentPage = ({ mobileNumber , pan}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [paymentSuccess, setPaymentSuccess] = React.useState(false);
 
@@ -140,7 +140,7 @@ const PaymentPage = () => {
               proceed with your loan application. It covers the administrative costs
               associated with reviewing and processing your application.
             </div>
-            <CashfreeButton isLoading={isLoading} onSuccess={handleSuccess}/>
+            <CashfreeButton mobileNumber={mobileNumber} customerId={pan} isLoading={isLoading} onSuccess={handleSuccess}/>
             <p className="refund-info">
               In the event that the payment doesn't go through and money is deducted
               from your account, it will be refunded within 2-3 business days.
