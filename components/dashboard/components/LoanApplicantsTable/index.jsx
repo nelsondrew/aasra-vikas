@@ -5,6 +5,7 @@ import {
   getPaginationRowModel, 
   flexRender 
 } from '@tanstack/react-table';
+import { LOAN_APPLICANTS_API } from '../../../../constants/apiConstants';
 
 const LoanApplicantsTable = ({ active }) => {
   const [data, setData] = useState([]);
@@ -16,7 +17,7 @@ const LoanApplicantsTable = ({ active }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/loanApplicants');
+        const response = await fetch(LOAN_APPLICANTS_API);
         const result = await response.json();
         setData(result.data);
       } catch (error) {
