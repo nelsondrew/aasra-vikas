@@ -67,7 +67,7 @@ const LoanApplicantsTable = ({ active }) => {
 
   return (
     <div style={{
-      width: !active? '80vw': '89vw',
+      width: !active? '80vw': '91vw',
       borderRadius: '16px',
       overflowX: 'scroll'
     }} className="table-responsive">

@@ -1,34 +1,17 @@
 import { useState } from "react";
 import Dashboard from "../components/dashboard/Dashboard";
-import Sidebar from "../components/dashboard/Sidebar";
-import AdminNavbar from "../components/common/AdminNavbar";
+import MasterLayout from "../components/dashboard/components/MasterLayout";
 
 export default function About() {
-  let [active, setActive] = useState(false);
-  let [show, setShow] = useState(false);
-  let dashboardControl = () => {
-    setActive(!active);
-  };
-  let showProfileControl = () => {
-    setShow(!show);
-  };
+  let [show, setShow] = useState(false); 
+
+  let [active, setActive] = useState(false)
+
   return (
     <>
-      <AdminNavbar active={active} dashboardControl={dashboardControl} />
-      <div
-        style={{
-          marginTop: "7rem",
-          display: "flex",
-        }}
-      >
-        <Sidebar
-          show={show}
-          showProfileControl={showProfileControl}
-          active={active}
-          dashboardControl={dashboardControl}
-        />
-        <Dashboard active={active} />
-      </div>
+       <MasterLayout active={active} setActive={setActive}>
+        <Dashboard active={active}/>
+       </MasterLayout>
     </>
   );
 }
