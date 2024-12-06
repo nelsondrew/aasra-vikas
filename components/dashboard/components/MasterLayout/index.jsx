@@ -50,7 +50,7 @@ const MasterLayout = ({ children, active, setActive }) => {
               <ul className="sidebar-list">
                 <li className="sidebar-list__item">
                   <NavLink
-                    to="/dashboard"
+                    to="/admin"
                     className={"sidebar-list__link activePage"}
                   >
                     <span className="sidebar-list__icon">
@@ -71,7 +71,7 @@ const MasterLayout = ({ children, active, setActive }) => {
 
                 <li className="sidebar-list__item">
                   <NavLink
-                    to="/refund"
+                    to="/statements"
                     className={(navData) =>
                       navData.isActive
                         ? "sidebar-list__link activePage"
