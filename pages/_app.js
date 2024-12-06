@@ -5,6 +5,10 @@ import Layout from "../components/layout";
 import "../styles/globals.scss";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/globals.css';
+import 'line-awesome/dist/line-awesome/css/line-awesome.min.css'; // Import Line Awesome styles
+
+
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {

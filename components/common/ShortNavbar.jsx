@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import logo from "/public/images/av_logo.png";
 
-const ShortNavbar = () => {
+const ShortNavbar = ({ dashboardControl }) => {
   const [windowHeight, setWindowHeight] = useState(0);
 
   const navBarTop = () => {
@@ -31,7 +31,12 @@ const ShortNavbar = () => {
         <div className="container">
           <div className="row d-flex header-area">
             <nav className="navbar d-flex justify-content-between navbar-expand-lg navbar-dark">
-              <Link style={{
+              <Link onClick={(e) => {
+                e.preventDefault();
+                if(typeof dashboardControl === 'function') {
+                  dashboardControl();
+                }
+              }} style={{
                 height : "56px",
                 width : "13rem"
               }} className="navbar-brand" href="/">
