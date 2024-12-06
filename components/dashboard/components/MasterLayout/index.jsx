@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import NavLink from "../../Navlink";
+import Image from "next/image";
+import logo from "/public/images/av_logo.png";
 
 const MasterLayout = ({ children, active, setActive }) => {
   let [show, setShow] = useState(false);
@@ -15,7 +17,6 @@ const MasterLayout = ({ children, active, setActive }) => {
 
   return (
     <>
-
       <section
         className={`dashboard ${active && "active"}`}
         onClick={() => show === true && setShow(false)}
@@ -123,6 +124,18 @@ const MasterLayout = ({ children, active, setActive }) => {
                   <img src="/images/icons/angle-right.svg" alt="" />
                 </button>
               </div>
+              <div>
+                <Image
+                  style={{
+                    height: '60px',
+                    width: '14rem',
+                  }}
+                  src={logo}
+                  className="logo"
+                  alt="logo"
+                />
+              </div>
+
               <div className="dashboard-nav__right">
                 <div className="header-right flx-align">
                   <div className="header-right__inner gap-sm-3 gap-2 flx-align d-flex">
