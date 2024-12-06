@@ -75,7 +75,7 @@ const LoanApplicantsTable = ({ active }) => {
       if (typeof window !== "undefined" && window.innerWidth < 760) {
         return "87vw";
       }
-      return "80vw";
+      return "83vw";
     }
     return "91vw";
   };
