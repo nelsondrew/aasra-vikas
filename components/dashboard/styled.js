@@ -1257,6 +1257,8 @@ background-color: #F6F7F9;
         border: 1px solid hsl(var(--gray-five));
         border-radius: 16px;
         overflow: hidden;
+        padding-right: 3rem;
+
 
         thead {
             tr {

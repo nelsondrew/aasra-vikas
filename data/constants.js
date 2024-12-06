@@ -154,3 +154,16 @@ export const APPLICATION_FIELDS= [
         class: "col-12",
     },
 ]
+
+const CITY_LOANS = {
+    "Mumbai": 22174,
+    "Delhi": 48228,
+    "Bengaluru": 6652,
+    "Chennai": 21777,
+    "Hyderabad": 34804,
+    "Kolkata": 35524,
+    "Pune": 11139,
+    "Ahmedabad": 4437,
+    "Surat": 137090,
+    "Noida": 178175
+}
