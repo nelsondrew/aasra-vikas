@@ -38,10 +38,6 @@ const UserSignupsChart = ({ timestampScores }) => {
         }
     };
 
-    console.log({
-        series , options
-    })
-    
 
     return <Chart options={options} series={series} type="area"  height={"500"} width={"100%"}  />;
 };
