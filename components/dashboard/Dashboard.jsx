@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
-import dynamic from "next/dynamic";
 import { StyledDashboardContainer } from "./styled";
 import LoanApplicantsTable from "./components/LoanApplicantsTable";
 import ChartContainer from "./components/UserSignUps/ChartContainer";
 import DashboardCard from "./components/DashboardCard";
 
 
-const Dashboard = ({ active }) => {
+const Dashboard = ({ active , name }) => {
  
 
   return (
@@ -16,7 +15,7 @@ const Dashboard = ({ active }) => {
         {/* welcome balance Content Start */}
         <div className="welcome-balance mt-2 mb-40 flx-between gap-2">
           <div className="welcome-balance__left">
-            <h4 className="welcome-balance__title mb-0">Welcome back! Rahil</h4>
+            <h4 className="welcome-balance__title mb-0">{`Welcome back ${name} !`}</h4>
           </div>
           <div className="welcome-balance__right flx-align gap-2">
             <span className="welcome-balance__text fw-500 text-heading">
