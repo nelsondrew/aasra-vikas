@@ -1,5 +1,5 @@
 
-export function withAuth(Component) {
+export function withAuth(Component, extraApiCallback = null) {
   // Define the getServerSideProps logic here
   const getServerSideProps = async (ctx) => {
     // Utility function to parse cookies
@@ -52,10 +52,20 @@ export function withAuth(Component) {
 
     const data = await res.json();
 
+    let extraData = {};
+    if (extraApiCallback) {
+      try {
+        extraData = await extraApiCallback(ctx);
+      } catch (error) {
+        console.error('Error fetching extra data:', error);
+      }
+    }
+
     // Return the user data as a prop for the wrapped component
     return {
       props: {
         user: data.decodedToken,
+        extraData, // Pass the extra data to the component
       },
     };
   };

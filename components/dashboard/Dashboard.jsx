@@ -7,7 +7,7 @@ import DashboardCard from "./components/DashboardCard";
 import { useEffect, useRef, useState } from "react";
 
 
-const Dashboard = ({ active , name }) => {
+const Dashboard = ({ active , name , tableData , chartData }) => {
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -42,10 +42,6 @@ const Dashboard = ({ active , name }) => {
       resizeObserver.disconnect();
     };
   }, []); // Empty dependency array to run on mount and unmount
-
-  useEffect(() => {
-    console.log(containerWidth)
-  },[containerWidth])
 
   return (
     <StyledDashboardContainer ref={containerRef}>
@@ -213,7 +209,7 @@ const Dashboard = ({ active , name }) => {
                     </div>
                   </div>
                   <div className="dashboard-card__chart">
-                    <ChartContainer />
+                    <ChartContainer chartData={chartData} />
                   </div>
                 </div>
               </div>
@@ -223,7 +219,7 @@ const Dashboard = ({ active , name }) => {
           {/* dashboard body Item End */}
           {/* dashboard body Item Start */}
           <div className="dashboard-body__item">
-            <LoanApplicantsTable containerWidth={containerWidth} active={active} />
+            <LoanApplicantsTable tableData={tableData} containerWidth={containerWidth} active={active} />
           </div>
           {/* dashboard body Item End */}
         </div>

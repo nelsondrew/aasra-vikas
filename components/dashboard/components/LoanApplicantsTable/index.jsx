@@ -5,29 +5,13 @@ import {
   getPaginationRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { LOAN_APPLICANTS_API } from "../../../../constants/apiConstants";
 
-const LoanApplicantsTable = ({ active , containerWidth }) => {
-  const [data, setData] = useState([]);
+const LoanApplicantsTable = ({  containerWidth , tableData }) => {
+  const [data, setData] = useState(tableData);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(LOAN_APPLICANTS_API);
-        const result = await response.json();
-        setData(result.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const columns = useMemo(
     () => [
       { header: "Applicant Name", accessorKey: "applicantName" },
