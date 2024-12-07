@@ -4,6 +4,43 @@ import Image from "next/image";
 import show_hide from "/public/images/icon/show-hide.png";
 import signInAndGetToken from "../../api/authApi";
 import { setTokenInCookie } from "../../utils/authUtils";
+import styled from "styled-components";
+
+
+const StyledSection = styled.section`
+  .single-input {
+    display: flex;
+    flex-direction: column;
+  }
+  .error-border {
+    input {
+      border: 1px solid red;
+    }
+  }
+  .error {
+    color: red;
+    font-size: 0.875rem;
+  }
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -48,7 +85,7 @@ const LoginForm = () => {
   };
 
   return (
-    <section className="sign-in-up login">
+    <StyledSection className="sign-in-up login">
       <div className="overlay pt-120 pb-120">
         <div className="container">
           <div className="row">
@@ -112,8 +149,8 @@ const LoginForm = () => {
                       type="submit"
                       disabled={loading}
                     >
-                      {loading ? "Logging In..." : "Login"}
-                    </button>
+                      {loading ? <div className="loader" /> : "Login"}
+                      </button>
                   </div>
                 </form>
               </div>
@@ -121,7 +158,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
-    </section>
+    </StyledSection>
   );
 };
 
