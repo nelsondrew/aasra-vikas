@@ -184,7 +184,7 @@ const Dashboard = ({ active , name , tableData , chartData }) => {
           {/* dashboard body Item End */}
           {/* dashboard body Item Start */}
           <div className="dashboard-body__item">
-            <LoanApplicantsTable active={active} tableData={tableData} containerWidth={containerWidth} />
+            <LoanApplicantsTable active={active} tableData={tableData} />
           </div>
           {/* dashboard body Item End */}
         </div>
