@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -6,7 +6,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
-const LoanApplicantsTable = ({  containerWidth , tableData }) => {
+const LoanApplicantsTable = ({ active, containerWidth , tableData }) => {
   const [data, setData] = useState(tableData);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -53,10 +53,36 @@ const LoanApplicantsTable = ({  containerWidth , tableData }) => {
   });
 
 
+  const [width, setWidth] = useState("80vw");
+  const initialRender = useRef(false);
+
+  const getWidth = () => {
+    if (!active) {
+      if (typeof window !== "undefined" && window.innerWidth < 760) {
+        return "87vw";
+      }
+      return "83vw";
+    }
+    return "91vw";
+  };
+
+  useEffect(() => {
+    if(!initialRender.current) {
+      setTimeout(() => {
+        setWidth(getWidth());
+        initialRender.current = true;
+      },500)
+    } else {
+      setWidth(getWidth())
+    }
+ 
+  }, [active]);
+
+
   return (
     <div
       style={{
-        width: `${containerWidth- 70}px`,
+        width: width,
         borderRadius: "16px",
         overflowX: "scroll",
       }}
