@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-table";
 import { LOAN_APPLICANTS_API } from "../../../../constants/apiConstants";
 
-const LoanApplicantsTable = ({ active }) => {
+const LoanApplicantsTable = ({ active , containerWidth }) => {
   const [data, setData] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -68,35 +68,17 @@ const LoanApplicantsTable = ({ active }) => {
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  const [width, setWidth] = useState("80vw");
-
-  const getWidth = () => {
-    if (!active) {
-      if (typeof window !== "undefined" && window.innerWidth < 760) {
-        return "87vw";
-      }
-      return "83vw";
-    }
-    return "91vw";
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setWidth(getWidth());
-
-    },500)
-  }, []);
 
   return (
     <div
       style={{
-        width: width,
+        width: `${containerWidth- 70}px`,
         borderRadius: "16px",
         overflowX: "scroll",
       }}
       className="table-responsive"
     >
-      <table className="table style-two">
+      <table className="table style-two" >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

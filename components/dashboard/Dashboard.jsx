@@ -4,13 +4,51 @@ import { StyledDashboardContainer } from "./styled";
 import LoanApplicantsTable from "./components/LoanApplicantsTable";
 import ChartContainer from "./components/UserSignUps/ChartContainer";
 import DashboardCard from "./components/DashboardCard";
+import { useEffect, useRef, useState } from "react";
 
 
 const Dashboard = ({ active , name }) => {
- 
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    // Function to update width when container size changes
+    const handleResize = (entries) => {
+      const entry = entries[0];
+      if (entry) {
+        const newWidth = entry.contentRect.width;
+        setContainerWidth(newWidth);
+      }
+    };
+
+    // Create a ResizeObserver to watch for changes in container's size
+    const resizeObserver = new ResizeObserver(handleResize);
+
+    // Check if containerRef.current is available, then observe it
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    } else {
+      // If containerRef.current is null, we can observe again once it's assigned
+      const intervalId = setInterval(() => {
+        if (containerRef.current) {
+          resizeObserver.observe(containerRef.current);
+          clearInterval(intervalId); // Stop the interval once the element is available
+        }
+      }, 100); // Check every 100ms until the element is available
+    }
+
+    // Cleanup observer when the component is unmounted
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []); // Empty dependency array to run on mount and unmount
+
+  useEffect(() => {
+    console.log(containerWidth)
+  },[containerWidth])
 
   return (
-    <StyledDashboardContainer>
+    <StyledDashboardContainer ref={containerRef}>
       <div className="dashboard-body__content">
         {/* welcome balance Content Start */}
         <div className="welcome-balance mt-2 mb-40 flx-between gap-2">
@@ -185,7 +223,7 @@ const Dashboard = ({ active , name }) => {
           {/* dashboard body Item End */}
           {/* dashboard body Item Start */}
           <div className="dashboard-body__item">
-            <LoanApplicantsTable active={active} />
+            <LoanApplicantsTable containerWidth={containerWidth} active={active} />
           </div>
           {/* dashboard body Item End */}
         </div>
