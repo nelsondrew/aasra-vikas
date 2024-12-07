@@ -31,7 +31,7 @@ const LoginForm = () => {
       setTokenInCookie(jwt);
 
       // Check if a 'redirect' query param exists
-      const redirectUrl = router.query.redirect || "/"; // Use the `redirect` query param or default to home page
+      const redirectUrl = router.query.redirect || "/admin"; // Use the `redirect` query param or default to home page
 
       window.location.href = redirectUrl;
     } catch (err) {

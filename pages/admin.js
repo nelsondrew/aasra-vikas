@@ -6,12 +6,12 @@ import MasterLayout from "../components/dashboard/components/MasterLayout";
 import { withAuth } from "../components/HOC/withAuth";
 
 function Admin({ user }) {
-  const { name } = user;
+  const { name , uid } = user;
   const [active, setActive] = useState(false);
 
   return (
     <>
-      <MasterLayout active={active} setActive={setActive}>
+      <MasterLayout uid={uid} active={active} setActive={setActive}>
         <Dashboard name={name} active={active} />
       </MasterLayout>
     </>

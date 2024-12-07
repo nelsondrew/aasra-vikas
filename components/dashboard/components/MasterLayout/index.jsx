@@ -5,13 +5,40 @@ import Link from "next/link";
 import NavLink from "../../Navlink";
 import Image from "next/image";
 import logo from "/public/images/av_logo.png";
-const MasterLayout = ({ children, active, setActive }) => {
+import { clearTokenCookie } from "../../../../utils/authUtils";
+const MasterLayout = ({ children, active, setActive, uid }) => {
   let [show, setShow] = useState(false);
   let dashboardControl = () => {
     setActive(!active);
   };
   let showProfileControl = () => {
     setShow(!show);
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Step 1: Clear the cookies on the client-side
+      clearTokenCookie(); // Clears the JWT token from the cookies
+
+      // Step 2: Call the API to revoke the user's refresh token using their UID
+      const res = await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid }), // Send the UID of the user
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to log out");
+      }
+
+      // Step 3: Redirect to the login page
+      window.location.href = "/login"
+    } catch (error) {
+      console.error("Logout Error:", error);
+    } finally {
+    }
   };
 
   return (
@@ -156,10 +183,7 @@ const MasterLayout = ({ children, active, setActive }) => {
                         className={`user-profile-dropdown ${show && "show"} `}
                       >
                         <li className="sidebar-list__item">
-                          <Link
-                            href="/dashboard-profile"
-                            className="sidebar-list__link"
-                          >
+                          <Link href="/admin" className="sidebar-list__link">
                             <span className="sidebar-list__icon">
                               <img
                                 src="/images/icons/sidebar-icon2.svg"
@@ -176,7 +200,7 @@ const MasterLayout = ({ children, active, setActive }) => {
                           </Link>
                         </li>
                         <li className="sidebar-list__item">
-                          <Link href="/setting" className="sidebar-list__link">
+                          <Link href="/admin" className="sidebar-list__link">
                             <span className="sidebar-list__icon">
                               <img
                                 src="/images/icons/sidebar-icon10.svg"
@@ -193,7 +217,13 @@ const MasterLayout = ({ children, active, setActive }) => {
                           </Link>
                         </li>
                         <li className="sidebar-list__item">
-                          <Link href="/login" className="sidebar-list__link">
+                          <div
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={handleLogout}
+                            className="sidebar-list__link"
+                          >
                             <span className="sidebar-list__icon">
                               <img
                                 src="/images/icons/sidebar-icon13.svg"
@@ -207,7 +237,7 @@ const MasterLayout = ({ children, active, setActive }) => {
                               />
                             </span>
                             <span className="text">Logout</span>
-                          </Link>
+                          </div>
                         </li>
                       </ul>
                     </div>
