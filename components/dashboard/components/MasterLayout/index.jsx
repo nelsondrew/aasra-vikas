@@ -5,7 +5,6 @@ import Link from "next/link";
 import NavLink from "../../Navlink";
 import Image from "next/image";
 import logo from "/public/images/av_logo.png";
-
 const MasterLayout = ({ children, active, setActive }) => {
   let [show, setShow] = useState(false);
   let dashboardControl = () => {
@@ -127,8 +126,8 @@ const MasterLayout = ({ children, active, setActive }) => {
               <div>
                 <Image
                   style={{
-                    height: '60px',
-                    width: '14rem',
+                    height: "60px",
+                    width: "14rem",
                   }}
                   src={logo}
                   className="logo"
