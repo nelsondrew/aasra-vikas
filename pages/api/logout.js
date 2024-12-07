@@ -1,6 +1,6 @@
 import { adminAuth } from "../../firebase/authAdmin";
 
-
+// update
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { uid } = req.body; // Pass the UID from the client
