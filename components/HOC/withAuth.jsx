@@ -1,4 +1,3 @@
-// utils/withAuth.js
 
 export function withAuth(Component) {
   // Define the getServerSideProps logic here
