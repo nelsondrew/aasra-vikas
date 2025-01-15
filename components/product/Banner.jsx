@@ -13,7 +13,7 @@ const Banner = () => {
             for some of us. It should work for all of us.
           </p>
         </div>
-        <Link href="/register" className="cmn-btn">
+        <Link href="/apply-loan" className="cmn-btn">
           Apply Now
         </Link>
       </div>

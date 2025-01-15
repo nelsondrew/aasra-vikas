@@ -43,7 +43,7 @@ const Banner = () => {
                 </div>
               </div>
               <div className="btn-area text-center">
-                <Link href="/register" className="cmn-btn">
+                <Link href="/apply-loan" className="cmn-btn">
                   Refer Now!
                 </Link>
               </div>

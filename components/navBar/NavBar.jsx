@@ -135,7 +135,7 @@ const NavBar = () => {
                 </ul>
                 <div className="right-area header-action d-flex align-items-center">
                   <Link
-                    href="/register"
+                    href="/apply-loan"
                     className="cmn-btn"
                     onClick={hidenMenu}
                   >
