@@ -28,8 +28,9 @@ const IframeComponent = () => {
     initializeSDK()
   }, [])
 
-  const handlePaymentProcessing = async () => {
+  const handlePaymentProcessing = async (paymentData) => {
     let cashfreeObj = cashfree;
+    console.log(paymentData, "payment data")
     if (!cashfree) {
        cashfreeObj = await load({
         mode: PRODUCTION,
@@ -42,7 +43,7 @@ const IframeComponent = () => {
         // Call the createCashfreeOrder API to create a payment session
         const { paymentSessionId } = await createCashfreeOrder({
             amount: 1,
-            customerEmail: "testuser@example.com",
+            customerEmail:  "testuser@example.com",
             customerPhone: "9876543210",
             customerId:  "CUST12345",
             returnUrl: "https://aaasravikas.com/payment-success"
@@ -56,7 +57,6 @@ const IframeComponent = () => {
 
         // Trigger the Cashfree payment checkout
         cashfreeObj.checkout(checkoutOptions).then((result) => {
-          console.log(checkoutOptions, "check out optionssssssss")
             if (result.error) {
               iframeRef.current.contentWindow.postMessage({
                 event: "payment-completed",
@@ -89,8 +89,8 @@ const IframeComponent = () => {
 
   // Listen for messages from iframe
   const handleMessageFromIframe = (event) => {
-    if (event.data === 'start-payment') {
-      handlePaymentProcessing();  // Trigger payment processing when iframe requests it
+    if (event.data.event === 'start-payment') {      
+      handlePaymentProcessing(event?.data?.data);  // Trigger payment processing when iframe requests it
     }
   };
 
