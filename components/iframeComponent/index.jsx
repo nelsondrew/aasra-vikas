@@ -43,10 +43,10 @@ const IframeComponent = () => {
         // Call the createCashfreeOrder API to create a payment session
         const { paymentSessionId } = await createCashfreeOrder({
             amount: 1,
-            customerEmail:  "testuser@example.com",
-            customerPhone: "9876543210",
-            customerId:  "CUST12345",
-            returnUrl: "https://aaasravikas.com/payment-success"
+            customerEmail:  paymentData?.email || '',
+            customerPhone: paymentData?.phoneNumber || '',
+            customerId:  paymentData?.customerId || '',
+            returnUrl: "https://aaasravikas.com/apply-loan"
         })
 
         // Set the checkout options
