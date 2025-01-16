@@ -72,7 +72,7 @@ const IframeComponent = () => {
                   message: "Payment will be redirected"
                 }, "*");
             } else if (result.paymentDetails) {
-                if (result.paymentDetails.paymentMessage === "Success") {
+                if (result.paymentDetails.paymentMessage === "Payment finished. Check status.") {
                   iframeRef.current.contentWindow.postMessage({
                     event: "payment-completed",
                     status: "success",
