@@ -56,6 +56,7 @@ const IframeComponent = () => {
 
         // Trigger the Cashfree payment checkout
         cashfreeObj.checkout(checkoutOptions).then((result) => {
+          console.log(checkoutOptions, "check out optionssssssss")
             if (result.error) {
               iframeRef.current.contentWindow.postMessage({
                 event: "payment-completed",
