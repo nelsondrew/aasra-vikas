@@ -42,7 +42,7 @@ const IframeComponent = () => {
     try {
         // Call the createCashfreeOrder API to create a payment session
         const { paymentSessionId } = await createCashfreeOrder({
-            amount: 1,
+            amount: 99,
             customerEmail:  paymentData?.email || '',
             customerPhone: paymentData?.phoneNumber || '',
             customerId:  paymentData?.customerId || '',
