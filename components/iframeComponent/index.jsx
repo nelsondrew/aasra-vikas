@@ -57,19 +57,25 @@ const IframeComponent = () => {
         // Trigger the Cashfree payment checkout
         cashfreeObj.checkout(checkoutOptions).then((result) => {
             if (result.error) {
-                iframeRef.current.contentWindow.postMessage({
-                  error : "payment failed"
-                }, "*");
+              iframeRef.current.contentWindow.postMessage({
+                event: "payment-completed",
+                status: "failed",
+                errorMessage: "Payment failed"
+              }, "*");
 
             } else if (result.redirect) {
                 console.log("Payment will be redirected.")
                 iframeRef.current.contentWindow.postMessage({
-                  msg : "payment will be redirected"
+                  event: "payment-completed",
+                  status: "redirect",
+                  message: "Payment will be redirected"
                 }, "*");
             } else if (result.paymentDetails) {
                 if (result.paymentDetails.paymentMessage === "Success") {
                   iframeRef.current.contentWindow.postMessage({
-                    msg : "success"
+                    event: "payment-completed",
+                    status: "success",
+                    message: "Payment success"
                   }, "*");
                 }
             }
