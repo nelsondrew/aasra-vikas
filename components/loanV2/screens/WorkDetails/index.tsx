@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Upload } from 'lucide-react';
-import React, { useRef } from 'react';
+import { Upload, Loader } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const WorkDetailsContent = styled.div`
   animation: fadeIn 0.3s ease-out;
@@ -111,6 +111,14 @@ const CTAButton = styled.button`
   }
 `;
 
+const LoadingSpinner = styled(Loader)`
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
+
 interface WorkDetailsProps {
   workEmail: string;
   officeAddress: string;
@@ -152,10 +160,55 @@ const WorkDetails = ({
   onSalarySlipsChange,
   onSubmit
 }: WorkDetailsProps) => {
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const fileInputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
   const handleFileInputClick = (index: number) => {
     fileInputRefs[index].current?.click();
+  };
+
+  const uploadFile = async (file: File, index: number) => {
+    try {
+      setUploadingIndex(index);
+      
+      // Update label immediately for better UX
+      const newSlips = [...salarySlips];
+      newSlips[index].label = file.name;
+      onSalarySlipsChange(newSlips);
+
+      // Create FormData and append file
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Call upload API
+      const response = await fetch('/api/upload-file', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Update with URL after successful upload
+        const updatedSlips = [...salarySlips];
+        updatedSlips[index] = {
+          label: file.name,
+          url: data.url
+        };
+        onSalarySlipsChange(updatedSlips);
+      } else {
+        throw new Error(data.error || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      // Revert on failure
+      const revertedSlips = [...salarySlips];
+      revertedSlips[index].label = `Month ${index + 1} salary slip`;
+      revertedSlips[index].url = '';
+      onSalarySlipsChange(revertedSlips);
+    } finally {
+      setUploadingIndex(null);
+    }
   };
 
   return (
@@ -180,23 +233,29 @@ const WorkDetails = ({
 
       <FileUploadContainer>
         <Label>3 months salary slip</Label>
-        {salarySlips.map((month, index) => (
-          <FileUploadInput 
-           // @ts-ignore
-            key={month}
+        {salarySlips.map((slip, index) => (
+          <FileUploadInput
+            key={index}
             onClick={() => handleFileInputClick(index)}
+            style={{ opacity: uploadingIndex === index ? 0.7 : 1 }}
           >
-            <span>{salarySlips[index]?.label || `Month ${index+ 1} salary slip`}</span>
-            <Upload size={20} color="#64748B" />
+            <span>{slip.label || `Month ${index + 1} salary slip`}</span>
+            {uploadingIndex === index ? (
+              <LoadingSpinner size={20} color="#4B89DC" />
+            ) : (
+              <Upload size={20} color="#64748B" />
+            )}
             <input
               ref={fileInputRefs[index]}
               type="file"
               hidden
               onChange={(e) => {
-                const newSlips = [...salarySlips];
-                newSlips[index].label = e.target.files?.[0]?.name || '';
-                onSalarySlipsChange(newSlips);
+                const file = e.target.files?.[0];
+                if (file) {
+                  uploadFile(file, index);
+                }
               }}
+              disabled={uploadingIndex !== null}
             />
           </FileUploadInput>
         ))}

@@ -789,18 +789,9 @@ const handleContinue = async () => {
 const handleSubmit = async () => {
   setIsLoading(true);
   try {
-    // Get the actual File objects from the WorkDetails component
-    const files = document.querySelectorAll<HTMLInputElement>('input[type="file"]');
-    const uploadFiles: File[] = [];
-    
-    files.forEach((fileInput) => {
-      if (fileInput.files && fileInput.files.length > 0) {
-        uploadFiles.push(fileInput.files[0]);
-      }
-    });
-
+    debugger;
     // First update user details with files
-    await updateUserWithFiles({
+    await updateUserDetails({
       ...consolidatedState,
       workEmail,
       officeAddress,
@@ -808,8 +799,9 @@ const handleSubmit = async () => {
       currentCity,
       currentLoans,
       stayingStatus,
-      currentScreen: 'offer'
-    }, uploadFiles);
+      currentScreen: 'offer',
+      salarySlips: salarySlips
+    });
 
     setCurrentScreen('offer');
   } catch (error) {
