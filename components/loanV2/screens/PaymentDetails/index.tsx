@@ -205,7 +205,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed, userDetails 
 
       const checkoutOptions = {
         paymentSessionId,
-        redirectTarget: "_self",
+        redirectTarget: "_modal",
       };
 
       cashfreeObj.checkout(checkoutOptions)
