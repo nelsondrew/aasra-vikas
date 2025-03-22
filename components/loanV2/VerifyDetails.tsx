@@ -817,15 +817,12 @@ const handleGetMoney = () => {
 const handlePaymentComplete =  async () => {
 
   setShowVerificationStatus(true);
+  //@ts-ignore
+  await updateUserDetails({
+    ...consolidatedState,
+    showVerificationStatus: true
+  })
 
-
-  setTimeout(async () => {
-    await updateUserDetails({
-      ...consolidatedState,
-      showVerificationStatus: true,
-    });
-
-  },100)
 };
 
 return (
