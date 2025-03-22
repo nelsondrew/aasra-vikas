@@ -823,8 +823,12 @@ const handleGetMoney = () => {
   setShowPayment(true);
 };
 
-const handlePaymentComplete = () => {
+const handlePaymentComplete = async () => {
   setShowVerificationStatus(true);
+  await updateUserDetails({
+    ...consolidatedState,
+    showVerificationStatus: true
+  });
 };
 
 return (
