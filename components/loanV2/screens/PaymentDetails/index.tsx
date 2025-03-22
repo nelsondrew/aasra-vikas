@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Info, CreditCard, ChevronRight } from 'lucide-react';
+import { createOrder } from '../../api/payment';
+import { InitialState } from "../../types";
 
 const PaymentDetailsContent = styled.div`
   animation: fadeIn 0.3s ease-out;
@@ -119,9 +121,36 @@ const CTAButton = styled.button`
 
 interface PaymentDetailsProps {
   onProceed: () => void;
+  userDetails: InitialState;
 }
 
-const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed }) => {
+const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed , userDetails }) => {
+  const handlePayment = async () => {
+    try {
+      const orderResponse = await createOrder({
+        amount: 99, // Amount in INR
+        customerEmail: userDetails?.email,
+        customerPhone: userDetails?.mobileNumber,
+        customerId: `cust_order`,
+        returnUrl: `https://aasravikas.com/verify-details-v2`,
+      });
+
+      if (orderResponse.error) {
+        console.error('Error:', orderResponse.error);
+        return;
+      }
+
+      // Initialize Cashfree payment
+      const { orderId, paymentSessionId } = orderResponse;
+      
+      // Use these values to initialize Cashfree payment SDK
+      // Follow Cashfree documentation for frontend integration
+
+    } catch (error) {
+      console.error('Payment error:', error);
+    }
+  };
+
   return (
     <PaymentDetailsContent>
       <IconContainer>
@@ -154,7 +183,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed }) => {
         </InfoText>
       </InfoBox>
 
-      <CTAButton onClick={onProceed}>
+      <CTAButton onClick={handlePayment}>
         Pay ₹99 & Continue
         <ChevronRight size={20} />
       </CTAButton>

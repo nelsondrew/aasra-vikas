@@ -43,6 +43,7 @@
     "twilio": "^5.3.6"
   },
   "devDependencies": {
+    "@types/react": "19.0.12",
     "babel-plugin-styled-components": "^2.1.4"
   }
 }

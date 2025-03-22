@@ -894,6 +894,7 @@ return (
                 onCurrentCityChange={(e) => setCurrentCity(e.target.value)}
                 onCurrentLoansChange={(e) => setCurrentLoans(e.target.value)}
                 onStayingStatusChange={(e) => setStayingStatus(e.target.value)}
+                // @ts-ignore
                 onSalarySlipsChange={setSalarySlips}
                 onSubmit={handleSubmit}
               />
@@ -902,7 +903,8 @@ return (
             !showPayment ? (
               <Congratulations onGetMoney={handleGetMoney} />
             ) : !showVerificationStatus ? (
-              <PaymentDetails onProceed={handlePaymentComplete} />
+              // @ts-ignore
+              <PaymentDetails userDetails={consolidatedState} onProceed={handlePaymentComplete} />
             ) : (
               <DocumentsVerification onCheckStatus={() => console.log('Checking status...')} />
             )
