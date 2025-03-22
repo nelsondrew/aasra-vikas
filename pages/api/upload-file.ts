@@ -1,6 +1,6 @@
 import { storage } from '../../firebase/admin';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import formidable from 'formidable';
+import formidable, { Fields, Files } from 'formidable';
 import { promises as fs } from 'fs';
 
 export const config = {
@@ -26,7 +26,9 @@ export default async function handler(
 
   try {
     const form = new formidable.IncomingForm();
-    const [fields, files] = await new Promise((resolve, reject) => {
+    
+    // Fix the Promise type definition
+    const [fields, files] = await new Promise<[Fields, Files]>((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) reject(err);
         resolve([fields, files]);
@@ -34,7 +36,7 @@ export default async function handler(
     });
 
     // Get the file from the request
-    const file = files.file;
+    const file = files.file as formidable.File;
     if (!file) {
       return res.status(400).json({ success: false, error: 'No file uploaded' });
     }
