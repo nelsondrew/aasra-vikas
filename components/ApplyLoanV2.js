@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { CheckCircle, Coins, Calendar, Ban } from 'lucide-react';
 import { useRouter } from "next/navigation";
 
@@ -10,10 +10,11 @@ const Container = styled.div`
   flex-direction: column;
   overflow-x: hidden;
   position: relative;
+  -webkit-overflow-scrolling: touch;
 `;
 
 const BackgroundCurve = styled.div`
-  position: absolute;
+  position: fixed;
   top: 25%;
   left: -5%;
   right: -5%;
@@ -21,11 +22,11 @@ const BackgroundCurve = styled.div`
   background: linear-gradient(180deg, #E6F0FF 0%, #D6E6FF 100%);
   border-radius: 50% 50% 0 0 / 15% 15% 0 0;
   z-index: 0;
+  pointer-events: none;
 `;
 
 const Content = styled.div`
   min-height: 100dvh;
-  /* height: 100dvh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,6 +38,8 @@ const Content = styled.div`
   padding: 20px;
   position: relative;
   z-index: 1;
+  overscroll-behavior: none;
+  touch-action: pan-y pinch-zoom;
 
   @media (max-width: 768px) {
     gap: 16px;
@@ -319,66 +322,75 @@ const Button = styled.button`
   }
 `;
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    overscroll-behavior: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 function Home() {
   const router = useRouter();
 
   return (
-    <Container>
-      <BackgroundCurve />
-      {/* <Header>
-        <BankLogo src="https://www.idfcfirstbank.com/content/dam/idfcfirstbank/images/icons/logo-icon.svg" alt="IDFC First Bank" />
-      </Header> */}
-      
-      <Content>
-        <PhoneContainer>
-          <Phone>
-            <PhoneScreen>
-              <CheckMark>
-                <CheckCircle size={20} />
-              </CheckMark>
-            </PhoneScreen>
-          </Phone>
-          <Coin />
-          <Coin />
-          <Coin />
-        </PhoneContainer>
+    <>
+      <GlobalStyle />
+      <Container>
+        <BackgroundCurve />
+        <Content>
+          <PhoneContainer>
+            <Phone>
+              <PhoneScreen>
+                <CheckMark>
+                  <CheckCircle size={20} />
+                </CheckMark>
+              </PhoneScreen>
+            </Phone>
+            <Coin />
+            <Coin />
+            <Coin />
+          </PhoneContainer>
 
-        <Logo>
-          <InstaLoanTitle>INSTA<span style={{ 
-            fontSize : "32px"
-          }}>loan</span></InstaLoanTitle>
-          <Subtitle>Smart Personal Loan</Subtitle>
-        </Logo>
+          <Logo>
+            <InstaLoanTitle>INSTA<span style={{ 
+              fontSize : "32px"
+            }}>loan</span></InstaLoanTitle>
+            <Subtitle>Smart Personal Loan</Subtitle>
+          </Logo>
 
-        <FeatureList>
-          <Feature>
-            <FeatureIcon>
-              <Coins size={18} />
-            </FeatureIcon>
-            Approved Loan offer up to ₹10 lakhs
-          </Feature>
-          
-          <Feature>
-            <FeatureIcon>
-              <Calendar size={18} />
-            </FeatureIcon>
-            Withdraw funds with flexible EMI dates
-          </Feature>
-          
-          <Feature>
-            <FeatureIcon>
-              <Ban size={18} />
-            </FeatureIcon>
-            Repay anytime with ZERO foreclosure charges
-          </Feature>
-        </FeatureList>
+          <FeatureList>
+            <Feature>
+              <FeatureIcon>
+                <Coins size={18} />
+              </FeatureIcon>
+              Approved Loan offer up to ₹10 lakhs
+            </Feature>
+            
+            <Feature>
+              <FeatureIcon>
+                <Calendar size={18} />
+              </FeatureIcon>
+              Withdraw funds with flexible EMI dates
+            </Feature>
+            
+            <Feature>
+              <FeatureIcon>
+                <Ban size={18} />
+              </FeatureIcon>
+              Repay anytime with ZERO foreclosure charges
+            </Feature>
+          </FeatureList>
 
-        <Button onClick={() => router.push('/verify-details-v2')}>Get Money</Button>
-      </Content>
-    </Container>
+          <Button onClick={() => router.push('/verify-details-v2')}>Get Money</Button>
+        </Content>
+      </Container>
+    </>
   );
 }
-
 
 const ApplyLoanV2 = () => {
   return (
