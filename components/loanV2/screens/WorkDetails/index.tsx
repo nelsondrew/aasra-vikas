@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { Upload, Loader } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
+
 const WorkDetailsContent = styled.div`
   animation: fadeIn 0.3s ease-out;
 
@@ -119,6 +121,13 @@ const LoadingSpinner = styled(Loader)`
   }
 `;
 
+const ErrorMessage = styled.div`
+  color: #DC2626;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+`;
+
 interface WorkDetailsProps {
   workEmail: string;
   officeAddress: string;
@@ -161,6 +170,7 @@ const WorkDetails = ({
   onSubmit
 }: WorkDetailsProps) => {
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
 
   const handleFileInputClick = (index: number) => {
@@ -169,6 +179,15 @@ const WorkDetails = ({
 
   const uploadFile = async (file: File, index: number) => {
     try {
+      // Clear any previous errors
+      setFileError(null);
+
+      // Check file size
+      if (file.size > MAX_FILE_SIZE) {
+        setFileError('File size must be less than 3MB');
+        return;
+      }
+
       setUploadingIndex(index);
       
       // Update label immediately for better UX
@@ -201,6 +220,7 @@ const WorkDetails = ({
       }
     } catch (error) {
       console.error('Error uploading file:', error);
+      setFileError('Failed to upload file');
       // Revert on failure
       const revertedSlips = [...salarySlips];
       revertedSlips[index].label = `Month ${index + 1} salary slip`;
@@ -233,6 +253,7 @@ const WorkDetails = ({
 
       <FileUploadContainer>
         <Label>3 months salary slip</Label>
+        {fileError && <ErrorMessage>{fileError}</ErrorMessage>}
         {salarySlips.map((slip, index) => (
           <FileUploadInput
             key={index}
@@ -252,6 +273,7 @@ const WorkDetails = ({
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
+                  setFileError(null); // Clear previous errors
                   uploadFile(file, index);
                 }
               }}

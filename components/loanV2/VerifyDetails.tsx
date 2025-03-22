@@ -9,7 +9,7 @@ import Congratulations from './screens/Congratulations';
 import PaymentDetails from './screens/PaymentDetails';
 import DocumentsVerification from './screens/DocumentsVerification';
 import debounce from 'lodash/debounce'
-import { sendOTP, verifyOTP, updateUserDetails, updateUserWithFiles } from './api/auth';
+import { sendOTP, verifyOTP, updateUserDetails } from './api/auth';
 
 const Container = styled.div`
   min-height: 100vh;
