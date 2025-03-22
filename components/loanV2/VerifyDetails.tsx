@@ -551,7 +551,7 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
             setMobileNumber(response.userDetails.mobileNumber);
             setAgreed(response.userDetails.agreed);
             setShowOTP(response.userDetails.showOTP);
-            setOTP(response.userDetails.otp);
+            // setOTP(response.userDetails.otp);
             setIsVerified(response.userDetails.isVerified);
             setPanNumber(response.userDetails.panNumber);
             setIsPanVerified(response.userDetails.isPanVerified);
@@ -568,11 +568,13 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
             setShowWorkDetails(response.userDetails.showWorkDetails);
             setWorkEmail(response.userDetails.workEmail);
             setOfficeAddress(response.userDetails.officeAddress);
+            // @ts-ignore
             setSalarySlips(response.userDetails.salarySlips);
             setPersonalAddress(response.userDetails.personalAddress);
             setCurrentCity(response.userDetails.currentCity);
             setCurrentLoans(response.userDetails.currentLoans);
             setStayingStatus(response.userDetails.stayingStatus);
+            // @ts-ignore
             setCurrentScreen(response.userDetails.currentScreen);
             setShowPayment(response.userDetails.showPayment);
             setShowVerificationStatus(response.userDetails.showVerificationStatus);
