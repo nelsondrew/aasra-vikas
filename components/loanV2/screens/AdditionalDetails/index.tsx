@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 const AdditionalDetailsContent = styled.div`
@@ -150,6 +151,15 @@ interface AdditionalDetailsProps {
   onContinue: () => void;
 }
 
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const isValidSalary = (salary: string): boolean => {
+  return /^\d{4,}$/.test(salary); // At least 4 digits, numbers only
+};
+
 const AdditionalDetails = ({
   email,
   employmentType,
@@ -159,6 +169,13 @@ const AdditionalDetails = ({
   onSalaryChange,
   onContinue
 }: AdditionalDetailsProps) => {
+  
+  const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+    e.target.value = value; // Update the input value
+    onSalaryChange(e); // Pass the original event with modified value
+  };
+
   return (
     <AdditionalDetailsContent>
       <Title>Help us with some more details</Title>
@@ -190,10 +207,12 @@ const AdditionalDetails = ({
       <SalaryInputContainer>
         <Label>Net monthly in-hand salary</Label>
         <SalaryInput
-          type="text"
+          type="number"
           placeholder="Enter your monthly salary"
           value={salary}
-          onChange={onSalaryChange}
+          onChange={handleSalaryChange}
+          min="0"
+          step="1"
         />
         <SalaryNote>
           Do not include incentives, bonuses or any one-time payments.
@@ -211,9 +230,29 @@ const AdditionalDetails = ({
         </DocumentItem>
       </DocumentsList>
 
-      <CTAButton onClick={onContinue}>
+      <CTAButton 
+        onClick={onContinue}
+        disabled={!isValidEmail(email) || !isValidSalary(salary)}
+        style={{ 
+          opacity: (!isValidEmail(email) || !isValidSalary(salary)) ? 0.7 : 1,
+          cursor: (!isValidEmail(email) || !isValidSalary(salary)) ? 'not-allowed' : 'pointer'
+        }}
+      >
         Continue
       </CTAButton>
+
+      {(!isValidEmail(email) || !isValidSalary(salary)) && (
+        <div style={{ 
+          color: '#64748B', 
+          fontSize: '12px', 
+          marginTop: '8px',
+          textAlign: 'center' 
+        }}>
+          {!isValidEmail(email) && 'Please enter a valid email address'}
+          {!isValidEmail(email) && !isValidSalary(salary) && ' and '}
+          {!isValidSalary(salary) && 'Monthly salary must be at least 4 digits'}
+        </div>
+      )}
     </AdditionalDetailsContent>
   );
 };
