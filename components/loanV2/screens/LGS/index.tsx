@@ -259,6 +259,13 @@ interface LGSProps {
     panError: string
 }
 
+const MIN_NAME_LENGTH = 4;
+
+const maskPAN = (pan: string) => {
+  if (!pan) return '';
+  return `${pan.slice(0, 4)}${'X'.repeat(5)}${pan.slice(-1)}`;
+};
+
 const LGS = ({ 
     isVerified, 
     mobileNumber, 
@@ -322,7 +329,7 @@ const LGS = ({
                             }}>
                                 <VerifiedPanInput
                                     type="text"
-                                    value={panNumber}
+                                    value={maskPAN(panNumber)}
                                     disabled
                                 />
                                 <VerifiedIcon style={{
@@ -398,11 +405,22 @@ const LGS = ({
                                 )}
                             </DateInputContainer>
 
-                            {isDateValid && !isNameVerified && !isDobVerified && (
-                                            // @ts-ignore
+                            {isDateValid && !isNameVerified && !isDobVerified && name.length >= MIN_NAME_LENGTH && (
+                                // @ts-ignore
                                 <CTAButton onClick={handleProceed}>
                                     Proceed
                                 </CTAButton>
+                            )}
+
+                            {isDateValid && !isNameVerified && !isDobVerified && name.length < MIN_NAME_LENGTH && (
+                                <div style={{ 
+                                    color: '#64748B', 
+                                    fontSize: '12px', 
+                                    marginTop: '8px',
+                                    textAlign: 'center' 
+                                }}>
+                                    Name must be at least 4 characters long
+                                </div>
                             )}
 
                             {isNameVerified && isDobVerified && (

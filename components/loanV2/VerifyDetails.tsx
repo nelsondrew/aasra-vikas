@@ -444,7 +444,6 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
       ...consolidatedState,
       ...update
     }
-    console.log(updatedObj)
     setConsolidatedState(updatedObj)
   }
 
@@ -789,7 +788,6 @@ const handleContinue = async () => {
 const handleSubmit = async () => {
   setIsLoading(true);
   try {
-    debugger;
     // First update user details with files
     await updateUserDetails({
       ...consolidatedState,
