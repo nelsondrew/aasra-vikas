@@ -1,37 +1,87 @@
-// import twilio from 'twilio';
+import { db } from '../../firebase/admin';
+import { generateOTP } from '../../utils/otpHelper';
+import twilio from 'twilio';
 
+// Initialize Twilio client
+const twilioClient = twilio(
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_AUTH_TOKEN
+);
 
-// const client = twilio(accountSid, authToken);
+export default async function handler(req, res) {
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-// export default async function handler(req, res) {
-//   if (req.method !== 'POST') {
-//     return res.status(405).json({ error: 'Method not allowed' });
-//   }
+    const { phoneNumber } = req.body;
+    
+    if (!phoneNumber) {
+        return res.status(400).json({ error: 'Phone number is required' });
+    }
 
-//   const { phoneNumber } = req.body;
+    try {
+        // Check if user exists in instaloan-applicants collection
+        const applicantDoc = await db.collection('instaloan-applicants')
+            .where('mobileNumber', '==', phoneNumber)
+            .get();
 
-//   if (!phoneNumber) {
-//     return res.status(400).json({ error: 'Phone number is required' });
-//   }
+        // If user exists and is verified, return success without generating OTP
+        if (!applicantDoc.empty) {
+            const applicantData = applicantDoc.docs[0].data();
+            if (applicantData.isVerified === true) {
+                return res.json({ 
+                    message: 'OTP verified successfully',
+                    userDetails: applicantData
+                });
+            }
+        }
 
-//   // Generate a 6-digit OTP
-//   const otp = Math.floor(100000 + Math.random() * 900000);
+        const otp = generateOTP();
+        const timestamp = Date.now();
+        
+        // Store OTP in Firestore
+        await db.collection('otps').doc(phoneNumber).set({
+            otp,
+            timestamp,
+            attempts: 0
+        });
 
-//   try {
-//     // Send OTP via Twilio
-//     const message = await client.messages.create({
-//       body: `Your OTP is: ${otp}`,
-//       from: twilioPhoneNumber,
-//       to: phoneNumber,
-//     });
+        // Send OTP via Twilio
+        try {
+            await twilioClient.messages.create({
+                body: `Your InstantLoan verification code is: ${otp}. Valid for 5 minutes. Do not share this OTP with anyone.`,
+                to: phoneNumber,
+                from: process.env.TWILIO_PHONE_NUMBER
+            });
 
-//     res.status(200).json({
-//       message: 'OTP sent successfully',
-//       otp, // For debugging purposes, remove this in production!
-//       sid: message.sid,
-//     });
-//   } catch (error) {
-//     console.error('Twilio error:', error);
-//     res.status(500).json({ error: 'Failed to send OTP' });
-//   }
-// }
+            res.json({ 
+                message: 'OTP sent successfully',
+                success: true
+            });
+        } catch (twilioError) {
+            console.error('Twilio Error:', twilioError);
+            
+            // In development, still return the OTP for testing
+            if (process.env.NODE_ENV === 'development') {
+                res.json({ 
+                    message: 'OTP generated (SMS failed - development mode)',
+                    success: true,
+                    otp // Only included in development
+                });
+            } else {
+                // In production, handle SMS failure
+                await db.collection('otps').doc(phoneNumber).delete();
+                res.status(500).json({ 
+                    error: 'Failed to send OTP SMS',
+                    success: false
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error in send-otp:', error);
+        res.status(500).json({ 
+            error: 'Failed to process request',
+            success: false
+        });
+    }
+}
