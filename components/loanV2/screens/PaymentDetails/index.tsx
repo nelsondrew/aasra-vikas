@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { Info, CreditCard, ChevronRight, AlertCircle } from 'lucide-react';
 import { createOrder } from '../../api/payment';
@@ -188,7 +189,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed, userDetails 
       }
 
       const orderResponse = await createOrder({
-        amount: 99,
+        amount: 1,
         customerEmail: userDetails?.email,
         customerPhone: userDetails?.mobileNumber,
         customerId: `cust_order`,
