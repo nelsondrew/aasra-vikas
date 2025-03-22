@@ -510,13 +510,15 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
   ]);
 
   useEffect(() => {
-    let interval: number;
+    let interval: NodeJS.Timeout | undefined;
     if (showOTP && timer > 0) {
       interval = setInterval(() => {
         setTimer((prev) => prev - 1);
       }, 1000);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [showOTP, timer]);
 
   useEffect(() => {
