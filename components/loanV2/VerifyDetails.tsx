@@ -618,7 +618,7 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
           setMobileNumber(userDetails.mobileNumber);
           setAgreed(userDetails.agreed);
           setShowOTP(userDetails.showOTP);
-          setOTP(userDetails.otp);
+          // setOTP(userDetails.otp);
           setIsVerified(userDetails.isVerified);
           setPanNumber(userDetails.panNumber);
           setIsPanVerified(userDetails.isPanVerified);
@@ -635,11 +635,13 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
           setShowWorkDetails(userDetails.showWorkDetails);
           setWorkEmail(userDetails.workEmail);
           setOfficeAddress(userDetails.officeAddress);
+          // @ts-ignore
           setSalarySlips(userDetails.salarySlips);
           setPersonalAddress(userDetails.personalAddress);
           setCurrentCity(userDetails.currentCity);
           setCurrentLoans(userDetails.currentLoans);
           setStayingStatus(userDetails.stayingStatus);
+             // @ts-ignore
           setCurrentScreen(userDetails.currentScreen);
           setShowPayment(userDetails.showPayment);
           setShowVerificationStatus(userDetails.showVerificationStatus);
