@@ -13,7 +13,7 @@ const Banner = () => {
             that comes with no annual fee, a high credit limit.
           </p>
         </div>
-        <Link href="/apply-loan" className="cmn-btn">
+        <Link href="/apply-loan-v2" className="cmn-btn">
           Apply Now
         </Link>
       </div>

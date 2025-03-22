@@ -189,7 +189,7 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed, userDetails 
       }
 
       const orderResponse = await createOrder({
-        amount: 1,
+        amount: 99,
         customerEmail: userDetails?.email,
         customerPhone: userDetails?.mobileNumber,
         customerId: `cust_order`,

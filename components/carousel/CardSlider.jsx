@@ -76,7 +76,7 @@ const CardSlider = () => {
               <Image src={card_img_1} alt="image" />
             </div>
             <div className="button-area text-center">
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Get Started Now
               </Link>
             </div>
@@ -86,7 +86,7 @@ const CardSlider = () => {
               <Image src={card_img_2} alt="image" />
             </div>
             <div className="button-area text-center">
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Get Started Now
               </Link>
             </div>
@@ -96,7 +96,7 @@ const CardSlider = () => {
               <Image src={card_img_1} alt="image" />
             </div>
             <div className="button-area text-center">
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Get Started Now
               </Link>
             </div>
@@ -106,7 +106,7 @@ const CardSlider = () => {
               <Image src={card_img_2} alt="image" />
             </div>
             <div className="button-area text-center">
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Get Started Now
               </Link>
             </div>

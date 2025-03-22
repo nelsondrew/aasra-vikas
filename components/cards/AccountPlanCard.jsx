@@ -38,7 +38,7 @@ const AccountPlanCard = ({ account }) => {
         </div>
       </div>
       <div className="btn-area">
-        <Link href="/apply-loan" className="cmn-btn">
+        <Link href="/apply-loan-v2" className="cmn-btn">
           Apply Now
         </Link>
       </div>

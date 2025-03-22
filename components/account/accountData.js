@@ -12,21 +12,21 @@ export const business_solutions_data = [
     title: "Checking Account",
     icon: checking,
     desc: "Choose from our checking options that allow you to earn interest, avoid fees, and easily manage your account.",
-    link: "/apply-loan",
+    link: "/apply-loan-v2",
   },
   {
     id: 2,
     title: "Savings Accounts",
     icon: savings,
     desc: "Save for your goals and watch your money grow with a CD, a money market account, a savings account.Your future starts now.",
-    link: "/apply-loan",
+    link: "/apply-loan-v2",
   },
   {
     id: 3,
     title: "Business Account",
     icon: business,
     desc: "Take charge of your business banking with a business bank account. Services including virtual cards, team management and more.",
-    link: "/apply-loan",
+    link: "/apply-loan-v2",
   },
 ];
 

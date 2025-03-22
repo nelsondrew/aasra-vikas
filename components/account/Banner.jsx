@@ -15,7 +15,7 @@ const Banner = () => {
             accounts to help you manage your finances seamlessly
           </p>
         </div>
-        <Link href="/apply-loan" className="cmn-btn">
+        <Link href="/apply-loan-v2" className="cmn-btn">
           Apply Now
         </Link>
       </div>

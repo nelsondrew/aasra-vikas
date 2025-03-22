@@ -38,7 +38,7 @@ const Rewards = () => {
                   </div>
                 </div>
                 <div className="bottom-area text-center">
-                  <Link href="/apply-loan" className="cmn-btn">
+                  <Link href="/apply-loan-v2" className="cmn-btn">
                     Apply Now
                   </Link>
                 </div>

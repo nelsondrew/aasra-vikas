@@ -46,7 +46,7 @@ const IframeComponent = () => {
             customerEmail:  paymentData?.email || '',
             customerPhone: paymentData?.phoneNumber || '',
             customerId:  paymentData?.customerId || '',
-            returnUrl: "https://aaasravikas.com/apply-loan"
+            returnUrl: "https://aaasravikas.com/apply-loan-v2"
         })
 
         // Set the checkout options

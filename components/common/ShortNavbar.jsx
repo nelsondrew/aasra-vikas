@@ -47,7 +47,7 @@ const ShortNavbar = ({ dashboardControl }) => {
                   <li className="nav-item">Don&#39;t have an account</li>
                 </ul>
                 <div className="right-area header-action d-flex align-items-center">
-                  <Link href="/apply-loan" className="cmn-btn">
+                  <Link href="/apply-loan-v2" className="cmn-btn">
                     Register
                   </Link>
                 </div>

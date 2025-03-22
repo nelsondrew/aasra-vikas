@@ -14,7 +14,7 @@ const CallToAction = () => {
                 <p>What are you waiting for? It&#39;s time to get started.</p>
               </div>
               <div className="btn-area text-center">
-                <Link href="/apply-loan" className="cmn-btn">
+                <Link href="/apply-loan-v2" className="cmn-btn">
                   Apply Now
                 </Link>
               </div>

@@ -16,7 +16,7 @@ const Ready = () => {
                   account.
                 </p>
               </div>
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Open an Account
               </Link>
               <Image src={get_start} alt="get start" />

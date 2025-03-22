@@ -20,7 +20,7 @@ const Planning = () => {
                   for you.
                 </p>
               </div>
-              <Link href="/apply-loan" className="cmn-btn">
+              <Link href="/apply-loan-v2" className="cmn-btn">
                 Apply for a loan
               </Link>
             </div>

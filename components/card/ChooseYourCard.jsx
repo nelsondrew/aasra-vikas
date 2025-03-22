@@ -67,7 +67,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_1} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>
@@ -77,7 +77,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_2} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>
@@ -87,7 +87,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_3} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>
@@ -106,7 +106,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_3} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>
@@ -116,7 +116,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_2} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>
@@ -126,7 +126,7 @@ const ChooseYourCard = () => {
                       <div className="single-card">
                         <Image src={card_1} alt="images" />
                         <div className="btn-area">
-                          <Link href="/apply-loan" className="cmn-btn">
+                          <Link href="/apply-loan-v2" className="cmn-btn">
                             Get Started Now
                           </Link>
                         </div>

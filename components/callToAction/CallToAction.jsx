@@ -14,7 +14,7 @@ const callToAction = () => {
                   </h2>
                 </div>
                 <div className="bottom-area text-center">
-                  <Link href="/apply-loan" className="cmn-btn">
+                  <Link href="/apply-loan-v2" className="cmn-btn">
                     Apply For Loan
                   </Link>
                   <Link href="/contact" className="cmn-btn second">

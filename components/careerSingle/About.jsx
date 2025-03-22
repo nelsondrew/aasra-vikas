@@ -137,7 +137,7 @@ const About = () => {
                     eros.tempor.
                   </li>
                 </ul>
-                <Link href="/apply-loan" className="cmn-btn">
+                <Link href="/apply-loan-v2" className="cmn-btn">
                   Apply for this job
                 </Link>
               </div>
@@ -149,7 +149,7 @@ const About = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing eliterloe.
                   Donec est sit ut justo. Non pharetra sem vitae odio lorem ipi
                 </p>
-                <Link href="/apply-loan" className="cmn-btn">
+                <Link href="/apply-loan-v2" className="cmn-btn">
                   Apply for this job
                 </Link>
               </div>
