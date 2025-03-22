@@ -814,8 +814,18 @@ const handleGetMoney = () => {
   setShowPayment(true);
 };
 
-const handlePaymentComplete = () => {
+const handlePaymentComplete =  async () => {
+
   setShowVerificationStatus(true);
+
+
+  setTimeout(async () => {
+    await updateUserDetails({
+      ...consolidatedState,
+      showVerificationStatus: true,
+    });
+
+  },100)
 };
 
 return (

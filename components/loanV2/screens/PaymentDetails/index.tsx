@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { Info, CreditCard, ChevronRight } from 'lucide-react';
+import { Info, CreditCard, ChevronRight, AlertCircle } from 'lucide-react';
 import { createOrder } from '../../api/payment';
 import { InitialState } from "../../types";
+import { useEffect, useState } from 'react';
+import { load } from "@cashfreepayments/cashfree-js";
 
 const PaymentDetailsContent = styled.div`
   animation: fadeIn 0.3s ease-out;
@@ -119,16 +121,74 @@ const CTAButton = styled.button`
   }
 `;
 
+const ErrorMessage = styled.div`
+  background: #FEE2E2;
+  border: 1px solid #FCA5A5;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #DC2626;
+  font-size: 14px;
+`;
+
+const RetryButton = styled.button`
+  background: none;
+  border: none;
+  color: #2563EB;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+
+  &:hover {
+    color: #1D4ED8;
+  }
+`;
+
 interface PaymentDetailsProps {
   onProceed: () => void;
   userDetails: InitialState;
 }
 
-const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed , userDetails }) => {
-  const handlePayment = async () => {
+const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed, userDetails }) => {
+  const [cashfree, setCashfree] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Initialize the CashFree SDK
+  const initializeSDK = async () => {
     try {
+      const cashfreeObj = await load({
+        mode: "production",
+      });
+      setCashfree(cashfreeObj);
+    } catch (err) {
+      console.error("Error initializing Cashfree SDK", err);
+    }
+  };
+
+  useEffect(() => {
+    initializeSDK();
+  }, []);
+
+  const handlePayment = async () => {
+    setIsLoading(true);
+    setError(null); // Clear any previous errors
+
+    try {
+      let cashfreeObj = cashfree;
+      if (!cashfree) {
+        cashfreeObj = await load({
+          mode: "production",
+        });
+      }
+
       const orderResponse = await createOrder({
-        amount: 99, // Amount in INR
+        amount: 99,
         customerEmail: userDetails?.email,
         customerPhone: userDetails?.mobileNumber,
         customerId: `cust_order`,
@@ -136,19 +196,50 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed , userDetails
       });
 
       if (orderResponse.error) {
-        console.error('Error:', orderResponse.error);
+        setError('Failed to create payment order. Please try again.');
         return;
       }
 
-      // Initialize Cashfree payment
-      const { orderId, paymentSessionId } = orderResponse;
-      
-      // Use these values to initialize Cashfree payment SDK
-      // Follow Cashfree documentation for frontend integration
+      const { paymentSessionId } = orderResponse;
+
+      const checkoutOptions = {
+        paymentSessionId,
+        redirectTarget: "_self",
+      };
+
+      cashfreeObj.checkout(checkoutOptions)
+        .then((result: any) => {
+          if (result.error) {
+            setError('Payment failed. Please try again or use a different payment method.');
+            console.error("Payment failed:", result.error);
+          } else if (result.redirect) {
+            console.log("Payment will be redirected.");
+          } else if (result.paymentDetails) {
+            if (result.paymentDetails.paymentMessage === "Payment finished. Check status.") {
+              onProceed();
+            } else {
+              setError('Payment was not completed. Please try again.');
+            }
+          }
+        })
+        .catch((error: any) => {
+          setError('Payment processing failed. Please try again.');
+          console.error("Payment error:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
 
     } catch (error) {
+      setError('Something went wrong. Please try again later.');
       console.error('Payment error:', error);
+      setIsLoading(false);
     }
+  };
+
+  const handleRetry = () => {
+    setError(null);
+    handlePayment();
   };
 
   return (
@@ -160,6 +251,20 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed , userDetails
       <SubTitle>
         Complete the verification process to get your loan of ₹1,00,000 sanctioned.
       </SubTitle>
+
+      {error && (
+        <ErrorMessage>
+          <AlertCircle size={20} />
+          <div style={{ flex: 1 }}>
+            {error}
+            <div style={{ marginTop: 8 }}>
+              <RetryButton onClick={handleRetry}>
+                Try Again
+              </RetryButton>
+            </div>
+          </div>
+        </ErrorMessage>
+      )}
 
       <PaymentDetailsTable>
         <PaymentRow>
@@ -183,9 +288,13 @@ const PaymentDetails: React.FC<PaymentDetailsProps> = ({ onProceed , userDetails
         </InfoText>
       </InfoBox>
 
-      <CTAButton onClick={handlePayment}>
-        Pay ₹99 & Continue
-        <ChevronRight size={20} />
+      <CTAButton 
+        onClick={handlePayment} 
+        disabled={isLoading}
+        style={{ opacity: isLoading ? 0.7 : 1 }}
+      >
+        {isLoading ? 'Processing...' : 'Pay ₹99 & Continue'}
+        {!isLoading && <ChevronRight size={20} />}
       </CTAButton>
     </PaymentDetailsContent>
   );
