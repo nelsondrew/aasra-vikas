@@ -118,7 +118,10 @@ interface WorkDetailsProps {
   currentCity: string;
   currentLoans: string;
   stayingStatus: string;
-  salarySlips: string[];
+  salarySlips: Array<{
+    label: string;
+    url: string;
+  }>;
   onWorkEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onOfficeAddressChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPersonalAddressChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -179,6 +182,7 @@ const WorkDetails = ({
         <Label>3 months salary slip</Label>
         {salarySlips.map((month, index) => (
           <FileUploadInput 
+           // @ts-ignore
             key={month}
             onClick={() => handleFileInputClick(index)}
           >

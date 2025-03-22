@@ -353,7 +353,10 @@ interface InitialState {
   showWorkDetails: boolean;
   workEmail: string;
   officeAddress: string;
-  salarySlips: string[];
+  salarySlips: Array<{
+    label: string;
+    url: string;
+  }> ;
   personalAddress: string;
   currentCity: string;
   currentLoans: string;
@@ -426,7 +429,7 @@ function VerifyDetails({ initialState }: VerifyDetailsProps) {
     showWorkDetails: false,
     workEmail: '',
     officeAddress: '',
-    salarySlips: ['', '', ''],
+    salarySlips: [],
     personalAddress: '',
     currentCity: '',
     currentLoans: '',
