@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { DollarSign, User, LogOut, Bell, ChevronDown , ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../../../store/slices/userSlice';
+import { RootState } from '../../../store/store';
 // import { useAuth } from '../../contexts/AuthContext';
 
 const HeaderContainer = styled.header`
@@ -144,6 +145,12 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const dispatch = useDispatch();
+  const userName = useSelector((state: RootState) =>{
+    const userData = state?.user?.user;
+    const fullName = `${userData?.firstName} ${userData?.lastName}`
+    return fullName || '';
+   });
+
   const userData = {
     logout: () => {
       console.log("dummy logout");
@@ -218,7 +225,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
                 <UserAvatar>
                   <User size={20} />
                 </UserAvatar>
-                <span>{user?.name || 'User'}</span>
+                <span>{userName || 'User'}</span>
                 <ChevronDown size={16} className="chevron" />
               </UserButton>
               {isDropdownOpen && (
