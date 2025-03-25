@@ -64,12 +64,14 @@ const InputGroup = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  padding: 1rem;
-  padding-left: 2.75rem;
+  padding: 1rem !important;
+  padding-top: 0.8rem !important;
+  padding-left: 2.75rem !important;
   border: 1px solid #E2E8F0;
   border-radius: 0.5rem;
   color: #1E293B;
   font-size: 1rem;
+  height: 3.25rem;
   
   &:focus {
     border-color: #60A5FA;
@@ -83,6 +85,11 @@ const IconWrapper = styled.div`
   top: 50%;
   transform: translateY(-50%);
   color: #60A5FA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
 `;
 
 const ErrorMessage = styled.span`
@@ -94,13 +101,15 @@ const ErrorMessage = styled.span`
 
 const Select = styled.select`
   width: 100%;
-  padding: 1rem;
-  padding-left: 2.75rem;
+  padding: 1rem !important;
+  padding-top: 0.8rem !important; 
+  padding-left: 2.75rem !important;
   border: 1px solid #E2E8F0;
   border-radius: 0.5rem;
   color: #1E293B;
   background-color: white;
   font-size: 1rem;
+  height: 3.25rem;
   
   &:focus {
     border-color: #60A5FA;
