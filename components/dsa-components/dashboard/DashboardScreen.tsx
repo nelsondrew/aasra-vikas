@@ -11,7 +11,7 @@ const DashboardContainer = styled.div`
   min-height: 100vh;
   background-color: #FFFFFF;
   padding: 1.5rem;
-  padding-top: 5rem;
+  padding-top: 7rem;
 
   h3 {
     font-size: 24px !important;
@@ -212,7 +212,7 @@ const DashboardScreen: React.FC = () => {
 
         <QuickActions>
           <ActionCard
-            onClick={() => router.push('/refer')}
+            onClick={() => router.push('/referral')}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
