@@ -4,6 +4,34 @@ import { useEffect, useRef, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { navData } from "./navData";
 import Logo from "/public/images/av_logo.png";
+import styled from "styled-components";
+
+const LoginButton = styled.button`
+  background: transparent;
+  color: #4B89DC;
+  border: 2px solid #4B89DC;
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 16px;
+
+  &:hover {
+    background: rgba(75, 137, 220, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 6px 20px;
+    margin-right: 12px;
+  }
+`;
 
 const NavBar = () => {
   const [windowHeight, setWindowHeight] = useState(0);
@@ -45,7 +73,6 @@ const NavBar = () => {
                 width: logoConstants.width
               }} className="navbar-brand" href="/" onClick={hidenMenu}>
                 <Image
-
                   src={Logo}
                   className="logo"
                   alt="logo"
@@ -134,6 +161,9 @@ const NavBar = () => {
                   })}
                 </ul>
                 <div className="right-area header-action d-flex align-items-center">
+                  <LoginButton onClick={() => window.location.href = '/splash'}>
+                    Login
+                  </LoginButton>
                   <Link
                     href="/apply-loan-v2"
                     className="cmn-btn"
