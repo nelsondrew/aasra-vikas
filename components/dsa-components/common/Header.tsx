@@ -137,7 +137,7 @@ interface HeaderProps {
   isLoggedIn?: boolean;
 }
 
-export const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
+const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -163,8 +163,24 @@ export const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/dsa/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // Redirect to login page after successful logout
+        router.push('/dsa-auth');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   const goBack = () => {
@@ -228,3 +244,5 @@ export const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
     </HeaderContainer>
   );
 };
+
+export default Header;
