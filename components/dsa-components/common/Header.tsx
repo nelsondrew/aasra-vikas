@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { DollarSign, User, LogOut, Bell, ChevronDown , ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
+import { useDispatch } from 'react-redux';
+import { clearUser } from '../../../store/slices/userSlice';
 // import { useAuth } from '../../contexts/AuthContext';
 
 const HeaderContainer = styled.header`
@@ -141,6 +143,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const dispatch = useDispatch();
   const userData = {
     logout: () => {
       console.log("dummy logout");
@@ -173,7 +176,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
       });
 
       if (response.ok) {
-        // Redirect to login page after successful logout
+        // Clear user data from Redux
+        dispatch(clearUser());
+        // Redirect to login page
         router.push('/dsa-auth');
       } else {
         console.error('Logout failed');

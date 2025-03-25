@@ -7,7 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
 import 'line-awesome/dist/line-awesome/css/line-awesome.min.css'; // Import Line Awesome styles
-
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 
 
 export default function App({ Component, pageProps }) {
@@ -17,28 +18,28 @@ export default function App({ Component, pageProps }) {
 
   if (Component.getLayout) {
     return Component.getLayout(
-      <>
+      <Provider store={store}>
+          <Head>
+            <title>Aasra Vikas</title>
+            <meta name="description" content="Micro loans for financial Freedom" />
+            <link rel="icon" href="av_favicon.ico" />
+          </Head>
+          <Component {...pageProps} />
+          <ToastContainer />
+      </Provider>
+    );
+  }
+
+  return (
+    <Provider store={store}>
         <Head>
           <title>Aasra Vikas</title>
           <meta name="description" content="Micro loans for financial Freedom" />
           <link rel="icon" href="av_favicon.ico" />
         </Head>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Head>
-        <title>Aasra Vikas</title>
-        <meta name="description" content="Micro loans for financial Freedom" />
-        <link rel="icon" href="av_favicon.ico" />
-      </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+    </Provider>
   );
 }

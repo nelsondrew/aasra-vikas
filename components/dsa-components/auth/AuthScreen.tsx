@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { User, Mail, Phone, Lock, ArrowLeft, DollarSign, Loader2, Check, X } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../store/slices/userSlice';
 
 const AuthContainer = styled.div`
   min-height: 100vh;
@@ -259,6 +261,7 @@ const AuthScreen: React.FC = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+  const dispatch = useDispatch();
   
   const loginForm = useForm<LoginFormData>();
   const registerForm = useForm<RegisterFormData>();
@@ -279,6 +282,9 @@ const AuthScreen: React.FC = () => {
       if (!response.ok) {
         throw new Error(result.message || 'Invalid credentials');
       }
+
+      // Dispatch user data to Redux
+      dispatch(setUser(result.user));
 
       // Redirect to dashboard on successful login
       router.push('/dsa-dashboard');
