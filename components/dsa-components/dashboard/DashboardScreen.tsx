@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { PlusCircle, TrendingUp, AlertCircle, Wallet } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '../common/Button';
-import { Header } from '../common/Header';
+import  Header  from '../common/Header';
 import { useRouter } from 'next/router';
 
 const DashboardContainer = styled.div`

@@ -254,6 +254,7 @@ interface RegisterFormData {
 const AuthScreen: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -263,6 +264,7 @@ const AuthScreen: React.FC = () => {
   const registerForm = useForm<RegisterFormData>();
 
   const handleLoginSubmit = async (data: LoginFormData) => {
+    setIsLoggingIn(true);
     try {
       const response = await fetch('/api/dsa/signin', {
         method: 'POST',
@@ -283,6 +285,10 @@ const AuthScreen: React.FC = () => {
 
     } catch (error) {
       console.error('Login error:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'Login failed. Please try again.');
+      setShowErrorModal(true);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -403,8 +409,15 @@ const AuthScreen: React.FC = () => {
               )}
             </InputGroup>
 
-            <Button type="submit" fullWidth>
-              Sign In
+            <Button type="submit" fullWidth disabled={isLoggingIn}>
+              {isLoggingIn ? (
+                <>
+                  <LoadingSpinner size={20} />
+                  Signing In...
+                </>
+              ) : (
+                'Sign In'
+              )}
             </Button>
           </Form>
         ) : (
@@ -591,7 +604,9 @@ const AuthScreen: React.FC = () => {
             <ErrorIcon>
               <X size={32} />
             </ErrorIcon>
-            <ModalTitle>Registration Failed</ModalTitle>
+            <ModalTitle>
+              {isLogin ? 'Login Failed' : 'Registration Failed'}
+            </ModalTitle>
             <ModalText>
               {errorMessage}
             </ModalText>
