@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { User, Mail, Phone, Lock, ArrowLeft, DollarSign } from 'lucide-react';
+import { User, Mail, Phone, Lock, ArrowLeft, DollarSign, Loader2, Check, X } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
 
@@ -156,6 +156,83 @@ const StatCard = styled.div`
   }
 `;
 
+const LoadingSpinner = styled(Loader2)`
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const SuccessModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  z-index: 1000;
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+const SuccessIcon = styled.div`
+  width: 64px;
+  height: 64px;
+  background: #059669;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: white;
+`;
+
+const ModalTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 1rem;
+`;
+
+const ModalText = styled.p`
+  color: #64748B;
+  margin-bottom: 2rem;
+`;
+
+const ErrorIcon = styled.div`
+  width: 64px;
+  height: 64px;
+  background: #DC2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: white;
+`;
+
+const ErrorModal = styled(SuccessModal)`
+  // Inherits all styles from SuccessModal
+`;
+
 interface LoginFormData {
   email: string;
   password: string;
@@ -176,29 +253,83 @@ interface RegisterFormData {
 
 const AuthScreen: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
-  // const { login } = useAuth();
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
   
   const loginForm = useForm<LoginFormData>();
   const registerForm = useForm<RegisterFormData>();
 
-  const handleLoginSubmit = (data: LoginFormData) => {
-    // login(data.email, data.password);
-    router.push("/dsa-dashboard")
+  const handleLoginSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await fetch('/api/dsa/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Invalid credentials');
+      }
+
+      // Redirect to dashboard on successful login
+      router.push('/dsa-dashboard');
+
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
-  const handleRegisterSubmit = (data: RegisterFormData) => {
-    // For now, just log them in after registration
-    router.push("/dsa-dashboard")
+  const handleRegisterSubmit = async (data: RegisterFormData) => {
+    setIsRegistering(true);
+    try {
+      const response = await fetch('/api/dsa/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Something went wrong');
+      }
+
+      registerForm.reset();
+      setShowSuccessModal(true);
+
+    } catch (error) {
+      console.error('Registration error:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'Registration failed. Please try again.');
+      setShowErrorModal(true);
+    } finally {
+      setIsRegistering(false);
+    }
   };
 
+  const handleModalClose = () => {
+    setShowSuccessModal(false);
+    setIsLogin(true);
+  };
 
-const goBack = () => {
-  if (typeof window !== 'undefined') {
-    window.history.back();
-  }
-};
+  const handleErrorModalClose = () => {
+    setShowErrorModal(false);
+    setErrorMessage('');
+  };
 
+  const goBack = () => {
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
 
   return (
     <AuthContainer>
@@ -415,8 +546,15 @@ const goBack = () => {
               )}
             </InputGroup>
 
-            <Button type="submit" fullWidth>
-              Create Account
+            <Button type="submit" fullWidth disabled={isRegistering}>
+              {isRegistering ? (
+                <>
+                  <LoadingSpinner size={20} />
+                  Creating Account...
+                </>
+              ) : (
+                'Create Account'
+              )}
             </Button>
           </Form>
         )}
@@ -427,6 +565,42 @@ const goBack = () => {
             : 'Already have an account? Sign In'}
         </ToggleText>
       </AuthCard>
+
+      {showSuccessModal && (
+        <>
+          <Overlay onClick={handleModalClose} />
+          <SuccessModal>
+            <SuccessIcon>
+              <Check size={32} />
+            </SuccessIcon>
+            <ModalTitle>Registration Successful!</ModalTitle>
+            <ModalText>
+              Your account has been created successfully. You can now login with your credentials.
+            </ModalText>
+            <Button fullWidth onClick={handleModalClose}>
+              Proceed to Login
+            </Button>
+          </SuccessModal>
+        </>
+      )}
+
+      {showErrorModal && (
+        <>
+          <Overlay onClick={handleErrorModalClose} />
+          <ErrorModal>
+            <ErrorIcon>
+              <X size={32} />
+            </ErrorIcon>
+            <ModalTitle>Registration Failed</ModalTitle>
+            <ModalText>
+              {errorMessage}
+            </ModalText>
+            <Button fullWidth onClick={handleErrorModalClose}>
+              Try Again
+            </Button>
+          </ErrorModal>
+        </>
+      )}
     </AuthContainer>
   );
 };
