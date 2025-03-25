@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { DollarSign, User, LogOut, Bell, ChevronDown } from 'lucide-react';
+import { DollarSign, User, LogOut, Bell, ChevronDown , ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
 // import { useAuth } from '../../contexts/AuthContext';
 
@@ -93,6 +93,15 @@ const UserAvatar = styled.div`
   justify-content: center;
 `;
 
+
+const BackButton = styled.button`
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  background: transparent;
+`;
+
+
 const DropdownMenu = styled.div`
   position: absolute;
   top: calc(100% + 4px);
@@ -158,11 +167,20 @@ export const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
     logout();
   };
 
+  const goBack = () => {
+    if (typeof window !== 'undefined') {
+      window.history.back();
+    }
+  };
+
   return (
     <HeaderContainer>
-      <Logo onClick={() => router.push(isLoggedIn ? '/dashboard' : '/')}>
+      <Logo onClick={() => router.push(isLoggedIn ? '/dsa-dashboard' : '/')}>
         {/* <DollarSign size={24} />
         InstantLoan */}
+         <BackButton onClick={() => goBack()}>
+          <ArrowLeft size={24} />
+        </BackButton>
       </Logo>
       <HeaderButtons>
         {isLoggedIn ? (
