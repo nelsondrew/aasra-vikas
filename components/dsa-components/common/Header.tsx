@@ -196,9 +196,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   };
 
   const goBack = () => {
-    if (typeof window !== 'undefined') {
-      window.history.back();
-    }
+    router.push('/')
   };
 
   return (

@@ -8,7 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
 import 'line-awesome/dist/line-awesome/css/line-awesome.min.css'; // Import Line Awesome styles
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '../store/store';
 
 
 export default function App({ Component, pageProps }) {
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }) {
   if (Component.getLayout) {
     return Component.getLayout(
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <Head>
             <title>Aasra Vikas</title>
             <meta name="description" content="Micro loans for financial Freedom" />
@@ -26,12 +28,14 @@ export default function App({ Component, pageProps }) {
           </Head>
           <Component {...pageProps} />
           <ToastContainer />
+        </PersistGate>
       </Provider>
     );
   }
 
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <Head>
           <title>Aasra Vikas</title>
           <meta name="description" content="Micro loans for financial Freedom" />
@@ -40,6 +44,7 @@ export default function App({ Component, pageProps }) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+      </PersistGate>
     </Provider>
   );
 }

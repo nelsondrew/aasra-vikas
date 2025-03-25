@@ -8,6 +8,26 @@ export async function middleware(request: NextRequest) {
   // Paths that require authentication
   const protectedPaths = ['/dsa-dashboard', '/referral', '/track', '/earnings', '/applications', '/notifications', '/profile'];
 
+  // Check if trying to access login page
+  if (request.nextUrl.pathname === '/dsa-auth') {
+    // If token exists and is valid, redirect to dashboard
+    if (token) {
+      try {
+        const secret = new TextEncoder().encode(
+          process.env.JWT_SECRET || 'your-secret-key'
+        );
+        await jose.jwtVerify(token.value, secret);
+        // Token is valid, redirect to dashboard
+        return NextResponse.redirect(new URL('/dsa-dashboard', request.url));
+      } catch (error) {
+        // Token is invalid, let them access login page
+        return NextResponse.next();
+      }
+    }
+    // No token, let them access login page
+    return NextResponse.next();
+  }
+
   // Check if path requires authentication
   const isProtectedPath = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
@@ -44,6 +64,7 @@ export const config = {
     '/earnings/:path*',
     '/applications/:path*',
     '/notifications/:path*',
-    '/profile/:path*'
+    '/profile/:path*',
+    '/dsa-auth'  // Add login page to matcher
   ]
 }; 
