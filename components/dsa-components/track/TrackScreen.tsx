@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Search, Filter, Clock, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
-import { Header } from '../common/Header';
+import  Header  from '../common/Header';
 import { useRouter } from 'next/router';
 
 const TrackContainer = styled.div`
