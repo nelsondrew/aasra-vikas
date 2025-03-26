@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArrowLeft, User, Mail, Phone, MapPin, Edit2, LogOut } from 'lucide-react';
 import { Button } from '../common/Button';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
+import { useRouter } from 'next/router';
+import { clearUser } from '../../../store/slices/userSlice';
 
 const ProfileContainer = styled.div`
   min-height: 100vh;
@@ -157,21 +159,39 @@ const LogoutSection = styled.div`
 `;
 
 const ProfileScreen: React.FC = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  
   const goBack = () => {
-    if (typeof window !== 'undefined') {
-      window.history.back();
-    }
+    router.push('/');
   };
 
   const userData = useSelector((state: RootState) => state.user.user);
+  const { email = "", firstName = "", lastName = "", id = '', phone = "" } = userData || {};
 
-  const { email = "" , firstName = "" , lastName = "" , id = '' } = userData;
 
   const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'User';
 
-  const handleLogout = () => {
-    // TODO: Implement logout logic
-    window.location.href = '/dsa-auth';
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/dsa/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        // Clear user data from Redux
+        dispatch(clearUser());
+        // Redirect to login page
+        router.push('/dsa-auth');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
@@ -205,7 +225,7 @@ const ProfileScreen: React.FC = () => {
         <InfoItem>
           <Phone size={20} className="icon" />
           <span className="label">Phone</span>
-          <span className="value">+91 98765 43210</span>
+          <span className="value">{phone}</span>
         </InfoItem>
         <InfoItem>
           <MapPin size={20} className="icon" />

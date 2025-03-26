@@ -15,6 +15,7 @@ interface JWTPayload {
   role: string;
   firstName: string;
   lastName: string;
+  phone : string;
 }
 
 export default async function handler(
@@ -49,13 +50,16 @@ export default async function handler(
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    console.log(userData, "user data from api")
+
     // Create JWT payload
     const payload: JWTPayload = {
       userId: userDoc.id,
       email: userData.email,
       role: userData.role,
       firstName: userData.firstName,
-      lastName: userData.lastName
+      lastName: userData.lastName,
+      phone: userData.phone,
     };
 
     // Sign JWT using jsonwebtoken
@@ -85,7 +89,8 @@ export default async function handler(
         email: userData.email,
         firstName: userData.firstName,
         lastName: userData.lastName,
-        role: userData.role
+        role: userData.role,
+        phone: userData.phone
       }
     });
 
