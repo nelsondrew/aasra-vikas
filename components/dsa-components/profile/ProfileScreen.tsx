@@ -184,8 +184,8 @@ const ProfileScreen: React.FC = () => {
       if (response.ok) {
         // Clear user data from Redux
         dispatch(clearUser());
-        // Redirect to login page
-        router.push('/dsa-auth');
+        // Use window.location.href for redirect
+        window.location.href = '/dsa-auth';
       } else {
         console.error('Logout failed');
       }

@@ -8,8 +8,8 @@ export async function middleware(request: NextRequest) {
   // Paths that require authentication
   const protectedPaths = ['/dsa-dashboard', '/referral', '/track', '/earnings', '/applications', '/notifications', '/profile'];
 
-  // Check if trying to access login page
-  if (request.nextUrl.pathname === '/dsa-auth') {
+  // Check if trying to access login pages
+  if (request.nextUrl.pathname === '/dsa-auth' || request.nextUrl.pathname === '/splash') {
     // If token exists and is valid, redirect to dashboard
     if (token) {
       try {
@@ -65,6 +65,7 @@ export const config = {
     '/applications/:path*',
     '/notifications/:path*',
     '/profile/:path*',
-    '/dsa-auth'  // Add login page to matcher
+    '/dsa-auth',
+    '/splash'  // Add splash page to matcher
   ]
 }; 

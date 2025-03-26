@@ -5,6 +5,8 @@ import { FaBars } from "react-icons/fa";
 import { navData } from "./navData";
 import Logo from "/public/images/av_logo.png";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { useRouter } from 'next/router';
 
 const LoginButton = styled.button`
   background: transparent;
@@ -36,6 +38,8 @@ const LoginButton = styled.button`
 const NavBar = () => {
   const [windowHeight, setWindowHeight] = useState(0);
   const menus = useRef();
+  const router = useRouter();
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const hidenMenu = () => {
     menus.current.classList.remove("show");
@@ -54,9 +58,18 @@ const NavBar = () => {
       window.removeEventListener("scroll", navBarTop);
     };
   }, []);
+
   const logoConstants = {
     height: "57px",
     width: "13rem",
+  };
+
+  const handleCTAClick = () => {
+    if (isAuthenticated) {
+      window.location.href = '/dsa-dashboard';
+    } else {
+      window.location.href = '/splash';
+    }
   };
 
   return (
@@ -161,8 +174,8 @@ const NavBar = () => {
                   })}
                 </ul>
                 <div className="right-area header-action d-flex align-items-center">
-                  <LoginButton onClick={() => window.location.href = '/splash'}>
-                    Login
+                  <LoginButton onClick={handleCTAClick}>
+                    {isAuthenticated ? 'Go to Dashboard' : 'Login'}
                   </LoginButton>
                   <Link
                     href="/apply-loan-v2"
