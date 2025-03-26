@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { ArrowLeft, User, Mail, Phone, MapPin, Edit2, LogOut } from 'lucide-react';
 import { Button } from '../common/Button';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const ProfileContainer = styled.div`
   min-height: 100vh;
@@ -161,6 +163,12 @@ const ProfileScreen: React.FC = () => {
     }
   };
 
+  const userData = useSelector((state: RootState) => state.user.user);
+
+  const { email = "" , firstName = "" , lastName = "" , id = '' } = userData;
+
+  const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'User';
+
   const handleLogout = () => {
     // TODO: Implement logout logic
     window.location.href = '/dsa-auth';
@@ -182,7 +190,7 @@ const ProfileScreen: React.FC = () => {
             <Edit2 size={16} />
           </div>
         </ProfilePicture>
-        <ProfileName>John Smith</ProfileName>
+        <ProfileName>{fullName}</ProfileName>
         <ProfileRole>Senior Loan Agent</ProfileRole>
         <Button variant="outline">Edit Profile</Button>
       </ProfileHeader>
@@ -192,7 +200,7 @@ const ProfileScreen: React.FC = () => {
         <InfoItem>
           <Mail size={20} className="icon" />
           <span className="label">Email</span>
-          <span className="value">john.smith@example.com</span>
+          <span className="value">{email}</span>
         </InfoItem>
         <InfoItem>
           <Phone size={20} className="icon" />
@@ -210,7 +218,7 @@ const ProfileScreen: React.FC = () => {
         <h3>Account Information</h3>
         <InfoItem>
           <span className="label">Agent ID</span>
-          <span className="value">DSA123456</span>
+          <span className="value">{id}</span>
         </InfoItem>
         <InfoItem>
           <span className="label">Member Since</span>
