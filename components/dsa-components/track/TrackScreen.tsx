@@ -405,7 +405,7 @@ const mockApplications = [
       <Header isLoggedIn />
       <TrackContainer>
         <PageHeader>
-          <BackButton onClick={() => router.push('/dashboard')}>
+          <BackButton onClick={() => router.push('/dsa-dashboard')}>
             <ArrowLeft size={24} />
           </BackButton>
           <Title>Track Applications</Title>
