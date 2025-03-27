@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ArrowLeft, User, Mail, Phone, MapPin, Edit2, LogOut } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { useRouter } from 'next/router';
-import { clearUser } from '../../../store/slices/userSlice';
+import { clearUser, setUser } from '../../../store/slices/userSlice';
+import { Loader } from '../common/Loader';
 
 const ProfileContainer = styled.div`
   min-height: 100vh;
@@ -152,23 +153,58 @@ const LogoutButton = styled(Button)`
   }
 `;
 
-
 const LogoutSection = styled.div`
   margin-top: 2rem;
   padding: 0 0.5rem;
 `;
 
+const PhotoUploadOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+const ProfilePictureContainer = styled.div`
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+`;
+
+const ProfileImage = styled.img`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #60A5FA;
+`;
+
 const ProfileScreen: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
   
   const goBack = () => {
     router.push('/dsa-dashboard');
   };
 
   const userData = useSelector((state: RootState) => state.user.user);
-  const { email = "", firstName = "", lastName = "", id = '', phone = "" } = userData || {};
-
+  const { email = "", firstName = "", lastName = "", id = '', phone = "", photoURL = "" } = userData || {};
 
   const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'User';
 
@@ -194,6 +230,73 @@ const ProfileScreen: React.FC = () => {
     }
   };
 
+  const handlePhotoClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handlePhotoChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+
+      // Upload photo
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const uploadResponse = await fetch('/api/upload-file', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const uploadData = await uploadResponse.json();
+
+      if (!uploadData.success) {
+        throw new Error(uploadData.error || 'Failed to upload photo');
+      }
+
+      // Update user with new photo URL
+      const updateResponse = await fetch('/api/dsa/update-user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          documentId: id,
+          updates: {
+            photoURL: uploadData.url
+          }
+        }),
+      });
+
+      const updateData = await updateResponse.json();
+
+      if (!updateData.success) {
+        throw new Error(updateData.error || 'Failed to update user');
+      }
+
+      const userObj = {
+        id: updateData.id,
+        email: updateData.email,
+        firstName: updateData.firstName,
+        lastName: updateData.lastName,
+        role: updateData.role,
+        phone: updateData.phone,
+        photoURL : updateData?.photoURL || '',
+      }
+
+      // Update Redux store
+      dispatch(setUser(updateData.user));
+
+    } catch (error) {
+      console.error('Error updating photo:', error);
+      // You might want to add error handling UI here
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <ProfileContainer>
       <Header>
@@ -204,12 +307,30 @@ const ProfileScreen: React.FC = () => {
       </Header>
 
       <ProfileHeader>
-        <ProfilePicture>
-          <User size={48} />
-          <div className="edit-button">
-            <Edit2 size={16} />
-          </div>
-        </ProfilePicture>
+        <ProfilePictureContainer>
+          {photoURL ? (
+            <ProfileImage src={photoURL} alt={fullName} />
+          ) : (
+            <ProfilePicture>
+              <User size={48} />
+            </ProfilePicture>
+          )}
+          <PhotoUploadOverlay onClick={handlePhotoClick}>
+            {isUploading ? (
+              <Loader size={24} color="#FFFFFF" />
+            ) : (
+              <Edit2 size={24} color="#FFFFFF" />
+            )}
+          </PhotoUploadOverlay>
+          <input
+            ref={fileInputRef}
+            type="file"
+            hidden
+            accept="image/*"
+            onChange={handlePhotoChange}
+            disabled={isUploading}
+          />
+        </ProfilePictureContainer>
         <ProfileName>{fullName}</ProfileName>
         <ProfileRole>Senior Loan Agent</ProfileRole>
         <Button variant="outline">Edit Profile</Button>

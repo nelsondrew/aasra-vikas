@@ -96,6 +96,12 @@ const UserAvatar = styled.div`
   justify-content: center;
 `;
 
+const UserImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  object-fit: cover;
+`;
 
 const BackButton = styled.button`
   color: #1E293B;
@@ -103,7 +109,6 @@ const BackButton = styled.button`
   align-items: center;
   background: transparent;
 `;
-
 
 const DropdownMenu = styled.div`
   position: absolute;
@@ -156,6 +161,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
     const fullName = `${userData?.firstName} ${userData?.lastName}`
     return fullName || '';
   });
+
+  const photoURL = useSelector((state: RootState) => {
+    const userData = state?.user?.user;
+    return userData?.photoURL || ''
+  })
 
   const userData = {
     logout: () => {
@@ -231,9 +241,13 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
                 isOpen={isDropdownOpen}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
-                <UserAvatar>
-                  <User size={20} />
-                </UserAvatar>
+                {photoURL ? (
+                  <UserImage src={photoURL} alt={userName} />
+                ) : (
+                  <UserAvatar>
+                    <User size={20} />
+                  </UserAvatar>
+                )}
                 <span>{userName || 'User'}</span>
                 <ChevronDown size={16} className="chevron" />
               </UserButton>

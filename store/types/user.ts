@@ -5,6 +5,7 @@ export interface User {
   lastName: string;
   role: string;
   phone: string;
+  photoURL: string;
 }
 
 export interface UserState {

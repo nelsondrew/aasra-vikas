@@ -90,7 +90,8 @@ export default async function handler(
         firstName: userData.firstName,
         lastName: userData.lastName,
         role: userData.role,
-        phone: userData.phone
+        phone: userData.phone,
+        photoURL : userData?.photoURL || '',
       }
     });
 

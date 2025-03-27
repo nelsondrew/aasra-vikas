@@ -65,7 +65,8 @@ export default async function handler(
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       status: 'active',
-      role: 'agent'
+      role: 'agent',
+      photoURL: '',
     };
 
     // Add to Firestore
