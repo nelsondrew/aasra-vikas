@@ -250,6 +250,8 @@ interface FormData {
     label: string;
     url: string;
   }>;
+  loanType: string;
+  loanAmount: string;
 }
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
@@ -277,13 +279,16 @@ const ReferralScreen: React.FC = () => {
   }, [dispatch]);
 
   const onSubmit = (data: FormData) => {
-    // Format the data into a single object
     const referralData = {
       // Personal Information
       name: data.name,
       email: data.email,
       mobileNumber: data.mobileNumber,
       dob: data.dob,
+      
+      // Loan Details
+      loanType: data.loanType,
+      loanAmount: data.loanAmount,
       
       // Identity Details
       aadhaarNumber: data.aadhaarNumber,
@@ -437,6 +442,42 @@ const ReferralScreen: React.FC = () => {
               placeholder="Enter personal email"
             />
             {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+          </InputGroup>
+        </FormSection>
+
+        <FormSection>
+          <h2>Loan Details</h2>
+          <InputGroup>
+            <label>Loan Type</label>
+            <Select {...register('loanType', { required: 'Loan type is required' })}>
+              <option value="">Select loan type</option>
+              <option value="personal">Personal Loan</option>
+              <option value="business">Business Loan</option>
+              <option value="home">Home Loan</option>
+              <option value="education">Education Loan</option>
+              <option value="vehicle">Vehicle Loan</option>
+            </Select>
+            {errors.loanType && <ErrorMessage>{errors.loanType.message}</ErrorMessage>}
+          </InputGroup>
+
+          <InputGroup>
+            <label>Loan Amount</label>
+            <Input
+              type="number"
+              {...register('loanAmount', { 
+                required: 'Loan amount is required',
+                min: {
+                  value: 100000,
+                  message: 'Minimum loan amount is ₹1,00,000'
+                },
+                max: {
+                  value: 10000000,
+                  message: 'Maximum loan amount is ₹1,00,00,000'
+                }
+              })}
+              placeholder="Enter required loan amount"
+            />
+            {errors.loanAmount && <ErrorMessage>{errors.loanAmount.message}</ErrorMessage>}
           </InputGroup>
         </FormSection>
 
