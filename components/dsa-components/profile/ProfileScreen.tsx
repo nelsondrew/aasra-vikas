@@ -163,7 +163,7 @@ const ProfileScreen: React.FC = () => {
   const dispatch = useDispatch();
   
   const goBack = () => {
-    router.push('/');
+    router.push('/dsa-dashboard');
   };
 
   const userData = useSelector((state: RootState) => state.user.user);

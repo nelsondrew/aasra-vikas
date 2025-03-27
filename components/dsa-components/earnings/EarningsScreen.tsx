@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Wallet, TrendingUp, Download, ChevronRight, Ban as Bank } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '../common/Button';
+import { useDispatch } from 'react-redux';
+import { setHeaderText } from '../../../store/slices/commonSlice';
 
 const EarningsContainer = styled.div`
   min-height: 100vh;
@@ -227,6 +229,11 @@ const mockTransactions = [
 ];
 
 const EarningsScreen: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeaderText('Your Earnings'));
+  }, [dispatch]);
 
   const goBack = () => {
     if (typeof window !== 'undefined') {

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Search, Filter, Clock, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import  Header  from '../common/Header';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setHeaderText } from '../../../store/slices/commonSlice';
 
 const TrackContainer = styled.div`
   min-height: 100vh;
@@ -386,6 +388,11 @@ const mockApplications = [
  const TrackScreen: React.FC = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeaderText('Track Applications'));
+  }, [dispatch]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {

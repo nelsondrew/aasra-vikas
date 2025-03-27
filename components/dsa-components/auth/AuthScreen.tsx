@@ -28,6 +28,7 @@ const BackButton = styled.button`
   gap: 0.25rem;
   font-weight: 500;
   background: transparent;
+  cursor: pointer;
 `;
 
 const AuthCard = styled(motion.div)`
@@ -338,9 +339,11 @@ const AuthScreen: React.FC = () => {
   };
 
   const goBack = () => {
-    if (typeof window !== 'undefined') {
-      window.history.back();
+    if(!isLogin) {
+      setIsLogin(true);
+      return;
     }
+    router.push("/")
   };
 
   return (

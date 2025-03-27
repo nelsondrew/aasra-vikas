@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { DollarSign, User, LogOut, Bell, ChevronDown , ArrowLeft } from 'lucide-react';
+import { DollarSign, User, LogOut, Bell, ChevronDown, ArrowLeft } from 'lucide-react';
 import { Button } from './Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../../../store/slices/userSlice';
@@ -136,6 +136,12 @@ const DropdownItem = styled.button`
   }
 `;
 
+const Title = styled.span`
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #60A5FA;
+`;
+
 interface HeaderProps {
   isLoggedIn?: boolean;
 }
@@ -145,11 +151,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const dispatch = useDispatch();
-  const userName = useSelector((state: RootState) =>{
+  const userName = useSelector((state: RootState) => {
     const userData = state?.user?.user;
     const fullName = `${userData?.firstName} ${userData?.lastName}`
     return fullName || '';
-   });
+  });
 
   const userData = {
     logout: () => {
@@ -159,8 +165,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
       name: "John Smith",
     },
   };
-  
+
   const { user, logout } = userData;
+
+  const headerText = useSelector((state: RootState) => state.common.headerText);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -196,17 +204,20 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   };
 
   const goBack = () => {
-    router.push('/')
+    if (window.location.pathname.includes("/dsa-dashboard")) {
+      router.push('/')
+    } else {
+      router.push("/dsa-dashboard")
+    }
   };
 
   return (
     <HeaderContainer>
-      <Logo onClick={() => router.push(isLoggedIn ? '/dsa-dashboard' : '/')}>
-        {/* <DollarSign size={24} />
-        InstantLoan */}
-         <BackButton onClick={() => goBack()}>
+      <Logo>
+        <BackButton onClick={goBack}>
           <ArrowLeft size={24} />
         </BackButton>
+        <Title>{headerText}</Title>
       </Logo>
       <HeaderButtons>
         {isLoggedIn ? (

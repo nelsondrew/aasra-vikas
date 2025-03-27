@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { PlusCircle, TrendingUp, AlertCircle, Wallet } from 'lucide-react';
@@ -6,6 +6,8 @@ import { format } from 'date-fns';
 import { Button } from '../common/Button';
 import  Header  from '../common/Header';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { setHeaderText } from '../../../store/slices/commonSlice';
 
 const DashboardContainer = styled.div`
   min-height: 100vh;
@@ -164,6 +166,11 @@ const mockApplications = [
 
 const DashboardScreen: React.FC = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeaderText('Your Dashboard'));
+  }, [dispatch]);
 
   return (
     <>

@@ -39,7 +39,12 @@ const NavBar = () => {
   const [windowHeight, setWindowHeight] = useState(0);
   const menus = useRef();
   const router = useRouter();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const isAuthenticated = useSelector((state) => {
+    if(state?.user?.user?.id) {
+      return true;
+    }
+    return false;
+  });
 
   const hidenMenu = () => {
     menus.current.classList.remove("show");
