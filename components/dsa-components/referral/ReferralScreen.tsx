@@ -6,18 +6,16 @@ import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
+import Header from '../common/Header';
 
 const ReferralContainer = styled.div`
   min-height: 100vh;
   background-color: #FFFFFF;
   padding: 1.5rem;
-`;
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  .referral-form {
+    margin-top: 5rem;
+  }
 `;
 
 const BackButton = styled.button`
@@ -384,16 +382,10 @@ const ReferralScreen: React.FC = () => {
 
   return (
     <ReferralContainer>
-      <Header>
-        <BackButton onClick={goBack}>
-          <ArrowLeft size={24} />
-        </BackButton>
-        <Title>New Loan Referral</Title>
-      </Header>
+      <Header isLoggedIn/>
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form className='referral-form' onSubmit={handleSubmit(onSubmit)}>
         <FormSection>
-          <h2>Personal Information</h2>
           <InputGroup>
             <label>Full Name</label>
             <Input
