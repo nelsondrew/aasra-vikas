@@ -4,9 +4,10 @@ import { useForm } from 'react-hook-form';
 import { ArrowLeft, Upload, Loader, Check, X } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
 import Header from '../common/Header';
+import { RootState } from '../../../store/store';
 
 const ReferralContainer = styled.div`
   min-height: 100vh;
@@ -250,6 +251,7 @@ interface FormData {
   }>;
   loanType: string;
   loanAmount: string;
+  loanPurpose: string;
 }
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
@@ -272,53 +274,74 @@ const ReferralScreen: React.FC = () => {
   const salarySlips = watch('salarySlips');
   const [showSuccess, setShowSuccess] = useState(false);
 
+  // Get agent ID from Redux state
+  const agentId = useSelector((state: RootState) => state.user.user?.agentID);
+
   useEffect(() => {
     dispatch(setHeaderText('Referral'));
   }, [dispatch]);
 
-  const onSubmit = (data: FormData) => {
-    const referralData = {
-      // Personal Information
-      name: data.name,
-      email: data.email,
-      mobileNumber: data.mobileNumber,
-      dob: data.dob,
-      
-      // Loan Details
-      loanType: data.loanType,
-      loanAmount: data.loanAmount,
-      
-      // Identity Details
-      aadhaarNumber: data.aadhaarNumber,
-      panNumber: data.panNumber,
-      
-      // Employment & Financial Details
-      employmentType: data.employmentType,
-      salary: data.salary,
-      currentLoans: data.currentLoans || '',
-      workEmail: data.workEmail || '',
-      salarySlips: data.salarySlips,
-      
-      // Address Details
-      officeAddress: data.officeAddress,
-      personalAddress: data.personalAddress,
-      currentCity: data.currentCity,
-      stayingStatus: data.stayingStatus,
-      
-      // Metadata
-      submittedAt: new Date().toISOString(),
-      status: 'pending'
-    };
+  const onSubmit = async (data: FormData) => {
+    try {
+      const referralData = {
+        // Personal Information
+        name: data.name,
+        email: data.email,
+        mobileNumber: data.mobileNumber,
+        dob: data.dob,
+        
+        // Loan Details
+        loanType: data.loanType,
+        loanAmount: data.loanAmount,
+        loanPurpose: data.loanPurpose,
+        
+        // Identity Details
+        aadhaarNumber: data.aadhaarNumber,
+        panNumber: data.panNumber,
+        
+        // Employment & Financial Details
+        employmentType: data.employmentType,
+        salary: data.salary,
+        currentLoans: data.currentLoans || '',
+        workEmail: data.workEmail || '',
+        salarySlips: data.salarySlips,
+        
+        // Address Details
+        officeAddress: data.officeAddress,
+        personalAddress: data.personalAddress,
+        currentCity: data.currentCity,
+        stayingStatus: data.stayingStatus,
+        
+        // Agent ID
+        agentId
+      };
 
-    console.log('Referral Data:', referralData);
-    
-    // Show success popover
-    setShowSuccess(true);
-    
-    // Automatically redirect after 2 seconds
-    setTimeout(() => {
-      router.push("/dsa-dashboard");
-    }, 2000);
+      const response = await fetch('/api/dsa/submit-loan-application', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(referralData),
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to submit application');
+      }
+
+      // Show success message
+      setShowSuccess(true);
+      
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        router.push("/dsa-dashboard");
+      }, 2000);
+
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      // You might want to show an error message to the user
+    }
   };
 
   const goBack = () => {
@@ -470,6 +493,27 @@ const ReferralScreen: React.FC = () => {
               placeholder="Enter required loan amount"
             />
             {errors.loanAmount && <ErrorMessage>{errors.loanAmount.message}</ErrorMessage>}
+          </InputGroup>
+
+          <InputGroup>
+            <label>Purpose of Loan</label>
+            <Input
+              as="textarea"
+              {...register('loanPurpose', { 
+                required: 'Loan purpose is required',
+                minLength: {
+                  value: 20,
+                  message: 'Please provide at least 20 characters'
+                },
+                maxLength: {
+                  value: 500,
+                  message: 'Purpose should not exceed 500 characters'
+                }
+              })}
+              placeholder="Describe the purpose of the loan"
+              style={{ minHeight: '100px' }}
+            />
+            {errors.loanPurpose && <ErrorMessage>{errors.loanPurpose.message}</ErrorMessage>}
           </InputGroup>
         </FormSection>
 

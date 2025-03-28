@@ -6,6 +6,7 @@ export interface User {
   role: string;
   phone: string;
   photoURL: string;
+  agentID: string;
 }
 
 export interface UserState {

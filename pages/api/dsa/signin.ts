@@ -50,7 +50,6 @@ export default async function handler(
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    console.log(userData, "user data from api")
 
     // Create JWT payload
     const payload: JWTPayload = {
@@ -92,6 +91,7 @@ export default async function handler(
         role: userData.role,
         phone: userData.phone,
         photoURL : userData?.photoURL || '',
+        agentID: userData?.agentID || ''
       }
     });
 
