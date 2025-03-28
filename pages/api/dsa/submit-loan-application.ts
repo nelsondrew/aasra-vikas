@@ -60,41 +60,49 @@ export default async function handler(
       });
     }
 
-    // Generate referral ID
-    const referralId = `Referral-${shortUUID.generate()}`;
+    // Generate IDs and timestamp once
     const timestamp = new Date().toISOString();
+    const referralId = `Referral-${shortUUID.generate()}`;
+    const loanApplicationId = `Loan-${shortUUID.generate()}`;
 
-    // Create referral document with 'pending' status
-    const referralData = {
+    // Create a batch write
+    const batch = db.batch();
+
+    // Prepare referral document with minimal data
+    const referralRef = db.collection('referrals').doc(referralId);
+    batch.set(referralRef, {
       referralId,
       agentId,
       panNumber: applicationData.panNumber,
-      status: 'pending',  // Referral starts as pending
-      createdAt: timestamp,
-      updatedAt: timestamp
-    };
-
-    // Add to referrals collection
-    await db.collection('referrals').doc(referralId).set(referralData);
-
-    // Add detailed application data with 'submitted' status
-    const enrichedApplicationData = {
-      ...applicationData,
-      referralId,
-      agentId,
-      status: 'submitted',  // Application starts as submitted
+      loanApplicationId, // Link to loan application
+      status: 'pending',
       createdAt: timestamp,
       updatedAt: timestamp,
-      applicationStatus: [
-        {
-          status: 'submitted',  // Application status history shows submitted
-          timestamp,
-          comment: 'Application submitted by agent'
-        }
-      ]
-    };
+      // Add essential fields for quick reference
+      applicantName: applicationData.name,
+      loanType: applicationData.loanType,
+      loanAmount: applicationData.loanAmount
+    });
 
-    await db.collection('loan-applications').add(enrichedApplicationData);
+    // Prepare loan application document with full data
+    const loanAppRef = db.collection('loan-applications').doc(loanApplicationId);
+    batch.set(loanAppRef, {
+      ...applicationData,
+      loanApplicationId,
+      referralId,
+      agentId,
+      status: 'submitted',
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      applicationStatus: [{
+        status: 'submitted',
+        timestamp,
+        comment: 'Application submitted by agent'
+      }]
+    });
+
+    // Commit both documents atomically
+    await batch.commit();
 
     return res.status(201).json({
       success: true,
