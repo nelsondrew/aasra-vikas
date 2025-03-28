@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
 import { RootState } from '../../../store/store';
-import { Container } from '../common/Container';
 
 interface LoanApplication {
   loanApplicationId: string;
