@@ -45,8 +45,6 @@ const TrackContainer = styled.div`
   }
 `;
 
-
-
 const SearchBar = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -335,6 +333,100 @@ const ApplicationCard = styled(motion.div)<ApplicationCardProps>`
   }
 `;
 
+const LoadingContainer = styled.div`
+  padding: 1rem;
+`;
+
+const SkeletonCard = styled(motion.div)`
+  background: #F8FAFC;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+`;
+
+const SkeletonHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const SkeletonTitle = styled.div`
+  height: 24px;
+  width: 200px;
+  background: linear-gradient(
+    90deg,
+    #E2E8F0 0%,
+    #F1F5F9 50%,
+    #E2E8F0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 4px;
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+`;
+
+const SkeletonStatus = styled.div`
+  height: 24px;
+  width: 100px;
+  background: linear-gradient(
+    90deg,
+    #E2E8F0 0%,
+    #F1F5F9 50%,
+    #E2E8F0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 999px;
+`;
+
+const SkeletonContent = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+`;
+
+const SkeletonField = styled.div`
+  div:first-child {
+    height: 16px;
+    width: 80px;
+    background: linear-gradient(
+      90deg,
+      #E2E8F0 0%,
+      #F1F5F9 50%,
+      #E2E8F0 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+
+  div:last-child {
+    height: 20px;
+    width: 120px;
+    background: linear-gradient(
+      90deg,
+      #E2E8F0 0%,
+      #F1F5F9 50%,
+      #E2E8F0 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 4px;
+  }
+`;
+
 const TrackScreen: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -403,7 +495,65 @@ const TrackScreen: React.FC = () => {
       <>
         <Header isLoggedIn />
         <TrackContainer>
-          <div style={{ textAlign: 'center', padding: '2rem' }}>Loading applications...</div>
+          <SearchBar>
+            <SearchInput>
+              <Search size={20} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search by name or ID"
+                disabled
+              />
+            </SearchInput>
+            <FilterButton disabled>
+              <Filter size={20} />
+              Filter
+            </FilterButton>
+          </SearchBar>
+
+          <LoadingContainer>
+            {[1, 2, 3].map((index) => (
+              <SkeletonCard
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <SkeletonHeader>
+                  <SkeletonTitle />
+                  <SkeletonStatus />
+                </SkeletonHeader>
+
+                <SkeletonContent>
+                  <SkeletonField>
+                    <div />
+                    <div />
+                  </SkeletonField>
+                  <SkeletonField>
+                    <div />
+                    <div />
+                  </SkeletonField>
+                  <SkeletonField>
+                    <div />
+                    <div />
+                  </SkeletonField>
+                </SkeletonContent>
+
+                <div className="timeline">
+                  <SkeletonTitle style={{ width: '140px', marginBottom: '1rem' }} />
+                  <div className="steps" style={{ opacity: 0.5 }}>
+                    {[1, 2, 3, 4, 5].map((step) => (
+                      <div key={step} className="step">
+                        <div className="icon">
+                          <Clock size={16} />
+                        </div>
+                        <span className="label">Step {step}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </SkeletonCard>
+            ))}
+          </LoadingContainer>
         </TrackContainer>
       </>
     );
