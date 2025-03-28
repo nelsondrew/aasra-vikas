@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Search, Filter, Clock, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
+import {  Search, Filter, Clock, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import Header from '../common/Header';
 import { useRouter } from 'next/router';
@@ -45,28 +45,7 @@ const TrackContainer = styled.div`
   }
 `;
 
-const PageHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-`;
 
-const BackButton = styled.button`
-  color: #1E293B;
-  display: flex;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1E293B;
-
-  @media (min-width: 768px) {
-    font-size: 1.5rem;
-  }
-`;
 
 const SearchBar = styled.div`
   display: flex;
@@ -445,13 +424,6 @@ const TrackScreen: React.FC = () => {
     <>
       <Header isLoggedIn />
       <TrackContainer>
-        <PageHeader>
-          <BackButton onClick={() => router.push('/dsa-dashboard')}>
-            <ArrowLeft size={24} />
-          </BackButton>
-          <Title>Track Applications</Title>
-        </PageHeader>
-
         <SearchBar>
           <SearchInput>
             <Search size={20} className="search-icon" />
