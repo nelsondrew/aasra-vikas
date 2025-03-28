@@ -145,6 +145,11 @@ const Title = styled.span`
   font-weight: 600;
   font-size: 1.5rem;
   color: #60A5FA;
+
+  @media (max-width: 480px) {
+    font-size: 1.125rem; // Smaller font size for iPhone screens
+    margin-right: 5px;
+  }
 `;
 
 interface HeaderProps {
