@@ -344,6 +344,61 @@ const SkeletonCard = styled(motion.div)`
   padding: 1.5rem;
   margin-bottom: 1rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  .timeline {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E2E8F0;
+  }
+
+  .steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 1rem 0;
+    padding: 0 0.25rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background-color: #E2E8F0;
+      z-index: 0;
+    }
+  }
+
+  .step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F8FAFC;
+    padding: 0 0.25rem;
+    min-width: 60px;
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.25rem;
+      background-color: #F8FAFC;
+      border: 2px solid #E2E8F0;
+      color: #94A3B8;
+    }
+
+    .label {
+      font-size: 0.625rem;
+      color: #94A3B8;
+      text-align: center;
+    }
+  }
 `;
 
 const SkeletonHeader = styled.div`
@@ -541,13 +596,13 @@ const TrackScreen: React.FC = () => {
 
                 <div className="timeline">
                   <SkeletonTitle style={{ width: '140px', marginBottom: '1rem' }} />
-                  <div className="steps" style={{ opacity: 0.5 }}>
-                    {[1, 2, 3, 4, 5].map((step) => (
-                      <div key={step} className="step">
+                  <div className="steps">
+                    {['Submitted', 'Document Verification', 'Credit Assessment', 'Final Approval', 'Disbursement'].map((step, index) => (
+                      <div key={index} className="step">
                         <div className="icon">
                           <Clock size={16} />
                         </div>
-                        <span className="label">Step {step}</span>
+                        <span className="label">{step}</span>
                       </div>
                     ))}
                   </div>
