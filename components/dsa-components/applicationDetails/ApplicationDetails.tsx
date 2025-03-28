@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   MessageSquare,
@@ -19,6 +19,9 @@ import {
   XCircle,
   Banknote,
 } from 'lucide-react';
+import Header from '../common/Header';
+import { useDispatch } from 'react-redux';
+import { setHeaderText } from '../../../store/slices/commonSlice';
 
 // Types
 type Comment = {
@@ -59,6 +62,8 @@ const ModalOverlay = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 2rem;
+  overflow-y: auto;
 `;
 
 const ModalContent = styled.div`
@@ -66,17 +71,26 @@ const ModalContent = styled.div`
   border-radius: 0.5rem;
   box-shadow: 0 8px 16px rgba(9, 30, 66, 0.25);
   width: 100%;
-  max-width: 32rem;
+  max-width: 500px;
+  max-height: 90vh;
   position: relative;
-  overflow: hidden;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ModalHeader = styled.div`
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-bottom: 1px solid #DFE1E6;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: white;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const ModalTitle = styled.h3`
@@ -105,12 +119,33 @@ const CloseButton = styled.button`
 `;
 
 const ModalBody = styled.div`
-  padding: 1.5rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+  flex: 1;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #F4F5F7;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #DFE1E6;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #C1C7D0;
+  }
 `;
 
 const StatusOptionList = styled.div`
   display: grid;
   gap: 0.75rem;
+  padding: 0.5rem 0;
 `;
 
 const StatusOption = styled.button<{ variant: string; isSelected: boolean }>`
@@ -148,11 +183,17 @@ const StatusDescription = styled.div`
 `;
 
 const ModalFooter = styled.div`
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-top: 1px solid #DFE1E6;
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
+  background: white;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
 `;
 
 const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
@@ -194,6 +235,8 @@ const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
 const PageContainer = styled.div`
   min-height: 100vh;
   background-color: #F4F5F7;
+  padding-top: 5rem;
+  background: white;
 `;
 
 const ContentWrapper = styled.div`
@@ -216,14 +259,15 @@ const MainContent = styled.div`
 `;
 
 const Card = styled.div`
-  background: white;
+  background: #F7FAFC;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(9, 30, 66, 0.13);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
+
 `;
 
-const Header = styled.div`
+const AppHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -368,9 +412,9 @@ const Timeline = styled.div`
   &::before {
     content: '';
     position: absolute;
-    left: 0.625rem;
+    left: 7px;
     top: 0.625rem;
-    bottom: 0.625rem;
+    bottom: 4.625rem;
     width: 2px;
     background-color: #DFE1E6;
   }
@@ -673,6 +717,13 @@ function ApplicationDetails() {
     { id: 4, name: 'credit-report.pdf', size: '956 KB', type: 'Document' }
   ];
 
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeaderText('Application Details'));
+  }, [dispatch]);
+
   const statuses: { 
     status: LoanStatus; 
     description: string;
@@ -761,11 +812,12 @@ function ApplicationDetails() {
 
   return (
     <PageContainer>
+      <Header isLoggedIn />
       <ContentWrapper>
         <FlexContainer>
           <MainContent>
             <Card>
-              <Header>
+              <AppHeader>
                 <TicketId>
                   <BadgeIndianRupee size={16} />
                   <span>LOAN-2024-456</span>
@@ -774,7 +826,7 @@ function ApplicationDetails() {
                   <Badge variant={status}>{status.replace('_', ' ')}</Badge>
                   <Badge variant={loanType}>{loanType}</Badge>
                 </StatusContainer>
-              </Header>
+              </AppHeader>
               <Title>Personal Loan Application - Raj Patel</Title>
               <InfoGrid>
                 <InfoItem>

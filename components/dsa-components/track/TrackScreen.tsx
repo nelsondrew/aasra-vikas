@@ -548,6 +548,10 @@ const TrackScreen: React.FC = () => {
     }).format(Number(amount));
   };
 
+  const handleViewDetails = (loanApplicationId: string) => {
+    router.push(`/application-details?id=${loanApplicationId}`);
+  };
+
   if (loading) {
     return (
       <>
@@ -696,7 +700,10 @@ const TrackScreen: React.FC = () => {
 
               <div className="actions">
                 <span className="date">{format(new Date(application.createdAt), 'dd MMM yyyy')}</span>
-                <button className="view-details">
+                <button 
+                  className="view-details"
+                  onClick={() => handleViewDetails(application.loanApplicationId)}
+                >
                   View Details
                   <ChevronRight size={16} />
                 </button>

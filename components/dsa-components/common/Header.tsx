@@ -221,6 +221,8 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn = false }) => {
   const goBack = () => {
     if (window.location.pathname.includes("/dsa-dashboard")) {
       router.push('/')
+    } else if (window.location.pathname.includes("/application-details")) {
+      router.push('/track')
     } else {
       router.push("/dsa-dashboard")
     }
