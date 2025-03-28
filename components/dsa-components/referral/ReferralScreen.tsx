@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, Upload, Loader, Check, X } from 'lucide-react';
+import {  Upload, Loader, Check, X } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,18 +19,7 @@ const ReferralContainer = styled.div`
   }
 `;
 
-const BackButton = styled.button`
-  color: #1E293B;
-  display: flex;
-  align-items: center;
-  background: transparent;
-`;
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1E293B;
-`;
 
 const Form = styled.form`
   display: flex;

@@ -14,6 +14,8 @@ const DashboardContainer = styled.div`
   background-color: #FFFFFF;
   padding: 1.5rem;
   padding-top: 7rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
 
   h3 {
     font-size: 24px !important;

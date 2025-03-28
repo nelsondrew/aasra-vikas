@@ -43,6 +43,8 @@ margin-top: 5rem;
 
   @media (min-width: 768px) {
     padding: 1.5rem;
+    padding-left: 7rem !important;
+    padding-right: 7rem !important;
   }
 `;
 
