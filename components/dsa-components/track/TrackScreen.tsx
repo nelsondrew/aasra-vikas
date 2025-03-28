@@ -1,12 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Search, Filter, Clock, CheckCircle, XCircle, AlertCircle, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
-import  Header  from '../common/Header';
+import Header from '../common/Header';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
+import { RootState } from '../../../store/store';
+import { Container } from '../common/Container';
+
+interface LoanApplication {
+  loanApplicationId: string;
+  referralId: string;
+  name: string;
+  loanType: string;
+  loanAmount: string;
+  loanPurpose: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  email: string;
+  mobileNumber: string;
+  dob: string;
+  aadhaarNumber: string;
+  panNumber: string;
+  employmentType: string;
+  salary: string;
+  currentLoans?: string;
+  workEmail?: string;
+  currentCity: string;
+  officeAddress: string;
+  personalAddress: string;
+  stayingStatus: string;
+}
 
 const TrackContainer = styled.div`
   min-height: 100vh;
@@ -290,7 +317,6 @@ const ApplicationCard = styled(motion.div)<ApplicationCardProps>`
     .label {
       font-size: 0.625rem;
       color: #64748B;
-      /* display: none; */
 
       @media (min-width: 768px) {
         display: block;
@@ -331,68 +357,47 @@ const ApplicationCard = styled(motion.div)<ApplicationCardProps>`
   }
 `;
 
-const mockApplications = [
-  {
-    id: 1,
-    customerName: 'John Doe',
-    loanType: 'Personal Loan',
-    loanAmount: '₹5,00,000',
-    applicationId: 'LOAN2024001',
-    status: 'review' as const,
-    date: new Date(),
-    currentStep: 2,
-    steps: [
-      { label: 'Submitted', completed: true },
-      { label: 'Document Verification', completed: true },
-      { label: 'Credit Assessment', completed: false },
-      { label: 'Final Approval', completed: false },
-      { label: 'Disbursement', completed: false },
-    ],
-  },
-  {
-    id: 2,
-    customerName: 'Jane Smith',
-    loanType: 'Business Loan',
-    loanAmount: '₹10,00,000',
-    applicationId: 'LOAN2024002',
-    status: 'pending' as const,
-    date: new Date(Date.now() - 86400000),
-    currentStep: 1,
-    steps: [
-      { label: 'Submitted', completed: true },
-      { label: 'Document Verification', completed: false },
-      { label: 'Credit Assessment', completed: false },
-      { label: 'Final Approval', completed: false },
-      { label: 'Disbursement', completed: false },
-    ],
-  },
-  {
-    id: 3,
-    customerName: 'Mike Johnson',
-    loanType: 'Home Loan',
-    loanAmount: '₹50,00,000',
-    applicationId: 'LOAN2024003',
-    status: 'approved' as const,
-    date: new Date(Date.now() - 172800000),
-    currentStep: 5,
-    steps: [
-      { label: 'Submitted', completed: true },
-      { label: 'Document Verification', completed: true },
-      { label: 'Credit Assessment', completed: true },
-      { label: 'Final Approval', completed: true },
-      { label: 'Disbursement', completed: true },
-    ],
-  },
-];
-
- const TrackScreen: React.FC = () => {
+const TrackScreen: React.FC = () => {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [applications, setApplications] = useState<LoanApplication[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const agentId = useSelector((state: RootState) => state.user.user?.agentID);
+  const fetchedRef = useRef(false);
 
   useEffect(() => {
     dispatch(setHeaderText('Track Applications'));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (agentId && !fetchedRef.current) {
+      fetchedRef.current = true;
+      fetchApplications();
+    }
+  }, [agentId]);
+
+  const fetchApplications = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await fetch(`/api/dsa/get-loan-applications?agentId=${agentId}`);
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to fetch applications');
+      }
+
+      setApplications(data.applications);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch applications');
+      console.error('Error fetching applications:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -406,6 +411,36 @@ const mockApplications = [
         return <Clock size={16} />;
     }
   };
+
+  const formatAmount = (amount: string) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(Number(amount));
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header isLoggedIn />
+        <TrackContainer>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>Loading applications...</div>
+        </TrackContainer>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Header isLoggedIn />
+        <TrackContainer>
+          <div style={{ textAlign: 'center', padding: '2rem', color: '#DC2626' }}>Error: {error}</div>
+        </TrackContainer>
+      </>
+    );
+  }
 
   return (
     <>
@@ -435,16 +470,16 @@ const mockApplications = [
         </SearchBar>
 
         <ApplicationList>
-          {mockApplications.map((application, index) => (
+          {applications.map((application, index) => (
             <ApplicationCard
-              key={application.id}
-              status={application.status}
+              key={application.loanApplicationId}
+              status={application.status as 'pending' | 'approved' | 'rejected' | 'review'}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
               <div className="header">
-                <h3>{application.customerName}</h3>
+                <h3>{application.name}</h3>
                 <div className="status">
                   {getStatusIcon(application.status)}
                   {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
@@ -454,41 +489,34 @@ const mockApplications = [
               <div className="content">
                 <div className="info-group">
                   <h4>Application ID</h4>
-                  <p>{application.applicationId}</p>
+                  <p>{application.loanApplicationId}</p>
                 </div>
                 <div className="info-group">
                   <h4>Loan Type</h4>
-                  <p>{application.loanType}</p>
+                  <p>{application.loanType.charAt(0).toUpperCase() + application.loanType.slice(1)} Loan</p>
                 </div>
                 <div className="info-group">
                   <h4>Loan Amount</h4>
-                  <p>{application.loanAmount}</p>
+                  <p>{formatAmount(application.loanAmount)}</p>
                 </div>
               </div>
 
               <div className="timeline">
                 <h4>Application Progress</h4>
                 <div className="steps">
-                  {application.steps.map((step, index) => (
+                  {['Submitted', 'Document Verification', 'Credit Assessment', 'Final Approval', 'Disbursement'].map((step, index) => (
                     <div key={index} className="step">
-                      <div className={`icon ${
-                        step.completed ? 'completed' : 
-                        index === application.currentStep - 1 ? 'current' : ''
-                      }`}>
-                        {step.completed ? (
-                          <CheckCircle size={16} />
-                        ) : (
-                          <Clock size={16} />
-                        )}
+                      <div className={`icon ${index === 0 ? 'completed' : ''}`}>
+                        {index === 0 ? <CheckCircle size={16} /> : <Clock size={16} />}
                       </div>
-                      <span className="label">{step.label}</span>
+                      <span className="label">{step}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="actions">
-                <span className="date">{format(application.date, 'dd MMM yyyy')}</span>
+                <span className="date">{format(new Date(application.createdAt), 'dd MMM yyyy')}</span>
                 <button className="view-details">
                   View Details
                   <ChevronRight size={16} />
@@ -496,6 +524,12 @@ const mockApplications = [
               </div>
             </ApplicationCard>
           ))}
+
+          {applications.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '2rem', color: '#6B7280' }}>
+              No applications found
+            </div>
+          )}
         </ApplicationList>
       </TrackContainer>
     </>
