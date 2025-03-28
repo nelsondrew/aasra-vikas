@@ -35,6 +35,7 @@ interface LoanApplication {
 }
 
 const TrackContainer = styled.div`
+margin-top: 5rem;
   min-height: 100vh;
   background-color: #FFFFFF;
   padding: 1rem;
