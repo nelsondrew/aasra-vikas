@@ -1,6 +1,8 @@
 import { hash } from 'bcryptjs';
 import { db } from '../../../firebase/admin';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import shortUUID from 'short-uuid';
+
 
 interface SignupRequest {
   firstName: string;
@@ -50,8 +52,12 @@ export default async function handler(
     // Hash password
     const hashedPassword = await hash(password, 12);
 
+    // Agent ID
+    const agentID = `Agent-${shortUUID.generate()}`
+
     // Create agent document
     const agentData = {
+      agentID,
       firstName,
       middleName,
       lastName,
