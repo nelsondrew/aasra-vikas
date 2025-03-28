@@ -1,6 +1,6 @@
 import { storage } from '../../firebase/admin';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import formidable from 'formidable';
+import formidable, { Fields, Files } from 'formidable';
 import { createReadStream } from 'fs';
 import path from 'path';
 
@@ -55,9 +55,9 @@ export default async function handler(
     const form = formidable(formidableConfig);
     timings.formInit = performance.now() - formStartTime;
     
-    // Parse form
+    // Parse form with proper typing
     const parseStartTime = performance.now();
-    const [_, files] = await new Promise((resolve, reject) => {
+    const [fields, files] = await new Promise<[Fields, Files]>((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err?.code === 'LIMIT_FILE_SIZE') {
           reject(new Error('File size too large. Maximum size is 5MB'));
