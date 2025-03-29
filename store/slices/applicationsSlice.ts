@@ -23,6 +23,10 @@ export type LoanApplication = {
   officeAddress: string;
   personalAddress: string;
   stayingStatus: string;
+  salarySlips: {
+    url: string;
+    label: string;
+  }[]
 };
 
 type NormalizedApplications = {
