@@ -572,16 +572,23 @@ const CommentItem = styled.div`
 `;
 
 const Avatar = styled.div<{ isBank: boolean }>`
-  width: 50px;
+  width: 40px;
   height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  aspect-ratio: 1;
   background: ${props => props.isBank ? '#E3FCEF' : '#DEEBFF'};
   color: ${props => props.isBank ? '#006644' : '#0052CC'};
   border: 2px solid ${props => props.isBank ? '#36B37E' : '#4C9AFF'};
   transition: all 0.2s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 
   &:hover {
     transform: scale(1.05);
