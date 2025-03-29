@@ -1459,7 +1459,7 @@ function ApplicationDetails() {
                 </InfoItem>
                 <InfoItem>
                   <FileCheck size={16} />
-                  <span>CIBIL Score: 750</span>
+                  <span>CIBIL Score: {cachedApplication?.cibil || 'Not Available'}</span>
                 </InfoItem>
               </InfoGrid>
 

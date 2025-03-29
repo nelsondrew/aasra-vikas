@@ -27,7 +27,8 @@ export type LoanApplication = {
   salarySlips: {
     url: string;
     label: string;
-  }[]
+  }[];
+  cibil: string;
 };
 
 type NormalizedApplications = {
