@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './slices/userSlice';
 import commonReducer from './slices/commonSlice';
+import applicationReducer from "./slices/applicationsSlice"
 
 const persistConfig = {
   key: 'root',
@@ -16,6 +17,7 @@ export const store = configureStore({
   reducer: {
     user: persistedReducer,
     common: commonReducer, // Add common reducer
+    applications: applicationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

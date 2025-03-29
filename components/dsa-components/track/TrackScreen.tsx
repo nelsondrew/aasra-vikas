@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
 import { RootState } from '../../../store/store';
+import { cacheApplications } from '../../../store/slices/applicationsSlice';
 
 interface LoanApplication {
   loanApplicationId: string;
@@ -549,6 +550,7 @@ const TrackScreen: React.FC = () => {
       }
 
       setApplications(data.applications);
+      dispatch(cacheApplications(data.applications));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch applications');
       console.error('Error fetching applications:', err);

@@ -20,9 +20,12 @@ import {
   Banknote,
 } from 'lucide-react';
 import Header from '../common/Header';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { selectApplicationsById, updateCachedApplication } from '../../../store/slices/applicationsSlice';
+import { RootState } from '../../../store/store';
 
 // Types
 type Comment = {
@@ -914,7 +917,99 @@ const ReadOnlyField = styled.div`
   gap: 8px;
 `;
 
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  return date.toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+  });
+}
+
+
+function timeAgo(isoString) {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  const intervals = [
+      { label: "year", seconds: 31536000 },
+      { label: "month", seconds: 2592000 },
+      { label: "week", seconds: 604800 },
+      { label: "day", seconds: 86400 },
+      { label: "hour", seconds: 3600 },
+      { label: "minute", seconds: 60 },
+      { label: "second", seconds: 1 }
+  ];
+
+  for (const interval of intervals) {
+      const count = Math.floor(diffInSeconds / interval.seconds);
+      if (count >= 1) {
+          return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+      }
+  }
+
+  return "Just now";
+}
+
+
+
 function ApplicationDetails() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { id } = router.query; // Get application ID from query params
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Select the Application from state.applications.applicationsById
+  const cachedApplication = useSelector((state: RootState) => 
+    id ? selectApplicationsById(state, id as string) : null
+  );
+
+  // Fetch application data if not in cache
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      if (!id || cachedApplication) return;
+
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`/api/dsa/get-loan-application?id=${id}`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || 'Failed to fetch application');
+        }
+
+        // Dispatch to store
+        dispatch(updateCachedApplication(data.application));
+
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch application');
+        console.error('Error fetching application:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchApplicationData();
+  }, [id, cachedApplication, dispatch]);
+
+  // Log cached data when available
+  useEffect(() => {
+    if (cachedApplication) {
+      console.log('Cached Application Data:', cachedApplication);
+      
+      // Update local state with cached data
+      // setStatus(cachedApplication.status as LoanStatus);
+      setLoanType(cachedApplication.loanType as LoanType);
+      // ... update other relevant state
+    }
+  }, [cachedApplication]);
+
   const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
@@ -960,9 +1055,6 @@ function ApplicationDetails() {
     { id: 3, name: 'kyc-documents.pdf', size: '1.8 MB', type: 'Document' },
     { id: 4, name: 'credit-report.pdf', size: '956 KB', type: 'Document' }
   ];
-
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setHeaderText('Application Details'));
@@ -1090,7 +1182,7 @@ function ApplicationDetails() {
     };
 
     // Update the status
-    setStatus(newStatus);
+    // setStatus(newStatus);
     
     // Add the event to timeline
     setTimeline([...timeline, timelineEvent]);
@@ -1122,6 +1214,16 @@ function ApplicationDetails() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isDropdownOpen]);
 
+  // Show loading state
+  if (isLoading) {
+    return <div>Loading application details...</div>;
+  }
+
+  // Show error state
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <PageContainer>
       <Header isLoggedIn />
@@ -1132,14 +1234,14 @@ function ApplicationDetails() {
               <AppHeader>
                 <TicketId>
                   <BadgeIndianRupee size={16} />
-                  <span>LOAN-2024-456</span>
+                  <span>{cachedApplication?.loanApplicationId}</span>
                 </TicketId>
                 <StatusContainer>
                   <Badge variant={status}>{toPascalCase(status)}</Badge>
                   <Badge variant={loanType}>{loanType}</Badge>
                 </StatusContainer>
               </AppHeader>
-              <Title>Personal Loan Application - Raj Patel</Title>
+              <Title>Personal Loan Application - {cachedApplication?.name || ''}</Title>
               <InfoGrid>
                 <InfoItem>
                   <IndianRupee size={16} />
@@ -1346,7 +1448,7 @@ function ApplicationDetails() {
                 <Label>Submitted On</Label>
                 <InfoItem>
                   <Clock size={16} />
-                  <span>March 15, 2024 10:30 AM</span>
+                  <span>{formatDate(cachedApplication?.createdAt)}</span>
                 </InfoItem>
               </FormGroup>
 
@@ -1354,7 +1456,7 @@ function ApplicationDetails() {
                 <Label>Last Updated</Label>
                 <InfoItem>
                   <Clock size={16} />
-                  <span>1 hour ago</span>
+                  <span>{timeAgo(cachedApplication?.updatedAt)}</span>
                 </InfoItem>
               </FormGroup>
 
