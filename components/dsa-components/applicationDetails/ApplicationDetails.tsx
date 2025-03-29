@@ -1104,7 +1104,7 @@ function ApplicationDetails() {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         isDropdownOpen && 
-        event.target instanceof Node && 
+        event.target instanceof Element &&
         !event.target.closest('[data-dropdown]')
       ) {
         setIsDropdownOpen(false);
