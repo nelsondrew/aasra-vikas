@@ -23,6 +23,7 @@ export type LoanApplication = {
   officeAddress: string;
   personalAddress: string;
   stayingStatus: string;
+  tenure: number;
   salarySlips: {
     url: string;
     label: string;

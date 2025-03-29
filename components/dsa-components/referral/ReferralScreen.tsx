@@ -439,7 +439,11 @@ const ReferralScreen: React.FC = () => {
         stayingStatus: data.stayingStatus,
         
         // Agent ID
-        agentId
+        agentId,
+        
+
+        // tenure in months
+        tenure
       };
 
       const response = await fetch('/api/dsa/submit-loan-application', {

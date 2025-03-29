@@ -1455,7 +1455,7 @@ function ApplicationDetails() {
                 </InfoItem>
                 <InfoItem>
                   <Clock size={16} />
-                  <span>Tenure: 36 months</span>
+                  <span>Tenure: {cachedApplication?.tenure} months</span>
                 </InfoItem>
                 <InfoItem>
                   <FileCheck size={16} />
@@ -1466,7 +1466,7 @@ function ApplicationDetails() {
               <DocumentsSection>
                 <SectionTitle>
                   <Paperclip size={20} />
-                  Required Documents ({attachments.length})
+                  Required Documents ({cachedApplication?.salarySlips?.length || 3})
                 </SectionTitle>
                 <DocumentGrid>
                   {(cachedApplication?.salarySlips || []).map((attachment , index) => (

@@ -85,7 +85,9 @@ export default async function handler(
         'currentCity',
         'officeAddress',
         'personalAddress',
-        'stayingStatus'
+        'stayingStatus',
+        'tenure',
+        'salarySlips'
       );
 
     const snapshot = await applicationsQuery.get();
@@ -118,7 +120,9 @@ export default async function handler(
         currentCity: data.currentCity,
         officeAddress: data.officeAddress,
         personalAddress: data.personalAddress,
-        stayingStatus: data.stayingStatus
+        stayingStatus: data.stayingStatus,
+        salarySlips: data?.salarySlips,
+        tenure: data?.tenure
       };
     });
     timings.transform = performance.now() - transformStart;
