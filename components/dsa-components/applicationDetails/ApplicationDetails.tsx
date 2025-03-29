@@ -45,6 +45,7 @@ type TimelineEvent = {
   type: 'status_change' | 'comment' | 'document_added';
   content: string;
   timestamp: string;
+  author: string;
   oldStatus?: string;
   newStatus?: string;
 };
@@ -419,6 +420,7 @@ const Timeline = styled.div`
   padding-left: 2rem;
 
   &::before {
+    display: none;
     content: '';
     position: absolute;
     left: 7px;
@@ -431,47 +433,85 @@ const Timeline = styled.div`
 
 const TimelineItem = styled.div`
   position: relative;
+  padding-left: 2rem;
   padding-bottom: 1.5rem;
 
   &:last-child {
     padding-bottom: 0;
+  }
 
-    &::before {
-      display: none;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 26px;
+    bottom: -18px;
+    width: 2px;
+    background: #DFE1E6;
+  }
+
+  &:last-child::before {
+    display: none;
   }
 `;
 
-const TimelineDot = styled.div`
+const TimelineDot = styled.div<{ type?: string }>`
   position: absolute;
-  left: -2rem;
-  top: 0.25rem;
-  width: 1rem;
-  height: 1rem;
-  background-color: #4C9AFF;
-  border: 2px solid #FFFFFF;
+  left: 0;
+  top: 4px;
+  width: 14px;
+  margin-top: 13px;
+  height: 14px;
   border-radius: 50%;
-  z-index: 1;
+  background: ${props => {
+    switch (props.type) {
+      case 'status_change':
+        return '#4C9AFF';
+      case 'comment':
+        return '#36B37E';
+      case 'document_added':
+        return '#FF991F';
+      default:
+        return '#DFE1E6';
+    }
+  }};
 `;
 
 const TimelineContent = styled.div`
-  background-color: #FAFBFC;
+  background: white;
+  border-radius: 3px;
+  padding: 12px 16px;
   border: 1px solid #DFE1E6;
-  border-radius: 0.375rem;
-  padding: 0.75rem;
 `;
 
-const TimelineText = styled.p`
-  font-size: 0.875rem;
+const TimelineHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+`;
+
+const TimelineIcon = styled.div`
+  color: #6B778C;
+  display: flex;
+  align-items: center;
+`;
+
+const TimelineAuthor = styled.span`
   font-weight: 500;
-  color: #0747A6;
-  margin: 0;
+  color: #172B4D;
 `;
 
-const TimelineTime = styled.p`
-  font-size: 0.75rem;
-  color: #7A869A;
-  margin: 0.25rem 0 0 0;
+const TimelineText = styled.div`
+  color: #172B4D;
+  font-size: 14px;
+  line-height: 20px;
+`;
+
+const TimelineTime = styled.div`
+  color: #6B778C;
+  font-size: 12px;
+  margin-top: 4px;
 `;
 
 const CommentList = styled.div`
@@ -811,6 +851,19 @@ const CommentTextarea = styled.textarea`
   }
 `;
 
+// Remove the SelectWrapper for loan type and replace with a read-only display
+const ReadOnlyField = styled.div`
+  padding: 8px 12px;
+  background-color: #F4F5F7;
+  border: 2px solid #DFE1E6;
+  border-radius: 3px;
+  color: #172B4D;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 function ApplicationDetails() {
   const [comments, setComments] = useState<Comment[]>([
     {
@@ -831,24 +884,11 @@ function ApplicationDetails() {
 
   const [timeline, setTimeline] = useState<TimelineEvent[]>([
     {
-      id: 1,
-      type: 'status_change',
-      content: 'Loan application submitted',
-      timestamp: '2 hours ago',
-      oldStatus: '',
-      newStatus: 'SUBMITTED'
-    },
-    {
       id: 2,
-      type: 'document_added',
-      content: 'Documents uploaded: Income Proof, Bank Statements, KYC',
-      timestamp: '2 hours ago'
-    },
-    {
-      id: 3,
       type: 'status_change',
       content: 'Application under review',
       timestamp: '1.5 hours ago',
+      author: 'Priya Sharma',
       oldStatus: 'SUBMITTED',
       newStatus: 'UNDER_REVIEW'
     }
@@ -980,7 +1020,8 @@ function ApplicationDetails() {
       id: timeline.length + 1,
       type: 'comment',
       content: `Comment added by ${comment.author}`,
-      timestamp: 'Just now'
+      timestamp: 'Just now',
+      author: "Rahul DSA"
     };
 
     setTimeline([...timeline, timelineEvent]);
@@ -993,6 +1034,7 @@ function ApplicationDetails() {
       type: 'status_change',
       content: `Status changed from ${toPascalCase(status)} to ${toPascalCase(newStatus)}${transitionComment ? ` - ${transitionComment}` : ''}`,
       timestamp: 'Just now',
+      author: transitionAssignee || assignee,
       oldStatus: status,
       newStatus: newStatus
     };
@@ -1088,11 +1130,45 @@ function ApplicationDetails() {
                 Application Timeline
               </SectionTitle>
               <Timeline>
-                {timeline.map((event, index) => (
+                {timeline.map((event) => (
                   <TimelineItem key={event.id}>
-                    <TimelineDot />
+                    <TimelineDot type={event.type} />
                     <TimelineContent>
-                      <TimelineText>{event.content}</TimelineText>
+                      <TimelineHeader>
+                        <TimelineIcon>
+                          {event.type === 'status_change' && <Clock size={16} />}
+                          {event.type === 'comment' && <MessageSquare size={16} />}
+                          {event.type === 'document_added' && <Paperclip size={16} />}
+                        </TimelineIcon>
+                        <TimelineAuthor>
+                          {event.type === 'status_change' ? (
+                            <>Status updated by <strong>{event.author}</strong></>
+                          ) : (
+                            event.author
+                          )}
+                        </TimelineAuthor>
+                      </TimelineHeader>
+                      <TimelineText>
+                        {event.type === 'status_change' ? (
+                          <>
+                            Changed status from{' '}
+                            <Badge variant={event.oldStatus as string} style={{ padding: '2px 8px', fontSize: '12px' }}>
+                              {toPascalCase(event.oldStatus || '')}
+                            </Badge>
+                            {' '}to{' '}
+                            <Badge variant={event.newStatus as string} style={{ padding: '2px 8px', fontSize: '12px' }}>
+                              {toPascalCase(event.newStatus || '')}
+                            </Badge>
+                            {event.content.includes('-') && (
+                              <div style={{ marginTop: '8px', color: '#6B778C' }}>
+                                {event.content.split('-')[1].trim()}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          event.content
+                        )}
+                      </TimelineText>
                       <TimelineTime>{event.timestamp}</TimelineTime>
                     </TimelineContent>
                   </TimelineItem>
@@ -1178,7 +1254,6 @@ function ApplicationDetails() {
                         <DropdownItem
                           key={nextStatus}
                           status={nextStatus}
-                          isDropdownItem={true}
                           onClick={() => {
                             setIsDropdownOpen(false);
                             setSelectedStatus(nextStatus);
@@ -1196,17 +1271,10 @@ function ApplicationDetails() {
 
               <FormGroup>
                 <Label>Loan Type</Label>
-                <SelectWrapper>
-                  <Select
-                    value={loanType}
-                    onChange={(e) => setLoanType(e.target.value as LoanType)}
-                  >
-                    {loanTypes.map(t => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </Select>
-                  <ChevronDown size={20} />
-                </SelectWrapper>
+                <ReadOnlyField>
+                  <BadgeIndianRupee size={16} />
+                  <span>{toPascalCase(loanType)}</span>
+                </ReadOnlyField>
               </FormGroup>
 
               <FormGroup>
