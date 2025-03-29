@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import {
   MessageSquare,
   Paperclip,
@@ -289,44 +289,72 @@ const MainContent = styled.div`
 
 const Card = styled.div`
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
-  border: 1px solid #E6E8EC;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
+  margin-bottom: 1rem;
 
-  &:hover {
-    box-shadow: 0 3px 8px rgba(9, 30, 66, 0.12);
+  @media (min-width: 768px) {
+    padding: 1.5rem;
   }
 `;
 
 const AppHeader = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const TicketId = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #7A869A;
   font-size: 0.875rem;
+  color: #64748B;
+  background: #F1F5F9;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  max-width: 100%;
+  overflow: hidden;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
 `;
 
 const StatusContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
 const Badge = styled.span<{ variant: string }>`
-  padding: 0.25rem 0.75rem;
+  padding: 0.375rem 0.75rem;
   border-radius: 16px;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+
+  @media (min-width: 640px) {
+    font-size: 0.875rem;
+  }
+
   ${props => {
     if (statusColors[props.variant as LoanStatus]) {
       const colors = statusColors[props.variant as LoanStatus];
@@ -340,21 +368,26 @@ const Badge = styled.span<{ variant: string }>`
   }}
 `;
 
-const Title = styled.h1`
-  font-size: 1.5rem;
+const Title = styled.h2`
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #172B4D;
-  margin: 0 0 1rem 0;
+  color: #1E293B;
+  margin: 1rem 0;
+  line-height: 1.4;
+
+  @media (min-width: 640px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const InfoGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 `;
 
@@ -362,21 +395,20 @@ const InfoItem = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #42526E;
-  font-size: 0.875rem;
   padding: 0.75rem;
   background: #F8FAFC;
-  border-radius: 6px;
-  border: 1px solid #E6E8EC;
-  transition: all 0.2s ease;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1E293B;
 
   svg {
-    color: #4C9AFF;
+    flex-shrink: 0;
+    color: #64748B;
   }
 
-  &:hover {
-    background: #F1F5F9;
-    border-color: #DFE1E6;
+  span {
+    white-space: normal;
+    word-break: break-word;
   }
 `;
 
@@ -404,8 +436,13 @@ const SectionTitle = styled.h2`
 
 const DocumentGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 `;
 
 const DocumentItem = styled.div`
@@ -917,6 +954,157 @@ const ReadOnlyField = styled.div`
   gap: 8px;
 `;
 
+// Add these styled components for the skeleton loader
+const SkeletonPulse = keyframes`
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+`;
+
+const SkeletonLoader = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  padding-top: 7rem;
+
+  @media (min-width: 768px) {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+`;
+
+const SkeletonCard = styled.div`
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.1);
+`;
+
+const SkeletonFlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
+
+const SkeletonMainContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const SkeletonSidebar = styled.div`
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    width: 320px;
+  }
+`;
+
+const SkeletonLine = styled.div<{ width?: string; height?: string }>`
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || '20px'};
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 37%,
+    #f0f0f0 63%
+  );
+  background-size: 400% 100%;
+  animation: ${SkeletonPulse} 1.4s ease infinite;
+`;
+
+const SkeletonHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const SkeletonGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+`;
+
+const SkeletonDocumentGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+`;
+
+// Add this component for the skeleton loader
+const ApplicationDetailsSkeleton = () => {
+  return (
+    <SkeletonLoader>
+      <SkeletonFlexContainer>
+        <SkeletonMainContent>
+          <SkeletonCard>
+            <SkeletonHeader>
+              <SkeletonLine width="150px" />
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <SkeletonLine width="100px" />
+                <SkeletonLine width="80px" />
+              </div>
+            </SkeletonHeader>
+            <SkeletonLine width="60%" height="28px" />
+            <SkeletonGrid>
+              {[1, 2, 3].map(i => (
+                <SkeletonLine key={i} height="24px" />
+              ))}
+            </SkeletonGrid>
+            <div style={{ marginTop: '2rem' }}>
+              <SkeletonLine width="200px" height="24px" />
+              <SkeletonDocumentGrid>
+                {[1, 2, 3, 4].map(i => (
+                  <SkeletonLine key={i} height="60px" />
+                ))}
+              </SkeletonDocumentGrid>
+            </div>
+          </SkeletonCard>
+
+          <SkeletonCard>
+            <SkeletonLine width="180px" height="24px" />
+            <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {[1, 2, 3].map(i => (
+                <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                  <SkeletonLine width="24px" height="24px" />
+                  <div style={{ flex: 1 }}>
+                    <SkeletonLine width="100%" height="24px" />
+                    <SkeletonLine width="60%" height="16px" style={{ marginTop: '0.5rem' }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SkeletonCard>
+        </SkeletonMainContent>
+
+        <SkeletonSidebar>
+          <SkeletonCard>
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} style={{ marginBottom: '1.5rem' }}>
+                <SkeletonLine width="120px" height="16px" />
+                <SkeletonLine width="100%" height="40px" style={{ marginTop: '0.5rem' }} />
+              </div>
+            ))}
+          </SkeletonCard>
+        </SkeletonSidebar>
+      </SkeletonFlexContainer>
+    </SkeletonLoader>
+  );
+};
+
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleString('en-US', {
@@ -928,7 +1116,6 @@ function formatDate(isoString) {
       hour12: true
   });
 }
-
 
 function timeAgo(isoString) {
   const date = new Date(isoString);
@@ -954,7 +1141,9 @@ function timeAgo(isoString) {
   return "Just now";
 }
 
-
+function formatIndianCurrency(amount) {
+  return new Intl.NumberFormat('en-IN').format(amount);
+}
 
 function ApplicationDetails() {
   const router = useRouter();
@@ -1092,7 +1281,6 @@ function ApplicationDetails() {
     }
   ];
 
-  const loanTypes: LoanType[] = ['PERSONAL', 'HOME', 'BUSINESS', 'VEHICLE'];
   const bankTeam = ['Priya Sharma', 'Amit Kumar', 'Sneha Patel', 'Rajesh Verma'];
 
   const statusTransitions: Record<LoanStatus, StatusTransition> = {
@@ -1215,8 +1403,13 @@ function ApplicationDetails() {
   }, [isDropdownOpen]);
 
   // Show loading state
-  if (isLoading) {
-    return <div>Loading application details...</div>;
+  if (isLoading ) {
+    return (
+      <>
+        <Header isLoggedIn />
+        <ApplicationDetailsSkeleton />
+      </>
+    );
   }
 
   // Show error state
@@ -1245,7 +1438,7 @@ function ApplicationDetails() {
               <InfoGrid>
                 <InfoItem>
                   <IndianRupee size={16} />
-                  <span>Loan Amount: ₹5,00,000</span>
+                  <span>Loan Amount: ₹{formatIndianCurrency(cachedApplication?.loanAmount)}</span>
                 </InfoItem>
                 <InfoItem>
                   <Clock size={16} />
