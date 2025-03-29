@@ -26,6 +26,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { selectApplicationsById, updateCachedApplication } from '../../../store/slices/applicationsSlice';
 import { RootState } from '../../../store/store';
+import FileViewer from '../common/FileViewer';
 
 // Types
 type Comment = {
@@ -1245,6 +1246,18 @@ function ApplicationDetails() {
     { id: 4, name: 'credit-report.pdf', size: '956 KB', type: 'Document' }
   ];
 
+  const [selectedFile, setSelectedFile] = React.useState<{
+    isOpen: boolean;
+    url: string;
+    name: string;
+    type: string;
+  }>({
+    isOpen: false,
+    url: '',
+    name: '',
+    type: ''
+  });
+
   useEffect(() => {
     dispatch(setHeaderText('Application Details'));
   }, [dispatch]);
@@ -1456,12 +1469,21 @@ function ApplicationDetails() {
                   Required Documents ({attachments.length})
                 </SectionTitle>
                 <DocumentGrid>
-                  {attachments.map(attachment => (
-                    <DocumentItem key={attachment.id}>
+                  {(cachedApplication?.salarySlips || []).map((attachment , index) => (
+                    <DocumentItem 
+                      key={attachment?.label}
+                      onClick={() => setSelectedFile({
+                        isOpen: true,
+                        url: attachment?.url,
+                        name: attachment?.label,
+                        type: "png"
+                      })}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <Paperclip size={16} />
                       <DocumentInfo>
-                        <DocumentName>{attachment.name}</DocumentName>
-                        <DocumentMeta>{attachment.size} • {attachment.type}</DocumentMeta>
+                        <DocumentName>{`Salary Slip ${index+1}`}</DocumentName>
+                        {/* <DocumentMeta>{attachment.size} • {attachment.type}</DocumentMeta> */}
                       </DocumentInfo>
                     </DocumentItem>
                   ))}
@@ -1770,6 +1792,14 @@ function ApplicationDetails() {
           </ModalOverlay>
         )}
       </AnimatePresence>
+
+      <FileViewer
+        isOpen={selectedFile.isOpen}
+        onClose={() => setSelectedFile(prev => ({ ...prev, isOpen: false }))}
+        fileUrl={selectedFile.url}
+        fileName={selectedFile.name}
+        fileType={selectedFile.type}
+      />
     </PageContainer>
   );
 }

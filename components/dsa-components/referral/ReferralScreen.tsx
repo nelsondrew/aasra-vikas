@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import {  Upload, Loader, Check, X } from 'lucide-react';
+import {  Upload, Loader, Check, X, IndianRupee } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
 import Header from '../common/Header';
 import { RootState } from '../../../store/store';
+import { Slider } from "../../dsa-components/common/Slider"
 
 const ReferralContainer = styled.div`
   min-height: 100vh;
@@ -18,8 +19,6 @@ const ReferralContainer = styled.div`
     margin-top: 5rem;
   }
 `;
-
-
 
 const Form = styled.form`
   display: flex;
@@ -219,6 +218,127 @@ const SuccessIcon = styled.div`
   color: #059669;
 `;
 
+const SliderContainer = styled.div`
+  margin-bottom: 1.5rem;
+`;
+
+const SliderHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;
+
+const SliderLabel = styled.label`
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1E293B;
+`;
+
+const TenureValue = styled.span`
+  font-size: 0.875rem;
+  color: #64748B;
+`;
+
+const EMIContainer = styled.div`
+  background: #F8FAFC;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: 1px solid #E2E8F0;
+`;
+
+const EMIGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #E2E8F0;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+`;
+
+const EMIDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
+
+const EMILabel = styled.span`
+  font-size: 0.875rem;
+  color: #64748B;
+`;
+
+const EMIValue = styled.div`
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  svg {
+    color: #64748B;
+    width: 18px;
+    height: 18px;
+  }
+`;
+
+const EMIHighlight = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #EFF6FF;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #BFDBFE;
+
+  svg {
+    color: #3B82F6;
+  }
+`;
+
+const EMIAmount = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  span:first-child {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1E293B;
+  }
+
+  span:last-child {
+    font-size: 0.875rem;
+    color: #64748B;
+  }
+`;
+
+// Add this styled component for better error message styling
+const ErrorContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #FEF2F2;
+  border-radius: 4px;
+  border: 1px solid #FEE2E2;
+`;
+
+const ErrorText = styled.span`
+  color: #DC2626;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
 interface FormData {
   name: string;
   email: string;
@@ -245,6 +365,13 @@ interface FormData {
 
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 3MB in bytes
 
+const calculateEMI = (principal: number, tenure: number, interestRate: number) => {
+  const monthlyRate = interestRate / (12 * 100);
+  const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / 
+              (Math.pow(1 + monthlyRate, tenure) - 1);
+  return Math.round(emi);
+};
+
 const ReferralScreen: React.FC = () => {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormData>({
@@ -262,6 +389,8 @@ const ReferralScreen: React.FC = () => {
   const fileInputRefs = [useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null), useRef<HTMLInputElement>(null)];
   const salarySlips = watch('salarySlips');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [tenure, setTenure] = useState(12);
+  const [emi, setEmi] = useState(0);
 
   // Get agent ID from Redux state
   const agentId = useSelector((state: RootState) => state.user.user?.agentID);
@@ -269,6 +398,14 @@ const ReferralScreen: React.FC = () => {
   useEffect(() => {
     dispatch(setHeaderText('Referral'));
   }, [dispatch]);
+
+  useEffect(() => {
+    const amount = parseFloat(watch('loanAmount') || '0');
+    if (amount > 0) {
+      const calculatedEMI = calculateEMI(amount, tenure, 10.5);
+      setEmi(calculatedEMI);
+    }
+  }, [watch('loanAmount'), tenure]);
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -392,6 +529,16 @@ const ReferralScreen: React.FC = () => {
     }
   };
 
+  // Add this function to handle loan amount changes
+  const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    if (value > 10000000) {
+      setValue('loanAmount', '10000000'); // Reset to 1 crore
+    } else {
+      setValue('loanAmount', e.target.value);
+    }
+  };
+
   return (
     <ReferralContainer>
       <Header isLoggedIn/>
@@ -471,8 +618,8 @@ const ReferralScreen: React.FC = () => {
               {...register('loanAmount', { 
                 required: 'Loan amount is required',
                 min: {
-                  value: 100000,
-                  message: 'Minimum loan amount is ₹1,00,000'
+                  value: 10000,
+                  message: 'Minimum loan amount should be ₹10,000'
                 },
                 max: {
                   value: 10000000,
@@ -480,9 +627,80 @@ const ReferralScreen: React.FC = () => {
                 }
               })}
               placeholder="Enter required loan amount"
+              onChange={(e) => {
+                handleLoanAmountChange(e);
+                // Trigger the default onChange from register
+                register('loanAmount').onChange(e);
+              }}
             />
-            {errors.loanAmount && <ErrorMessage>{errors.loanAmount.message}</ErrorMessage>}
+            {errors.loanAmount && (
+              <ErrorContainer>
+                <ErrorText>
+                  <X size={16} />
+                  {errors.loanAmount.type === 'min' 
+                    ? `Please enter an amount of at least ₹${(10000).toLocaleString('en-IN')}` 
+                    : errors.loanAmount.type === 'max'
+                    ? `Amount cannot exceed ₹${(10000000).toLocaleString('en-IN')}`
+                    : errors.loanAmount.message}
+                </ErrorText>
+              </ErrorContainer>
+            )}
           </InputGroup>
+
+          {parseFloat(watch('loanAmount') || '0') > 0 && parseFloat(watch('loanAmount') || '0') < 10000 && (
+            <ErrorContainer style={{ marginTop: '1rem' }}>
+              <ErrorText>
+                <X size={16} />
+                Enter an amount of at least ₹10,000 to see EMI calculations
+              </ErrorText>
+            </ErrorContainer>
+          )}
+
+          <SliderContainer>
+            <SliderHeader>
+              <SliderLabel>Loan Tenure</SliderLabel>
+              <TenureValue>{tenure} months</TenureValue>
+            </SliderHeader>
+            <Slider
+              min={9}
+              max={36}
+              step={3}
+              value={tenure}
+              onChange={(value) => setTenure(value)}
+            />
+            {parseFloat(watch('loanAmount') || '0') >= 10000 && (
+              <EMIContainer>
+                <EMIGrid>
+                  <EMIDetail>
+                    <EMILabel>Principal Amount</EMILabel>
+                    <EMIValue>
+                      <IndianRupee size={18} />
+                      {parseFloat(watch('loanAmount') || '0').toLocaleString('en-IN')}
+                    </EMIValue>
+                  </EMIDetail>
+                  <EMIDetail>
+                    <EMILabel>Interest Rate</EMILabel>
+                    <EMIValue>
+                      10.50% <span style={{ fontSize: '0.875rem', color: '#64748B' }}>p.a.</span>
+                    </EMIValue>
+                  </EMIDetail>
+                  <EMIDetail>
+                    <EMILabel>Loan Tenure</EMILabel>
+                    <EMIValue>
+                      {tenure} <span style={{ fontSize: '0.875rem', color: '#64748B' }}>months</span>
+                    </EMIValue>
+                  </EMIDetail>
+                </EMIGrid>
+                <EMIHighlight>
+                  <IndianRupee size={24} />
+                  <EMIAmount>
+                    <span>₹{emi.toLocaleString('en-IN')}</span>
+                    <span>Estimated Monthly EMI</span>
+                  </EMIAmount>
+                </EMIHighlight>
+              </EMIContainer>
+            )}
+          </SliderContainer>
 
           <InputGroup>
             <label>Purpose of Loan</label>
