@@ -182,7 +182,7 @@ const StatusOption = styled.button<{ variant: string; isSelected: boolean }>`
   padding: 12px;
   border-radius: 3px;
   border: 2px solid ${props => props.isSelected ? '#4C9AFF' : 'transparent'};
-  background-color: ${props => props.isSelected ? 
+  background-color: ${props => props.isSelected ?
     statusColors[props.variant as LoanStatus].background : 'transparent'};
   cursor: pointer;
   width: 100%;
@@ -190,8 +190,8 @@ const StatusOption = styled.button<{ variant: string; isSelected: boolean }>`
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${props => props.isSelected ? 
-      statusColors[props.variant as LoanStatus].background : '#F4F5F7'};
+    background-color: ${props => props.isSelected ?
+    statusColors[props.variant as LoanStatus].background : '#F4F5F7'};
   }
 
   svg {
@@ -446,6 +446,13 @@ const DocumentGrid = styled.div`
   }
 `;
 
+
+const UserImage = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  object-fit: cover;
+`;
 const DocumentItem = styled.div`
   display: flex;
   align-items: center;
@@ -1109,12 +1116,12 @@ const ApplicationDetailsSkeleton = () => {
 function formatDate(isoString) {
   const date = new Date(isoString);
   return date.toLocaleString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
   });
 }
 
@@ -1123,20 +1130,20 @@ function timeAgo(isoString) {
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
   const intervals = [
-      { label: "year", seconds: 31536000 },
-      { label: "month", seconds: 2592000 },
-      { label: "week", seconds: 604800 },
-      { label: "day", seconds: 86400 },
-      { label: "hour", seconds: 3600 },
-      { label: "minute", seconds: 60 },
-      { label: "second", seconds: 1 }
+    { label: "year", seconds: 31536000 },
+    { label: "month", seconds: 2592000 },
+    { label: "week", seconds: 604800 },
+    { label: "day", seconds: 86400 },
+    { label: "hour", seconds: 3600 },
+    { label: "minute", seconds: 60 },
+    { label: "second", seconds: 1 }
   ];
 
   for (const interval of intervals) {
-      const count = Math.floor(diffInSeconds / interval.seconds);
-      if (count >= 1) {
-          return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
-      }
+    const count = Math.floor(diffInSeconds / interval.seconds);
+    if (count >= 1) {
+      return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+    }
   }
 
   return "Just now";
@@ -1154,9 +1161,19 @@ function ApplicationDetails() {
   const [error, setError] = useState<string | null>(null);
 
   // Select the Application from state.applications.applicationsById
-  const cachedApplication = useSelector((state: RootState) => 
+  const cachedApplication = useSelector((state: RootState) =>
     id ? selectApplicationsById(state, id as string) : null
   );
+
+  const fullName = useSelector((state: RootState) => {
+    const userData = state?.user?.user;
+    const firstName = userData?.firstName || '';
+    const lastName = userData?.lastName || '';
+    const fullName = `${firstName} ${lastName}`
+    return fullName;
+  })
+
+  const photoURL = useSelector((state: RootState) => state?.user?.user?.photoURL);
 
   // Fetch application data if not in cache
   useEffect(() => {
@@ -1192,7 +1209,7 @@ function ApplicationDetails() {
   useEffect(() => {
     if (cachedApplication) {
       console.log('Cached Application Data:', cachedApplication);
-      
+
       // Update local state with cached data
       // setStatus(cachedApplication.status as LoanStatus);
       setLoanType(cachedApplication.loanType as LoanType);
@@ -1262,37 +1279,37 @@ function ApplicationDetails() {
     dispatch(setHeaderText('Application Details'));
   }, [dispatch]);
 
-  const statuses: { 
-    status: LoanStatus; 
+  const statuses: {
+    status: LoanStatus;
     description: string;
     icon: React.ReactNode;
   }[] = [
-    { 
-      status: 'SUBMITTED', 
-      description: 'Application has been submitted and is pending review',
-      icon: <ClipboardCheck size={20} />
-    },
-    { 
-      status: 'UNDER_REVIEW', 
-      description: 'Application is being reviewed by the bank team',
-      icon: <Search size={20} />
-    },
-    { 
-      status: 'APPROVED', 
-      description: 'Loan application has been approved',
-      icon: <CheckCircle2 size={20} />
-    },
-    { 
-      status: 'REJECTED', 
-      description: 'Loan application has been rejected',
-      icon: <XCircle size={20} />
-    },
-    { 
-      status: 'DISBURSED', 
-      description: 'Loan amount has been disbursed to the account',
-      icon: <Banknote size={20} />
-    }
-  ];
+      {
+        status: 'SUBMITTED',
+        description: 'Application has been submitted and is pending review',
+        icon: <ClipboardCheck size={20} />
+      },
+      {
+        status: 'UNDER_REVIEW',
+        description: 'Application is being reviewed by the bank team',
+        icon: <Search size={20} />
+      },
+      {
+        status: 'APPROVED',
+        description: 'Loan application has been approved',
+        icon: <CheckCircle2 size={20} />
+      },
+      {
+        status: 'REJECTED',
+        description: 'Loan application has been rejected',
+        icon: <XCircle size={20} />
+      },
+      {
+        status: 'DISBURSED',
+        description: 'Loan amount has been disbursed to the account',
+        icon: <Banknote size={20} />
+      }
+    ];
 
   const bankTeam = ['Priya Sharma', 'Amit Kumar', 'Sneha Patel', 'Rajesh Verma'];
 
@@ -1350,7 +1367,7 @@ function ApplicationDetails() {
 
     const comment: Comment = {
       id: comments.length + 1,
-      author: "Rahul DSA",
+      author: fullName,
       isBank: false,
       content: newComment,
       timestamp: 'Just now'
@@ -1364,7 +1381,7 @@ function ApplicationDetails() {
       type: 'comment',
       content: `Comment added by ${comment.author}`,
       timestamp: 'Just now',
-      author: "Rahul DSA"
+      author: comment?.author
     };
 
     setTimeline([...timeline, timelineEvent]);
@@ -1384,7 +1401,7 @@ function ApplicationDetails() {
 
     // Update the status
     // setStatus(newStatus);
-    
+
     // Add the event to timeline
     setTimeline([...timeline, timelineEvent]);
 
@@ -1392,7 +1409,7 @@ function ApplicationDetails() {
     if (transitionAssignee && transitionAssignee !== assignee) {
       setAssignee(transitionAssignee);
     }
-    
+
     // Reset and close modal
     setIsStatusModalOpen(false);
     setSelectedStatus(null);
@@ -1403,7 +1420,7 @@ function ApplicationDetails() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        isDropdownOpen && 
+        isDropdownOpen &&
         event.target instanceof Element &&
         !event.target.closest('[data-dropdown]')
       ) {
@@ -1416,7 +1433,7 @@ function ApplicationDetails() {
   }, [isDropdownOpen]);
 
   // Show loading state
-  if (isLoading ) {
+  if (isLoading) {
     return (
       <>
         <Header isLoggedIn />
@@ -1469,8 +1486,8 @@ function ApplicationDetails() {
                   Required Documents ({cachedApplication?.salarySlips?.length || 3})
                 </SectionTitle>
                 <DocumentGrid>
-                  {(cachedApplication?.salarySlips || []).map((attachment , index) => (
-                    <DocumentItem 
+                  {(cachedApplication?.salarySlips || []).map((attachment, index) => (
+                    <DocumentItem
                       key={attachment?.label}
                       onClick={() => setSelectedFile({
                         isOpen: true,
@@ -1482,7 +1499,7 @@ function ApplicationDetails() {
                     >
                       <Paperclip size={16} />
                       <DocumentInfo>
-                        <DocumentName>{`Salary Slip ${index+1}`}</DocumentName>
+                        <DocumentName>{`Salary Slip ${index + 1}`}</DocumentName>
                         {/* <DocumentMeta>{attachment.size} • {attachment.type}</DocumentMeta> */}
                       </DocumentInfo>
                     </DocumentItem>
@@ -1552,13 +1569,20 @@ function ApplicationDetails() {
               <CommentList>
                 {comments.map(comment => (
                   <CommentItem key={comment.id}>
-                    <Avatar isBank={comment.isBank}>
-                      {comment.isBank ? (
+                    {comment?.isBank ? (
+                      <Avatar isBank={comment.isBank}>
                         <Building2 size={20} />
-                      ) : (
-                        <User size={20} />
-                      )}
-                    </Avatar>
+                      </Avatar>
+                    ) : (
+                      <>
+                        {photoURL && comment?.author === fullName ?
+                          (<UserImage src={photoURL} alt={fullName} />) :
+                          (<Avatar isBank={false}>
+                            <User size={20} />
+                          </Avatar>)
+                        }
+                      </>
+                    )}
                     <CommentContent>
                       <CommentHeader>
                         <CommentAuthor>{comment.author}</CommentAuthor>
@@ -1591,7 +1615,7 @@ function ApplicationDetails() {
               <FormGroup>
                 <Label>Application Status</Label>
                 <StatusDropdown data-dropdown>
-                  <StatusTransitionButton 
+                  <StatusTransitionButton
                     onClick={() => {
                       const availableTransitions = getAvailableTransitions(status);
                       if (availableTransitions.length > 0) {
@@ -1605,12 +1629,12 @@ function ApplicationDetails() {
                       <span>{toPascalCase(status)}</span>
                     </div>
                     {getAvailableTransitions(status).length > 0 && (
-                      <ChevronDown 
-                        size={16} 
-                        style={{ 
+                      <ChevronDown
+                        size={16}
+                        style={{
                           transform: isDropdownOpen ? 'rotate(180deg)' : 'none',
                           transition: 'transform 0.2s ease'
-                        }} 
+                        }}
                       />
                     )}
                   </StatusTransitionButton>
@@ -1808,7 +1832,7 @@ function ApplicationDetails() {
 const getStatusDescription = (nextStatus: LoanStatus, currentStatus: LoanStatus) => {
   switch (nextStatus) {
     case 'UNDER_REVIEW':
-      return currentStatus === 'CHANGES_REQUIRED' 
+      return currentStatus === 'CHANGES_REQUIRED'
         ? 'Resume reviewing the application after changes'
         : 'Start reviewing the loan application';
     case 'CHANGES_REQUIRED':
