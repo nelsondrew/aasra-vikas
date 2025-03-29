@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { PlusCircle, TrendingUp, AlertCircle, Wallet } from 'lucide-react';
 import { format } from 'date-fns';
 import { Button } from '../common/Button';
-import  Header  from '../common/Header';
+import Header from '../common/Header';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setHeaderText } from '../../../store/slices/commonSlice';
@@ -14,8 +14,12 @@ const DashboardContainer = styled.div`
   background-color: #FFFFFF;
   padding: 1.5rem;
   padding-top: 7rem;
-  padding-left: 5rem;
-  padding-right: 5rem;
+ 
+
+  @media (min-width: 768px) {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 
   h3 {
     font-size: 24px !important;

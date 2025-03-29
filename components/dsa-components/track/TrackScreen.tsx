@@ -337,15 +337,23 @@ const ApplicationCard = styled(motion.div)<ApplicationCardProps>`
 `;
 
 const LoadingContainer = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
+
+  @media (min-width: 768px) {
+    padding: 1rem;
+  }
 `;
 
 const SkeletonCard = styled(motion.div)`
   background: #F8FAFC;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  @media (min-width: 768px) {
+    padding: 1.5rem;
+  }
 
   .timeline {
     margin-top: 1rem;
@@ -359,6 +367,12 @@ const SkeletonCard = styled(motion.div)`
     position: relative;
     margin: 1rem 0;
     padding: 0 0.25rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &::before {
       content: '';
@@ -380,11 +394,12 @@ const SkeletonCard = styled(motion.div)`
     align-items: center;
     background: #F8FAFC;
     padding: 0 0.25rem;
-    min-width: 60px;
+    min-width: 70px;
+    flex-shrink: 0;
 
     .icon {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -393,12 +408,22 @@ const SkeletonCard = styled(motion.div)`
       background-color: #F8FAFC;
       border: 2px solid #E2E8F0;
       color: #94A3B8;
+
+      @media (min-width: 768px) {
+        width: 28px;
+        height: 28px;
+      }
     }
 
     .label {
-      font-size: 0.625rem;
+      font-size: 0.5rem;
       color: #94A3B8;
       text-align: center;
+      white-space: nowrap;
+
+      @media (min-width: 768px) {
+        font-size: 0.625rem;
+      }
     }
   }
 `;
@@ -449,39 +474,44 @@ const SkeletonStatus = styled.div`
 
 const SkeletonContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
 `;
 
 const SkeletonField = styled.div`
   div:first-child {
-    height: 16px;
-    width: 80px;
-    background: linear-gradient(
-      90deg,
-      #E2E8F0 0%,
-      #F1F5F9 50%,
-      #E2E8F0 100%
-    );
+    height: 14px;
+    width: 60px;
+    background: linear-gradient(90deg, #E2E8F0 0%, #F1F5F9 50%, #E2E8F0 100%);
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
     border-radius: 4px;
     margin-bottom: 0.5rem;
+
+    @media (min-width: 768px) {
+      height: 16px;
+      width: 80px;
+    }
   }
 
   div:last-child {
-    height: 20px;
-    width: 120px;
-    background: linear-gradient(
-      90deg,
-      #E2E8F0 0%,
-      #F1F5F9 50%,
-      #E2E8F0 100%
-    );
+    height: 18px;
+    width: 100px;
+    background: linear-gradient(90deg, #E2E8F0 0%, #F1F5F9 50%, #E2E8F0 100%);
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
     border-radius: 4px;
+
+    @media (min-width: 768px) {
+      height: 20px;
+      width: 120px;
+    }
   }
 `;
 
